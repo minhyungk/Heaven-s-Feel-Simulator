@@ -1,0 +1,1745 @@
+[
+  {
+    "id": 2,
+    "name": "알트리아 펜드래곤",
+    "class": "Saber",
+    "stats": {
+      "strength": "B",
+      "endurance": "B",
+      "agility": "B",
+      "mana": "A",
+      "luck": "A+",
+      "np": "A++"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 A",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기승 B",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "카리스마 B",
+        "detail": "아군 전체 공격력 UP(3턴)"
+      },
+      {
+        "name": "용의 노심 B",
+        "detail": "자신의 버스터 카드 성능 UP(1턴)&보구 위력 UP(1턴)▲&모든 커맨드 카드를 버스터 타입으로 변경(1턴)▲"
+      },
+      {
+        "name": "빛나는 길 EX",
+        "detail": "자신의 NP 증가▲&스타 대량 획득"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "약속된 승리의 검",
+      "ruby": "엑스칼리버",
+      "rank": "A++",
+      "type": "대성보구",
+      "detail": "적 전체에게 강력한 공격▲ + 자신의 NP 차지"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1001000.png",
+    "profile": "브리튼 전설의 왕. 기사왕이라고도 한다. \n알트리아는 아명으로,\n왕이 된 후에는 아서 왕이라고 불리게 되었다. \n\n기사도가 저물어가던 시대, 성검을 손에 들고 \n브리튼에 일시적인 평화와 마지막 번영을 가져왔다. \n\n역사상으로는 남자이지만,\n이 세계에서는 남장미인이었던 것 같다."
+  },
+  {
+    "id": 8,
+    "name": "알테라",
+    "class": "Saber",
+    "stats": {
+      "strength": "B",
+      "endurance": "A",
+      "agility": "A",
+      "mana": "B",
+      "luck": "A",
+      "np": "A+"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 B",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기승 A",
+        "detail": "자신의 퀵 카드 성능 UP"
+      },
+      {
+        "name": "신성 B",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "신의 채찍 A",
+        "detail": "아군 전체 보구 위력 UP▲(3턴▲) + 적 전체 방어 강화 상태 해제▲"
+      },
+      {
+        "name": "완전구조체 EX",
+        "detail": "자신의 NP 증가▲&크리티컬 위력 UP(3턴)▲&공격 약화 내성 UP▲(3턴)&HP 크게 회복▲&스타 집중도 UP▲(1턴)"
+      },
+      {
+        "name": "별의 문장 EX",
+        "detail": "자신의 공격력 UP(3턴) + 스타 획득"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "군신의 검",
+      "ruby": "포톤 레이",
+      "rank": "A",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 공격▲&방어력 DOWN(3턴)▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1018000.png",
+    "profile": "대제국을 이룩한 대왕. 아틸라 더 훈. \n흉노의 후예, 훈족의 전사이자 왕. \n서아시아부터 러시아, 동유럽, 갈리아에 이르는 \n광대한 판도를 제압한 5세기의 대영웅. \n서로마제국의 멸망을 초래했다고도 일컬어진다."
+  },
+  {
+    "id": 6,
+    "name": "지크프리트",
+    "class": "Saber",
+    "stats": {
+      "strength": "B+",
+      "endurance": "A",
+      "agility": "B",
+      "mana": "C",
+      "luck": "E",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "기승 B",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "탐욕의 황금 A",
+        "detail": "자신의 NP 증가▲&NP 획득량 UP(3턴)&공격력 UP(3턴)▲"
+      },
+      {
+        "name": "재정비 A",
+        "detail": "자신의 약화 상태 해제&HP 회복"
+      },
+      {
+        "name": "용살자 A++",
+        "detail": "자신에게 [용] 특공 상태 부여(3턴)&[용] 특방 상태 부여(3턴)&버스터 카드 성능 UP▲(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "환상대검・천마실추",
+      "ruby": "발뭉",
+      "rank": "EX",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 [용] 특공 공격▲ + 자신의 NP 획득량 UP▲(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1008000.png",
+    "profile": "‘니벨룽겐의 노래’에서 칭송되는 만부부당의 영웅. \n성검 발뭉을 들고 사악한 용 파프니르를\n쓰러뜨린 “드래곤 슬레이어”.  \n\n과묵하지만 정이 깊다. \n전장에서는 항상 전면에 나서 동료를 지킨다."
+  },
+  {
+    "id": 5,
+    "name": "네로 클라우디우스",
+    "class": "Saber",
+    "stats": {
+      "strength": "D",
+      "endurance": "D",
+      "agility": "A",
+      "mana": "B",
+      "luck": "A",
+      "np": "B"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "기승 B",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "부의 잔 B",
+        "detail": "자신의 NP 증가▲&[물가] 또는 [도시]인 필드인 경우 아츠 카드 성능 UP(3턴)▲&자신의 정신이상 내성 UP(3턴)&HP 회복"
+      },
+      {
+        "name": "황제특권(갈채) EX",
+        "detail": "자신의 공격력을 확률로 UP(3턴)&방어력을 확률로 UP(3턴)&HP 회복&아츠 카드 성능 UP(3턴)▲&매 턴 스타 획득 상태 부여(3턴)▲"
+      },
+      {
+        "name": "세 번, 낙일을 맞이할지라도 EX",
+        "detail": "자신에게 근성 상태 부여(3회・6턴▲)&‘근성 발동 시 자신의 보구 위력 UP(6턴)&약화 상태를 해제하는 상태’ 부여(6턴)▲&강화 성공률 UP(6턴)▲&NP 획득량 UP(6턴)▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "여자아이가 노래하는 꽃의 제정",
+      "ruby": "라우스 상트 클라우디우스",
+      "rank": "B",
+      "type": "대진보구",
+      "detail": "적 전체에게 강력한 방어력 무시 공격▲&방어력 DOWN(1턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1005000.png",
+    "profile": "자칭 남장미인. 자기 지상주의에 제멋대로이지만\n밝고 활달하며 아이같이 천진난만한 면 때문에\n만인의 사랑을 받는 만능 막무가내 황제. \n\n본명은 네로 클라우디우스 카이사르\n아우구스투스 게르마니쿠스. \n\n제정 로마의 제5대 황제. \n평생이 모략과 독으로 얼룩진 악명 높은 폭군."
+  },
+  {
+    "id": 123,
+    "name": "가웨인",
+    "class": "Saber",
+    "stats": {
+      "strength": "B+",
+      "endurance": "B+",
+      "agility": "B+",
+      "mana": "A",
+      "luck": "A",
+      "np": "A+"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 B",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기승 B",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "성자의 숫자 EX",
+        "detail": "자신의 공격력 UP(3턴)&[햇빛]이 있는 필드에서만 자신의 버스터 카드 성능 UP(3턴)"
+      },
+      {
+        "name": "불야의 카리스마 B",
+        "detail": "아군 전체 공격력 UP▲(3턴) + 자신에게 필드를 [햇빛] 특성으로 하는 상태 부여(1턴)▲"
+      },
+      {
+        "name": "베르틸락의 벨트 EX",
+        "detail": "자신의 NP 증가&스타 획득&근성 상태 부여(1회・1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "전륜하는 승리의 검",
+      "ruby": "엑스칼리버 갈라틴",
+      "rank": "A+",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 공격▲&스킬 봉인 상태 부여(1턴)&화상 상태 부여(5턴) + [햇빛]인 필드에서 자신의 버스터 카드 크리티컬 위력 UP(3턴)▲&버스터 카드의 스타 집중도 UP(3턴)▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1007000.png",
+    "profile": "아서 왕 전설에 나오는 원탁의 기사 중 한 사람. \n최고참의 기사 중 한 명이자 왕의 싸움, 그 종국까지 \n섬겼던 충의의 기사. \n\n엑스칼리버의 자매검이라 불리는 태양의 성검을 가져 \n성자의 축복으로 해가 있는 동안에는 비할 자가 없는 \n무쌍의 기사로 이름을 떨쳤다."
+  },
+  {
+    "id": 76,
+    "name": "모드레드",
+    "class": "Saber",
+    "stats": {
+      "strength": "B+",
+      "endurance": "A",
+      "agility": "B",
+      "mana": "B",
+      "luck": "D",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 B",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기승 B",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "붉은 번개의 기사 A+",
+        "detail": "자신의 버스터 카드 성능 UP(3회・3턴▲)&버스터 카드의 크리티컬 위력 UP(3턴)▲&공격력 UP(3턴)▲"
+      },
+      {
+        "name": "시가렛 라이온 B+",
+        "detail": "자신의 버스터 카드의 스타 집중도 UP(1턴)▲&크리티컬 위력 UP(3회・3턴)▲ + 스타 대량 획득▲"
+      },
+      {
+        "name": "부정을 숨기는 투구 EX",
+        "detail": "자신의 약화 상태 해제&방어력을 크게 UP(1턴)&NP 증가"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "나의 아름다운 아버지에 대한 반역",
+      "ruby": "클라렌트 블러드 아서",
+      "rank": "A+",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 [아서] 특공 공격▲ + 자신의 NP를 조금 차지한다▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1009000.png",
+    "profile": "모드레드는 원탁의 기사 중 한 명으로, 아서 왕의 적자이다. \n\n동시에 전설에 종지부를 찍은 캄란 언덕에서 \n아서 왕을 죽인 반역의 기사이다."
+  },
+  {
+    "id": 68,
+    "name": "오키타 소지",
+    "class": "Saber",
+    "stats": {
+      "strength": "C",
+      "endurance": "E",
+      "agility": "A+",
+      "mana": "E",
+      "luck": "D",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 E",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "기승 E",
+        "detail": "자신의 퀵 카드 성능 약간 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "축지 B+",
+        "detail": "자신의 퀵 카드 성능 UP(1턴)&‘통상 공격 시 대미지 전 자신의 공격력 UP(1턴) 하는 상태’ 부여(1턴)▲"
+      },
+      {
+        "name": "절도 A",
+        "detail": "자신의 스타 집중도 크게 UP(1턴)&크리티컬 위력 UP(1턴)▲&NP 증가▲"
+      },
+      {
+        "name": "심안(가짜) A",
+        "detail": "자신에게 회피 상태 부여(1턴)&크리티컬 위력 UP(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "무명 삼단 찌르기",
+      "ruby": "무명 삼단 찌르기",
+      "rank": "-",
+      "type": "대인마검",
+      "detail": "적 하나에게 초강력한 방어력 무시 공격&방어력 크게 DOWN(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_1027000.png",
+    "profile": "막부 말기 교토를 중심으로 활약한 치안조직,\n신선조의 1번대 대장 오키타 소지. \n검객 집단으로도 두려움을 샀던 신선조에서\n최강의 천재 검객으로 칭송받았던 이가 오키타 소지다."
+  },
+  {
+    "id": 12,
+    "name": "길가메시",
+    "class": "Archer",
+    "stats": {
+      "strength": "B",
+      "endurance": "C",
+      "agility": "C",
+      "mana": "B",
+      "luck": "A",
+      "np": "EX"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 E",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "단독행동 A+",
+        "detail": "자신의 크리티컬 위력 UP"
+      },
+      {
+        "name": "신성 B",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "모든 것을 본 자 EX",
+        "detail": "아군 전체 공격력 UP(3턴) + 아군 전체의 [천의 힘을 가진 서번트]의 보구 위력 UP(3턴)▲ + 스타 획득▲"
+      },
+      {
+        "name": "황금률 A",
+        "detail": "자신의 NP 획득량 UP(3턴)"
+      },
+      {
+        "name": "바빌론의 창고 EX",
+        "detail": "자신의 스타 집중도 크게 UP(3턴)&NP 증가▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "천지를 괴리시키는 개벽의 별",
+      "ruby": "에누마 엘리시",
+      "rank": "EX",
+      "type": "대계보구",
+      "detail": "자신의 보구 위력 UP(1턴)▲ + 적 전체에게 강력한 [서번트] 특공 공격 [특별한 별의 힘을 지닌 서번트에게는 특공 무효]▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_2002000.png",
+    "profile": "기원전, 수메르의 도시국가 우루크를 \n다스리던 반신반인인 왕. \n\n전설뿐만 아니라 실존한 것으로 여겨지는 인류상 가장 \n오래된 서사시 “길가메시 서사시”에 기록된 왕."
+  },
+  {
+    "id": 11,
+    "name": "에미야",
+    "class": "Archer",
+    "stats": {
+      "strength": "D",
+      "endurance": "C",
+      "agility": "C",
+      "mana": "B",
+      "luck": "E",
+      "np": "?"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 D",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "단독행동 B",
+        "detail": "자신의 크리티컬 위력 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "심안(진짜) B",
+        "detail": "자신에게 회피 상태 부여(1턴)&방어력 UP(3턴)"
+      },
+      {
+        "name": "매의 눈 B+",
+        "detail": "자신의 스타 발생률 UP▲(3턴)&크리티컬 위력 UP▲(3턴)"
+      },
+      {
+        "name": "회로접속 EX",
+        "detail": "자신의 퀵 카드 성능 UP(1턴)▲▲&아츠 카드 성능 UP▲▲(1턴)&버스터 카드 성능 UP(1턴)▲▲&보구 카드의 타입을 아츠 또는 버스터로 변경(1턴)▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "무한의 검제",
+      "ruby": "언리미티드 블레이드 워크스",
+      "rank": "E~A",
+      "type": "????",
+      "detail": "적 전체에게 강력한 방어력 무시 공격&공격력 DOWN(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_2001000.png",
+    "profile": "다른 영령들과는 출전이 다르기 때문에\n정통 영령이라 할 수 없다. \n\n이 영령은 수호자라 불리는 것으로, \n인류의 “존속해야 한다”는 집합 무의식이 \n만들어낸 방위장치와 같은 것이다. \n이런 방위 방식은 인류 측의 억지력이라고도 불린다. \n\n요컨대 이름도 없는 사람들이 선출한, \n얼굴 없는 정의의 대표자."
+  },
+  {
+    "id": 14,
+    "name": "아탈란테",
+    "class": "Archer",
+    "stats": {
+      "strength": "D",
+      "endurance": "E",
+      "agility": "A",
+      "mana": "B",
+      "luck": "C",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 D",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "단독행동 A",
+        "detail": "자신의 크리티컬 위력 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "아르카디아 너머 A",
+        "detail": "아군 전체 퀵 카드 성능 UP▲(1턴)"
+      },
+      {
+        "name": "몰이사냥의 미학 C",
+        "detail": "자신의 스타 집중도 크게 UP(1턴)"
+      },
+      {
+        "name": "칼리돈 사냥 A",
+        "detail": "자신에게 회피 상태 부여(1턴)&NP 획득량 UP(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "청원의 화살 편지",
+      "ruby": "포이보스 카타스트로피",
+      "rank": "B+",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 공격▲ + 스타 대량 획득▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_2005000.png",
+    "profile": "그리스 신화에 등장하는 이름 높은 여자 사냥꾼.\n칼리돈의 멧돼지 퇴치 때, 가장 먼저 화살을 \n명중시킨 것으로 이름을 날렸다.\n\n또한, 그리스의 용사들이 모였다고 하는 \n아르고노트에도 참가했었다."
+  },
+  {
+    "id": 84,
+    "name": "아르주나",
+    "class": "Archer",
+    "stats": {
+      "strength": "A",
+      "endurance": "B",
+      "agility": "B",
+      "mana": "B",
+      "luck": "A++",
+      "np": "EX"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "단독행동 A",
+        "detail": "자신의 크리티컬 위력 UP"
+      },
+      {
+        "name": "신성 B",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "천리안(사수) B+",
+        "detail": "자신의 스타 발생률 UP▲(3턴)&약화 무효 상태 부여▲(5턴)"
+      },
+      {
+        "name": "축복받는 영웅 A+",
+        "detail": "자신의 NP 증가&매 턴 HP 회복 상태 부여(5턴)&매 턴 스타 획득 상태 부여(5턴)&매 턴 NP 획득 상태 부여(5턴)▲"
+      },
+      {
+        "name": "마력방출(불꽃) A",
+        "detail": "자신의 버스터 카드 성능 UP(1턴)&보구 위력 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "파괴신의 손짓",
+      "ruby": "파슈파타",
+      "rank": "A+",
+      "type": "대인보구",
+      "detail": "적 전체에게 강력한 공격▲&중간 확률▲로 즉사&[신성] 특성인 상대에 대해 더 높은 확률▲로 즉사&방어력 DOWN(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_2015000.png",
+    "profile": "인도 고대 서사시 ‘마하바라타’의 대영웅. \n\n마하바라타는 인도의 모든 영웅이 집결하는 \n찬란한 이야기인데 아르주나는 그 중심에 위치하는 \n존재라 해도 과언이 아니다."
+  },
+  {
+    "id": 16,
+    "name": "아라쉬",
+    "class": "Archer",
+    "stats": {
+      "strength": "B",
+      "endurance": "A",
+      "agility": "B+",
+      "mana": "E",
+      "luck": "D",
+      "np": "B++"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "단독행동 C",
+        "detail": "자신의 크리티컬 위력 약간 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "강건 EX",
+        "detail": "자신의 방어력 UP(3턴)&독 내성 UP(3턴)"
+      },
+      {
+        "name": "천리안 A",
+        "detail": "자신의 스타 발생률 UP(3턴)"
+      },
+      {
+        "name": "궁시작성 A",
+        "detail": "자신의 NP 증가&HP 회복"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "유성일조",
+      "ruby": "스텔라",
+      "rank": "A",
+      "type": "대군보구",
+      "detail": "적 전체에게 초강력한 공격▲ + 자신에게 즉사 효과【단점】"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_2013000.png",
+    "profile": "고대 페르시아 전설의 대영웅. \n\n서아시아 신대의 마지막 왕으로도 불리는 \n마누치플 왕의 전사로, 60년에 걸친 페르시아와 투르크 간의\n전쟁을 종결시켰다. \n\n양국의 백성에게 평화와 안녕을 가져다준 구세의 용사."
+  },
+  {
+    "id": 17,
+    "name": "쿠 훌린",
+    "class": "Lancer",
+    "stats": {
+      "strength": "B",
+      "endurance": "C",
+      "agility": "A",
+      "mana": "C",
+      "luck": "E",
+      "np": "B"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "신성 B",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "네 가지의 여울 A",
+        "detail": "자신에게 근성 상태(1회・5턴) 부여&HP가 적을수록 공격력이 UP하는 상태 부여(3턴)▲"
+      },
+      {
+        "name": "화살 회피의 가호 B",
+        "detail": "자신에게 회피 상태 부여(3회)&방어력 UP(3턴)"
+      },
+      {
+        "name": "재정비 C",
+        "detail": "자신의 약화 상태 해제&HP 회복"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "꿰뚫는 죽음의 가시 창",
+      "ruby": "게이 볼그",
+      "rank": "B+",
+      "type": "대인보구",
+      "detail": "자신에게 필중 상태 부여(1턴)▲ + 적 하나에게 초강력한 공격▲&방어력 DOWN(3턴)&중간 확률▲로 즉사 효과"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_3001000.png",
+    "profile": "장식을 좋아하지 않고 야생적인 싸움을 좋아하는 창병. \n일이라면 입막음으로 일반인도 살해하는 \n비정한 인물이지만, 평소에는 시원시원한 기질을 \n가지고 있다. \n\n남을 잘 돌봐주는 형님 성격."
+  },
+  {
+    "id": 18,
+    "name": "엘리자베트 바토리",
+    "class": "Lancer",
+    "stats": {
+      "strength": "C",
+      "endurance": "D",
+      "agility": "E",
+      "mana": "A",
+      "luck": "B",
+      "np": "D"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 A",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "진지작성 B",
+        "detail": "자신의 아츠 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "기학의 카리스마 A",
+        "detail": "아군 전체 공격력 UP▲(3턴) + 자신을 제외한 아군 전체 [여성]의 공격력 UP▲(3턴)"
+      },
+      {
+        "name": "체이테의 밤 B",
+        "detail": "적 전체▲의 방어력 DOWN(3턴)&강화 상태 1개 해제▲&스킬 봉인 상태 부여(1턴)▲"
+      },
+      {
+        "name": "전투속행 B",
+        "detail": "자신에게 근성 상태(1회・4턴)를 부여"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "선혈마양",
+      "ruby": "바토리 에르제베트",
+      "rank": "E+",
+      "type": "대인보구",
+      "detail": "적 전체에게 강력한 방어력 무시 공격▲&저주 상태 부여(3턴)&받는 강화 성공률 DOWN▲(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_3005000.png",
+    "profile": "흡혈귀 카밀라의 모델이 된 피의 백작부인. \n……이지만 서번트로 소환된 것은 그녀가 아직 \n죄를 짓기 전인 14살의 모습이었다. \n아이돌을 자칭하는 스위트 계열의 서번트. \n\n고귀, 고압적, 잔인, 무자비 등 전설에 나오는 대로 \n비인도적인 모습을 보인다."
+  },
+  {
+    "id": 70,
+    "name": "스카사하",
+    "class": "Lancer",
+    "stats": {
+      "strength": "B",
+      "endurance": "A",
+      "agility": "A",
+      "mana": "C",
+      "luck": "D",
+      "np": "A+"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 A",
+        "detail": "자신의 약화 내성 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "마경의 지혜 A+",
+        "detail": "자신의 크리티컬 위력을 확률로 UP(3턴)&스타 집중도를 확률로 UP(3턴)&회피 상태 부여(1턴)"
+      },
+      {
+        "name": "원초의 룬",
+        "detail": "아군 한 명의 퀵 카드 성능 UP(1턴)&받는 강화 성공률 UP(3턴)▲&NP 증가▲"
+      },
+      {
+        "name": "신살자 EX",
+        "detail": "자신에게 [신성] 특공 상태 부여(3턴▲)&[사령] 특공 상태 부여(3턴▲)&‘공격 시 자신의 NP를 증가시키는 상태’ 부여(3회・3턴)▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "꿰뚫는 죽음의 투창",
+      "ruby": "게이 볼그 얼터너티브",
+      "rank": "B+",
+      "type": "대인보구",
+      "detail": "적 하나에게 스턴 상태 부여(1턴)&초강력한 공격▲&중간 확률▲로 즉사 효과"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_3013000.png",
+    "profile": "켈트 얼스터 전설의 전사이자 여왕. \n이경이자 마경인 ‘그림자 나라’의 여왕이자 문지기로, \n창술과 룬 마술의 천재이다. \n\n수많은 망령이 넘쳐나는 ‘그림자 나라’의 문을 닫고 \n지배하기에 충분한 절대적인 힘을 지니고 있다. \n\n후에 얼스터의 영웅이 되는 젊은 쿠 훌린의 스승으로 \n그를 이끌고 기술을 전부 전수했으며 애용하는 마창까지 \n줬다고 한다. 그의 아들 콘라도 가르쳐 이끌었다."
+  },
+  {
+    "id": 85,
+    "name": "카르나",
+    "class": "Lancer",
+    "stats": {
+      "strength": "B",
+      "endurance": "C",
+      "agility": "A",
+      "mana": "B",
+      "luck": "D",
+      "np": "EX"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "기승 A",
+        "detail": "자신의 퀵 카드 성능 UP"
+      },
+      {
+        "name": "신성 A",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "빈자의 식견 A",
+        "detail": "적 하나의 약화 내성 DOWN(1턴)&보구 봉인 상태 부여(1턴)"
+      },
+      {
+        "name": "마력방출(불꽃) A",
+        "detail": "자신의 버스터 카드 성능 UP(1턴)&보구 위력 UP(1턴)"
+      },
+      {
+        "name": "희사의 끝",
+        "detail": "자신의 NP 증가▲&스타 발생률 UP▲(3턴)&크리티컬 위력 UP▲(3턴) + 스타 대량 획득▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "일륜이여, 죽음에 복종하여라",
+      "ruby": "바사비 샤크티",
+      "rank": "EX",
+      "type": "대신보구",
+      "detail": "적 전체에게 강력한 [신성] 특공 공격▲&버스터 카드 내성 DOWN▲(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_3004000.png",
+    "profile": "인도 고대 서사시 ‘마하바라타’의 대영웅. \n마하바라타의 중심적 영웅인 아르주나의 라이벌이자 \n아버지가 다른 형제이다. \n\n수많은 저주로 몸을 움직일 수 없게 된 그를\n아르주나는 모살에 가까운 형태로 죽였다."
+  },
+  {
+    "id": 71,
+    "name": "디어뮈드 오 디나",
+    "class": "Lancer",
+    "stats": {
+      "strength": "B",
+      "endurance": "C",
+      "agility": "A+",
+      "mana": "D",
+      "luck": "E",
+      "np": "B"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 B",
+        "detail": "자신의 약화 내성 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "심안(진짜) B",
+        "detail": "자신에게 회피 상태 부여(1턴)&방어력 UP(3턴)"
+      },
+      {
+        "name": "사랑의 점 C",
+        "detail": "적 전체 [여성]의 공격력 크게 DOWN(1턴)"
+      },
+      {
+        "name": "비련요란 A",
+        "detail": "자신의 퀵 카드 성능 UP(3턴)▲&아츠 카드 성능 UP(3턴)▲&크리티컬 위력 UP(3턴)▲&스타 발생률 크게 UP(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "파마의 홍장미, 필멸의 황장미",
+      "ruby": "게이 저그&게이 보",
+      "rank": "B+",
+      "type": "대인보구",
+      "detail": "적 하나에게 초강력한 공격▲&강화 상태를 해제&저주 상태를 부여(5턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_3002000.png",
+    "profile": "켈트 신화. 피오나 기사단의 단장 핀의 휘하에서 \n손꼽히는 기사이자 미모의 소유자였다. \n\n요정에게서 받은 뺨에 있는 점은 소녀들의 마음을 \n설레게 하는 마력을 지니고 있다."
+  },
+  {
+    "id": 23,
+    "name": "메두사",
+    "class": "Rider",
+    "stats": {
+      "strength": "B",
+      "endurance": "D",
+      "agility": "A",
+      "mana": "B",
+      "luck": "E",
+      "np": "A+"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 B",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기승 A+",
+        "detail": "자신의 퀵 카드 성능 UP"
+      },
+      {
+        "name": "단독행동 C",
+        "detail": "자신의 크리티컬 위력 약간 UP"
+      },
+      {
+        "name": "신성 E-",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "마안 A+",
+        "detail": "적 하나를 확률로 행동 불능 상태로 한다(1턴)"
+      },
+      {
+        "name": "괴력 B",
+        "detail": "자신의 공격력 UP(2턴)"
+      },
+      {
+        "name": "선혈신전 B",
+        "detail": "자신의 NP 증가&NP 획득량 UP(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "기영의 고삐",
+      "ruby": "벨레로폰",
+      "rank": "A+",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 공격▲&크리티컬 발생률 DOWN(3턴)▲ + 아군 전체의 스타 발생률 UP▲(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_4001000.png",
+    "profile": "그리스 신화에 등장하는 고르곤 세 자매의 막내.\n\n근원은 토착 지모신이었지만, 올림포스 신들의 책략, \n사람들의 광신에 의해 형태 없는 섬으로 도망쳤다. \n\n바라본 자들을 돌로 만드는 뱀의 괴물로서 묘사되고 있다."
+  },
+  {
+    "id": 108,
+    "name": "이스칸다르",
+    "class": "Rider",
+    "stats": {
+      "strength": "B",
+      "endurance": "A",
+      "agility": "D",
+      "mana": "C",
+      "luck": "A+",
+      "np": "A++"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 D",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "기승 A+",
+        "detail": "자신의 퀵 카드 성능 UP"
+      },
+      {
+        "name": "신성 C",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "카리스마 A",
+        "detail": "아군 전체 공격력 UP(3턴)"
+      },
+      {
+        "name": "제압군략 A",
+        "detail": "아군 전체 보구 위력 UP▲(3턴▲)&크리티컬 위력 UP(3턴)▲"
+      },
+      {
+        "name": "번개의 정복자 EX",
+        "detail": "자신의 버스터 카드 성능 UP(1턴)&스타 발생률 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "왕의 군세",
+      "ruby": "아이오니언 헤타이로이",
+      "rank": "EX",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 공격▲＆방어력 DOWN(3턴)&크리티컬 발생률 DOWN(3턴)▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_4002000.png",
+    "profile": "이스칸다르란 알렉산더 3세의 페르시아어 호칭으로, \n쌍각왕(즈카르나인)이라는 별명으로도 알려졌다.\n\n동방 원정을 통해 이슬람 세계에 울려 퍼진 그 무용담은 \n수많은 영웅 전설로 파생되어 아시아에 전파되었다."
+  },
+  {
+    "id": 206,
+    "name": "아킬레우스",
+    "class": "Rider",
+    "stats": {
+      "strength": "B+",
+      "endurance": "A",
+      "agility": "A+",
+      "mana": "C",
+      "luck": "D",
+      "np": "A+"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "기승 A+",
+        "detail": "자신의 퀵 카드 성능 UP"
+      },
+      {
+        "name": "신성 C",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "혜성주법 A+",
+        "detail": "자신의 퀵 카드 성능 UP(3턴)&크리티컬 위력 UP(3턴)"
+      },
+      {
+        "name": "용사의 시들지 않는 꽃 B",
+        "detail": "자신에게 무적 상태(2회・5턴) 부여&방어력 UP(3턴)"
+      },
+      {
+        "name": "하늘을 달리는 별의 창끝 B+",
+        "detail": "자신에게 타깃 집중 상태 부여(1턴)&NP 획득량 UP(1턴)&NP 증가"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "질풍노도의 불사전차",
+      "ruby": "트로이아스・트라고이디아",
+      "rank": "A+",
+      "type": "대군보구",
+      "detail": "자신의 퀵 카드 성능 UP(1턴)&크리티컬 위력 UP(3턴)▲ + 적 전체에게 강력한 공격▲&[혼란] 상태 ‘매 턴 낮은 확률로 스킬 봉인을 부여하는 상태’ 부여(3턴)▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_4029000.png",
+    "profile": "그리스 신화에서 손꼽히는 지명도를 자랑하는 영웅.\n그 일생은 질풍처럼 질주하는 것이었으며, \n동시에 영웅이라 불리기에 마땅한 광채를 발하고 있었다.\n\n평범하며 온화한 생을 바라는가,\n가열찬 영웅으로서 죽을 것인가,\n어머니에게 그런 질문을 받았을 때, \n그는 망설이지 않고 후자를 택했다고 한다.\n\n아킬레스건이라는 인체의 명칭은, 불사의 육체를 가진\n아킬레우스의 유일한 약점이었다는 전설의 흔적."
+  },
+  {
+    "id": 27,
+    "name": "우시와카마루",
+    "class": "Rider",
+    "stats": {
+      "strength": "D",
+      "endurance": "C",
+      "agility": "A+",
+      "mana": "B",
+      "luck": "A",
+      "np": "A+"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 C",
+        "detail": "자신의 약화 내성 약간 UP"
+      },
+      {
+        "name": "기승 A+",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "텐구의 병법 EX",
+        "detail": "아군 전체 NP 획득량 UP(3턴) + 자신의 퀵 카드 성능 UP(3턴)▲"
+      },
+      {
+        "name": "육도비술・신뢰풍열 A",
+        "detail": "아군 전체 공격력 UP▲(3턴) + 자신의 크리티컬 위력 UP(3턴)▲ + 스타 획득▲"
+      },
+      {
+        "name": "제비의 날쌘 재주 B",
+        "detail": "자신에게 회피 상태 부여(1턴)&스타 발생률 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "단노우라 팔척도",
+      "ruby": "단노우라 여덟 척 뛰기",
+      "rank": "C",
+      "type": "대인오의",
+      "detail": "적 하나에게 초강력한 공격▲ + 자신의 스타 발생률 크게 UP(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_4014000.png",
+    "profile": "일본에서 그 이름을 모르는 사람은 \n없다고 할 수 있을 정도로 유명한 비운의 무장. \n천부적인 재능과 카리스마를 가졌음에도 \n오라비인 요리토모에게 소외당하고, \n최후에는 종자인 벤케이와 함께 쓰러졌다. \n\n우시와카마루는 미나모토노 요시츠네의 어릴 적 이름이다."
+  },
+  {
+    "id": 24,
+    "name": "게오르기우스",
+    "class": "Rider",
+    "stats": {
+      "strength": "D",
+      "endurance": "A+",
+      "agility": "C++",
+      "mana": "D",
+      "luck": "A+",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 A",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기승 B",
+        "detail": "자신의 퀵 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "수호기사 A+",
+        "detail": "자신에게 타깃 집중 상태 부여(3턴)&방어력 UP(3턴)"
+      },
+      {
+        "name": "순교자의 혼 B+",
+        "detail": "자신의 정신이상 내성을 크게 UP(3턴)&HP 회복"
+      },
+      {
+        "name": "전투속행 A",
+        "detail": "자신에게 근성 상태(1회・5턴)를 부여"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "힘을 타파하는 축복의 검",
+      "ruby": "아스칼론",
+      "rank": "B",
+      "type": "대인보구",
+      "detail": "적 하나에게 [용] 특성을 부여(3턴)&초강력한 공격 + 자신의 방어력 크게 UP(1턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_4006000.png",
+    "profile": "성 게오르기우스 또는 성 조지로 이름 높은 성인. \n성검 아스칼론을 들고 드래곤을 퇴치한 일화가 유명하다. \n상대의 공격을 딱 한 번 무효화하는 베이어드라는 말을 탄다."
+  },
+  {
+    "id": 31,
+    "name": "메데이아",
+    "class": "Caster",
+    "stats": {
+      "strength": "E",
+      "endurance": "D",
+      "agility": "C",
+      "mana": "A+",
+      "luck": "B",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "진지작성 A",
+        "detail": "자신의 아츠 카드 성능 UP"
+      },
+      {
+        "name": "도구작성 A",
+        "detail": "자신의 약화 상태 부여 성공률 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "고속신언 A",
+        "detail": "자신의 NP를 아주 많이 증가"
+      },
+      {
+        "name": "황금양모",
+        "detail": "가죽을 사랑하여 자신의 HP 회복"
+      },
+      {
+        "name": "키르케의 가르침 A",
+        "detail": "아군 한 명의 약화 상태 해제&NP 획득량 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "파계해야 할 모든 부적",
+      "ruby": "룰 브레이커",
+      "rank": "C+",
+      "type": "대마술보구",
+      "detail": "적 하나에게 강력한 공격▲&강화 모두 해제 + 자신의 NP 차지"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_5001000.png",
+    "profile": "황금 양털을 가진 아이에테스 왕의 딸로\n달의 여신 헤카테에게 마술을 배웠다. \n영웅 이아손 때문에 나라를 떠나게 되었고,\n긴 방랑 끝에 배신의 마녀라는 낙인이\n찍힌 채 세상을 떠났다."
+  },
+  {
+    "id": 37,
+    "name": "제갈공명(엘멜로이 2세)",
+    "class": "Caster",
+    "stats": {
+      "strength": "E",
+      "endurance": "E",
+      "agility": "D",
+      "mana": "A+",
+      "luck": "B+",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "진지작성 A",
+        "detail": "자신의 아츠 카드 성능 UP"
+      },
+      {
+        "name": "도구작성 B",
+        "detail": "자신의 약화 상태 부여 성공률 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "감식안 A",
+        "detail": "아군 한 명의 크리티컬 위력 UP(3턴)&NP 증가"
+      },
+      {
+        "name": "군사의 충언 A+",
+        "detail": "아군 전체 방어력 UP(3턴)&받는 대미지 컷 상태 부여(3턴)&NP 조금 증가"
+      },
+      {
+        "name": "군사의 지휘 A+",
+        "detail": "아군 전체 공격력 UP(3턴)&공격 대미지 플러스 상태 부여(3턴)&NP 조금 증가"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "석병팔진",
+      "ruby": "돌아갈 수 없는 진",
+      "rank": "C",
+      "type": "대군보구",
+      "detail": "적 전체의 차지 감소&중간 확률로 스턴 상태를 부여(1턴)&저주 상태를 부여▲(6턴)&방어력 크게 DOWN▲(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_5019000.png",
+    "profile": "로드 엘멜로이 2세는 \n본래 서번트가 될 만한 그릇, 역사를 가지고 있지 않다. \n\n하지만 이번 성배전쟁의 지극히 특수한 사정이 얽혀 \n중국의 영령인 제갈공명의 매개체가 됨으로써 소환되었다."
+  },
+  {
+    "id": 62,
+    "name": "타마모노마에",
+    "class": "Caster",
+    "stats": {
+      "strength": "E",
+      "endurance": "E",
+      "agility": "B",
+      "mana": "A",
+      "luck": "D",
+      "np": "B"
+    },
+    "classSkills": [
+      {
+        "name": "진지작성 C",
+        "detail": "자신의 아츠 카드 성능 약간 UP"
+      },
+      {
+        "name": "신성 A",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "주층・광일조 A",
+        "detail": "적 하나의 차지를 높은 확률로 감소 + 자신을 제외한 아군 전체의 보구 위력 UP(3턴)▲"
+      },
+      {
+        "name": "변화 A",
+        "detail": "자신의 방어력 크게 UP(1턴)&방어력 UP(3턴)"
+      },
+      {
+        "name": "여우 시집가기 EX",
+        "detail": "아군 한 명의 아츠 카드 성능 UP(3턴)&HP 회복▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "수천일광천조팔야진석",
+      "ruby": "수천일광천조팔야진석",
+      "rank": "D",
+      "type": "대군보구",
+      "detail": "아군 전체 스킬 차지를 1 진행&HP 회복▲&NP 증가"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_5003000.png",
+    "profile": "현모양처를 꿈꾸는 무녀 주술사. \n헤이안 시대 말기, 도바 상황을 모신 절세미녀. \n흰 얼굴에 금빛 털을 가진 구미호가 \n둔갑한 모습이라고도 전해진다. \n\n여러 가지 일로 마지막에는 궁정을 쫓겨나 \n나스노에서 인간들과 일대결전을 펼친 후 \n얌전히 퇴치되었다나 뭐라나."
+  },
+  {
+    "id": 150,
+    "name": "멀린",
+    "class": "Caster",
+    "stats": {
+      "strength": "B",
+      "endurance": "E",
+      "agility": "D",
+      "mana": "A",
+      "luck": "C",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "진지작성 C",
+        "detail": "자신의 아츠 카드 성능 약간 UP"
+      },
+      {
+        "name": "도구작성 C",
+        "detail": "자신의 약화 상태 부여 성공률 약간 UP"
+      },
+      {
+        "name": "혼혈 EX",
+        "detail": "자신에게 매 턴 NP 획득 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "몽환의 카리스마 A",
+        "detail": "아군 전체 공격력 UP(3턴)&NP 증가"
+      },
+      {
+        "name": "환술 A",
+        "detail": "아군 전체에게 무적 상태 부여(1턴)&스타 발생률 UP(1턴) + 적 전체 크리티컬 발생률 DOWN(3턴)"
+      },
+      {
+        "name": "영웅 작성 EX",
+        "detail": "아군 한 명의 버스터 카드 성능 UP(3턴)&최대 HP 증가(3턴)&크리티컬 위력 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "영원히 닫힌 이상향",
+      "ruby": "가든 오브 아발론",
+      "rank": "C",
+      "type": "대인보구",
+      "detail": "아군 전체에게 매 턴 HP 회복 상태를 부여(5턴)&매 턴 NP 획득 상태를 부여(5턴) + 자신에게 매 턴 스타 획득 상태를 부여(5턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_5008000.png",
+    "profile": "낙원의 방랑자. 아서 왕 전설에 등장하는\n궁정 마술사이자 조언자, 예언자.\n수많은 적과 고난을 극복하려는 아서 왕을\n때로는 이끌고, 때로는 고뇌하게 만들고, 때로는 도왔다.\n그러나 현자일지라도 기본적으로는 비인간적.\n어쨌든 몽마와 인간의 혼혈이니까.\n\n“인간 세계는 정말 좋지만, 개개인으로 따지면\n 비교적, 그 왜, 그렇지, 응!\n 좋아, 침묵이 금이라는 기분이 들기 시작했어!”\n\n이처럼 딱히 인간의 편인 것도 아니다.\n최고위의 캐스터 중 한 명이지만\n본인은 마술을 특기로 삼지 않는다. \n왜냐하면 주문을 더듬게 되니까 말이야."
+  },
+  {
+    "id": 34,
+    "name": "윌리엄 셰익스피어",
+    "class": "Caster",
+    "stats": {
+      "strength": "E",
+      "endurance": "E",
+      "agility": "D",
+      "mana": "C++",
+      "luck": "B",
+      "np": "C+"
+    },
+    "classSkills": [
+      {
+        "name": "진지작성 C",
+        "detail": "자신의 아츠 카드 성능 약간 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "인챈트 A",
+        "detail": "아군 전체 버스터 카드 성능 UP(1턴)"
+      },
+      {
+        "name": "자기보존 B",
+        "detail": "자신에게 무적 상태 부여(1턴)&HP 회복"
+      },
+      {
+        "name": "국왕일좌 C",
+        "detail": "아군 한 명의 NP 증가&스타 발생률 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "막을 올릴 때가 왔으니, 여기에 우레 같은 갈채를",
+      "ruby": "퍼스트 폴리오",
+      "rank": "B+",
+      "type": "대인보구",
+      "detail": "적 전체에게 강력한 공격▲&낮은 확률▲로 스턴 상태 부여(1턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_5007000.png",
+    "profile": "윌리엄 셰익스피어는 틀림없이 세계에서 가장 \n저명한 극작가이자 배우였다. 영문학 역사에서 찬란하게 \n빛나는 그 이름은, 그리고 영국 위인으로서의 지명도는 \n최고봉에 위치할 것이다."
+  },
+  {
+    "id": 40,
+    "name": "주완의 하산",
+    "class": "Assassin",
+    "stats": {
+      "strength": "B",
+      "endurance": "C",
+      "agility": "A",
+      "mana": "C",
+      "luck": "E",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "기척 차단 A+",
+        "detail": "자신의 스타 발생률 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "투척/회수 A",
+        "detail": "스타 획득▲&자신에게 턴 종료 시 스타를 획득하는 상태 부여(1턴)▲"
+      },
+      {
+        "name": "자기개조 C",
+        "detail": "자신의 크리티컬 위력 UP(3턴)"
+      },
+      {
+        "name": "바람막이의 가호 A",
+        "detail": "자신에게 회피 상태 부여(3회)&스타 발생률 UP(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "망상심음",
+      "ruby": "자바니아",
+      "rank": "C+",
+      "type": "대인보구",
+      "detail": "적 하나에게 초강력한 공격▲&높은 확률로 즉사 효과 + 즉사 성공 시 자신의 공격력 UP(3턴)▲&NP를 리차지▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_6002000.png",
+    "profile": "하얀 해골의 암살자. \n중동에 기원을 둔 암살교단의 우두머리. \n별명 ‘산의 노인’, 어쌔신의 어원이 된\n니자르파의 전설적 두목, 그중 하나. \n산의 노인은 역대 19명이었다고 하며,\n저마다 특별한 기술을 수양한 달인이었다고 한다."
+  },
+  {
+    "id": 39,
+    "name": "사사키 코지로",
+    "class": "Assassin",
+    "stats": {
+      "strength": "C",
+      "endurance": "E",
+      "agility": "A+",
+      "mana": "E",
+      "luck": "A",
+      "np": "None"
+    },
+    "classSkills": [
+      {
+        "name": "기척 차단 D",
+        "detail": "자신의 스타 발생률 약간 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "심안(가짜) A",
+        "detail": "자신에게 회피 상태 부여(1턴)&크리티컬 위력 UP(3턴)"
+      },
+      {
+        "name": "투화 A+",
+        "detail": "자신의 약화 상태▲ 해제&퀵 공격 시 적 하나의 퀵 공격 내성 DOWN(3턴) 하는 상태 부여(3턴)▲ + 스타 대량 획득"
+      },
+      {
+        "name": "소와의 소양 B++",
+        "detail": "자신에게 필중 상태 부여(3턴)&스타 발생률 UP▲(3턴)&스타 집중도 UP▲(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "츠바메가에시",
+      "ruby": "제비반전베기",
+      "rank": "-",
+      "type": "대인마검",
+      "detail": "자신의 퀵 카드 성능 UP(3턴)▲ + 적 하나에게 초강력한 공격▲ + 스타 대량 획득"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_6001000.png",
+    "profile": "일본 유수의 검호 미야모토 무사시의\n호적수로 회자되는 검사. \n젊어서 간류 검술을 닦고\n가는 곳마다 적수가 없었다던 천재 검사. \n\n그러나───"
+  },
+  {
+    "id": 75,
+    "name": "잭 더 리퍼",
+    "class": "Assassin",
+    "stats": {
+      "strength": "C",
+      "endurance": "C",
+      "agility": "A",
+      "mana": "C",
+      "luck": "E",
+      "np": "C"
+    },
+    "classSkills": [
+      {
+        "name": "기척 차단 A+",
+        "detail": "자신의 스타 발생률 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "안개 낀 밤의 살인 A",
+        "detail": "자신의 퀵 카드 성능 UP(1턴)&회피 상태 부여(1턴)"
+      },
+      {
+        "name": "정보 말소 B",
+        "detail": "적 하나의 강화 상태 해제&크리티컬 발생률 DOWN(3턴)"
+      },
+      {
+        "name": "외과수술 E",
+        "detail": "아군 한 명의 HP 회복"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "해체성모",
+      "ruby": "마리아 더 리퍼",
+      "rank": "D+",
+      "type": "대인보구",
+      "detail": "자신에게 [여성] 특공 상태를 부여(1턴) + 적 하나에게 초강력한 방어력 무시 공격▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_6005000.png",
+    "profile": "전 세계에 그 이름을 떨친 연쇄 살인마. \n\n일본에서는 그대로 ‘난도질 잭’이라 부르는 경우가 많다. \n다섯 명의 여자를 살해했고, 스코틀랜드 야드의 필사적인\n수사에도 불구하고 잡히지 않은 채 사라졌다."
+  },
+  {
+    "id": 154,
+    "name": "“산의 노인”",
+    "class": "Assassin",
+    "stats": {
+      "strength": "B",
+      "endurance": "A",
+      "agility": "B",
+      "mana": "E",
+      "luck": "E",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "대 마력 B",
+        "detail": "자신의 약화 내성 UP"
+      },
+      {
+        "name": "기척 차단 A",
+        "detail": "자신의 스타 발생률 UP"
+      },
+      {
+        "name": "단독행동 B",
+        "detail": "자신의 크리티컬 위력 UP"
+      },
+      {
+        "name": "경계에서 A",
+        "detail": "자신에게 즉사 무효 상태 부여&강력한 매료 내성을 부여&통상 공격 시에 아주 낮은 확률로 즉사 효과가 발생하는 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "죽음의 구렁 EX",
+        "detail": "자신에게 근성 상태(1회・5턴) 부여&[죽음의 구렁] 상태를 부여(5턴)▲&근성 발동 시 ‘자신의 [죽음의 구렁] 상태 해제&NP 증가&버스터 카드 성능을 크게 UP(1턴)’ 하는 상태 부여(1회・5턴)▲"
+      },
+      {
+        "name": "신앙의 가호 A+++",
+        "detail": "자신의 약화 내성 UP(3턴)&HP 크게 회복&방어력 UP(1턴)&공격력 UP(3턴)"
+      },
+      {
+        "name": "만종, 귀로 EX",
+        "detail": "적 전체의 즉사 내성 DOWN▲(3턴) + 자신의 버스터 카드 성능 UP(3턴▲)&NP 증가▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "죽음을 고하는 천사",
+      "ruby": "아즈라엘",
+      "rank": "C",
+      "type": "대인보구",
+      "detail": "적 하나에게 초강력한 공격&높은 확률로 즉사 효과"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_6025000.png",
+    "profile": "해골 가면을 쓴 암살자. \n암살교단이 어쌔신으로 성립된 뒤, \n“산의 노인”이라는 이름이 호칭으로 변한 뒤에 \n탄생한 최초의 하산 사바흐로 여겨진다. \n그러나 다른 18명의 하산과\n교단의 신도들은 모두 이 인물의 정체를 몰랐으며,\n실제로 존재했었다는 증거 또한 어디에도 없었다고 한다. \n그 대의 하산 사바흐가 길을 잘못 들었을 때 나타나 \n그의 목을 벤다는 전설의 암살자. \n\n즉, 하산을 죽이는 하산일지니."
+  },
+  {
+    "id": 45,
+    "name": "마타 하리",
+    "class": "Assassin",
+    "stats": {
+      "strength": "E",
+      "endurance": "E",
+      "agility": "E",
+      "mana": "E",
+      "luck": "D",
+      "np": "A+"
+    },
+    "classSkills": [],
+    "personalSkills": [
+      {
+        "name": "뱅센에 해는 지고 EX",
+        "detail": "아군 전체의 스타 발생률 크게 UP▲(3턴)&크리티컬 위력 UP(3턴)▲"
+      },
+      {
+        "name": "페로몬 B",
+        "detail": "적 전체 [남성]에게 낮은 확률로 매료 부여(1턴)&방어력 DOWN(3턴)"
+      },
+      {
+        "name": "더블 크로스 B",
+        "detail": "적 하나에게 스킬 봉인 상태 부여(1턴)&방어력 DOWN(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "태양의 눈을 가진 여자",
+      "ruby": "마타 하리",
+      "rank": "A",
+      "type": "대군보구",
+      "detail": "적 전체에게 중간 확률로 매료 상태 부여(1턴)&공격력을 크게 DOWN(1턴)&방어력을 크게 DOWN(1턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_6014000.png",
+    "profile": "세계의 이면에서 활약한 여자 스파이. \n마타 하리는 스파이 중에서 가장 기이한 존재였을 것이다. \n스트리퍼인 그녀는 스파이로 처형되기까지 \n그 몸으로 장교들을 농락했다."
+  },
+  {
+    "id": 47,
+    "name": "헤라클레스",
+    "class": "Berserker",
+    "stats": {
+      "strength": "A+",
+      "endurance": "A",
+      "agility": "A",
+      "mana": "A",
+      "luck": "B",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "광화 B",
+        "detail": "자신의 버스터 카드 성능 UP"
+      },
+      {
+        "name": "신성 A",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "용맹 A+",
+        "detail": "자신의 공격력 UP(3턴)&정신이상 내성 UP(3턴)"
+      },
+      {
+        "name": "심안(가짜) B",
+        "detail": "자신에게 회피 상태 부여(1턴)&크리티컬 위력 UP(3턴)"
+      },
+      {
+        "name": "불요불굴 A",
+        "detail": "자신에게 근성 상태(1회・5턴・다른 근성 상태와 중복 가능▲) 부여&근성 발동 시 자신의 버스터 카드 성능 UP(5턴) 하는 상태 부여(5턴)▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "사살하는 백 개의 머리",
+      "ruby": "나인 라이브즈",
+      "rank": "C~A+",
+      "type": "불명",
+      "detail": "적 하나에게 초강력한 공격&방어력 DOWN(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_7001000.png",
+    "profile": "그리스 신화의 양대 영웅 중 하나. \n주신 제우스와 인간 여자 사이에서 태어난 반신반인의 \n영웅. 여신 헤라와의 불화로 무수한 모험을 거듭하며\n그 모든 시련을 극복한 초인."
+  },
+  {
+    "id": 48,
+    "name": "랜슬롯",
+    "class": "Berserker",
+    "stats": {
+      "strength": "A",
+      "endurance": "A",
+      "agility": "A+",
+      "mana": "C",
+      "luck": "B",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "광화 C",
+        "detail": "자신의 버스터 카드 성능 약간 UP"
+      },
+      {
+        "name": "대 마력 E",
+        "detail": "자신의 약화 내성 약간 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "무궁의 무련 A+",
+        "detail": "자신의 스타 집중도 UP(3턴)"
+      },
+      {
+        "name": "정령의 가호 A",
+        "detail": "자신의 스타 발생률 UP(3턴)"
+      },
+      {
+        "name": "마력 역류 A",
+        "detail": "자신의 NP 획득량 UP(1턴)&크리티컬 위력 UP(3턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "기사는 맨손으로 죽지 않는다",
+      "ruby": "나이트 오브 아너",
+      "rank": "A",
+      "type": "대인보구",
+      "detail": "자신의 공격력 UP(3턴) + 적 전체에게 강력한 공격"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_7002000.png",
+    "profile": "원탁의 기사 중에서도 최강으로 평가받는 \n“호수의 기사”.\n\n왕비 귀네비어와의 불륜과 사랑이 카멜롯을 \n파멸로 이끌었다는, 그야말로 아서 왕 전설의 \n부정적인 면을 상징하는 인물."
+  },
+  {
+    "id": 49,
+    "name": "여포 봉선",
+    "class": "Berserker",
+    "stats": {
+      "strength": "A+",
+      "endurance": "A+",
+      "agility": "B+",
+      "mana": "C+",
+      "luck": "C+",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "광화 A",
+        "detail": "자신의 버스터 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "용맹 B",
+        "detail": "자신의 공격력 UP(3턴)&정신이상 내성 UP(3턴)"
+      },
+      {
+        "name": "반골의 상 B",
+        "detail": "자신의 방어력 UP(3턴)&공격 강화 성공률 DOWN(3턴)【단점】"
+      },
+      {
+        "name": "난세의 효웅 A",
+        "detail": "자신의 보구 위력 UP(1턴)&스타 집중도 UP(1턴) + 자신을 제외한 아군 전체의 방어력 DOWN(1턴)【단점】"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "군신오병",
+      "ruby": "갓 포스",
+      "rank": "A",
+      "type": "대인, 대군, 대성보구",
+      "detail": "적 하나에게 초강력한 방어력 무시 공격&낮은 확률로 스턴 상태를 부여(1턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_7003000.png",
+    "profile": "삼국지연의에 나오는 배신의 장수. \n두 번이나 양아버지를 베고 몇 번이나 배신을 \n거듭하는 등 유교도덕이 중시되는 중국에서 \n믿기지 않는 짓을 저질렀다.\n\n하지만 무공과 무훈은 타의 추종을 불허해 \n삼국지 세계에서 최강으로 손꼽힌다."
+  },
+  {
+    "id": 55,
+    "name": "다리우스 3세",
+    "class": "Berserker",
+    "stats": {
+      "strength": "A",
+      "endurance": "A+",
+      "agility": "B",
+      "mana": "E",
+      "luck": "D",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "광화 B",
+        "detail": "자신의 버스터 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "황금률 B",
+        "detail": "자신의 NP 획득량 UP(3턴)"
+      },
+      {
+        "name": "재정비 A",
+        "detail": "자신의 약화 상태 해제&HP 회복"
+      },
+      {
+        "name": "아케메네스의 긍지 A+",
+        "detail": "자신에게 근성 상태(1회・5턴) 부여 + 적 전체의 버스터 카드 내성 DOWN(3턴)▲"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "불사의 일만 기병",
+      "ruby": "아타나토이 텐 사우전드",
+      "rank": "A+",
+      "type": "대군보구",
+      "detail": "적 전체에게 강력한 공격▲＆공격력 DOWN(3턴)&방어력 DOWN(3턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_7011000.png",
+    "profile": "용맹한 고대 페르시아 왕. \n기원전 4세기의 인물. \n아케메네스조 페르시아 최후의 왕으로 알려진다. \n마케도니아의 정복왕 이스칸다르의 “호적수”로\n몇 번이나 그의 앞을 가로막았다."
+  },
+  {
+    "id": 98,
+    "name": "쿠 훌린(얼터)",
+    "class": "Berserker",
+    "stats": {
+      "strength": "A",
+      "endurance": "B+",
+      "agility": "A+",
+      "mana": "C",
+      "luck": "D",
+      "np": "A"
+    },
+    "classSkills": [
+      {
+        "name": "광화 EX(C 상당)",
+        "detail": "자신의 버스터 카드 성능 약간 UP"
+      },
+      {
+        "name": "신성 C",
+        "detail": "자신에게 공격 대미지 플러스 상태 부여"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "정령의 광소 A",
+        "detail": "적 전체 크리티컬 발생률 DOWN(3턴)&공격력 DOWN(3턴)"
+      },
+      {
+        "name": "화살 회피의 가호 C",
+        "detail": "자신에게 회피 상태 부여(2회)&방어력 UP(3턴)"
+      },
+      {
+        "name": "전투속행 A",
+        "detail": "자신에게 근성 상태(1회・5턴)를 부여"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "씹어 으깨는 죽음의 송곳니 짐승",
+      "ruby": "쿠루드 코인헨 ",
+      "rank": "A+",
+      "type": "대인보구",
+      "detail": "자신의 공격력 UP(1턴)&방어력 UP(1턴) + 적 하나의 방어 강화 상태 해제▲&초강력한 공격▲"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_7020000.png",
+    "profile": "켈트, 얼스터 전설의 용사. \n붉은 가지 기사단의 일원으로 얼스터 최강의 전사이며, \n이계 ‘그림자 나라’의 맹주 스카사하에게 전수받은 무적의 \n마창술을 구사하며 용맹을 떨쳤다. \n\n통상과는 달리 버서커로 현계하였다.\n어떠한 요인으로 전신의 장비가 변하고 성격도 반전. \n표정은 냉혹, 보구인 마창도 검붉은 색으로 변하여, \n흉흉한 기운을 내뿜고 있다."
+  },
+  {
+    "id": 56,
+    "name": "키요히메",
+    "class": "Berserker",
+    "stats": {
+      "strength": "E",
+      "endurance": "E",
+      "agility": "C",
+      "mana": "E",
+      "luck": "E",
+      "np": "EX"
+    },
+    "classSkills": [
+      {
+        "name": "광화 EX",
+        "detail": "자신의 버스터 카드 성능 UP"
+      }
+    ],
+    "personalSkills": [
+      {
+        "name": "변화(화룡) C+",
+        "detail": "자신의 방어력 UP▲(3턴) + 적 전체에게 연소 상태(화상의 효과량 UP 상태)를 부여(5턴)▲"
+      },
+      {
+        "name": "슈퍼 포지티브 스토커 A+",
+        "detail": "적 하나의 방어력 DOWN▲(3턴)&공격력 UP(3턴)【단점】 + 자신에게 [화상] 특공 상태 부여(3턴)▲&‘공격 시 대상이 [화상] 상태일 때 자신의 NP를 조금 증가시키는 상태’ 부여(5회・3턴)▲"
+      },
+      {
+        "name": "불꽃색 입맞춤 A",
+        "detail": "자신의 약화 상태 해제&버스터 카드 성능 UP(1턴)"
+      }
+    ],
+    "noblePhantasm": {
+      "name": "전신화생삼매",
+      "ruby": "전신화생삼매",
+      "rank": "EX",
+      "type": "대인보구",
+      "detail": "적 전체에게 강력한 공격&낮은 확률로 스턴 상태를 부여(1턴)&화상 상태 부여(10턴)"
+    },
+    "imageUrl": "https://static.atlasacademy.io/KR/Faces/f_7013000.png",
+    "profile": "사랑해서, 연모해서, 사랑해서, 연모해서, 배신당해서, 슬퍼서, 슬퍼서, 슬퍼서슬퍼서슬퍼서, 미워서미워서미워서미워서미워미워미워미워미워미워미워미워미워미워미워미워미워미워── 그래서 태워 죽였습니다."
+  }
+]
