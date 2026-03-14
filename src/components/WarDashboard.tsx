@@ -69,6 +69,13 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
 }
 
 export default function WarDashboard({ war, onReroll, onHome }: Props) {
+  useEffect(() => {                                                                                                                                                                                                                                                                         
+  const handler = (e: KeyboardEvent) => {                                                                                                                                                                                                                                                 
+    if (e.key === "Enter") onReroll();                                                                                                                                                                                                                                                    
+    };                                                                                                                                                                                                                                                                                      
+    window.addEventListener("keydown", handler);                                                                                                                                                                                                                                            
+    return () => window.removeEventListener("keydown", handler);                                                                                                                                                                                                                            
+  }, [onReroll]);
   const [showWinRate, setShowWinRate] = useState(false);
   const enemies = war.participants.filter((s) => s.id !== war.playerServant.id);
 
