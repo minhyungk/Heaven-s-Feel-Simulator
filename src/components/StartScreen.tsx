@@ -89,15 +89,19 @@ export default function StartScreen({ onStart }: Props) {
         className="absolute bottom-12 w-1/2 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"
       />
 
-      {/* GitHub credit */}
-      <a
-        href="https://github.com/minhyungk/Heaven-s-Feel-Simulator"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute bottom-4 right-4 text-gray-700 hover:text-gray-400 text-xs transition-colors z-10"
-      >
-        GitHub
-      </a>
+      {/* Version + GitHub credit */}
+      <div className="absolute bottom-4 right-4 text-gray-700 text-xs z-10 flex items-center gap-2">
+        <span>v0.1 beta</span>
+        <span className="text-gray-800">|</span>
+        <a
+          href="https://github.com/minhyungk/Heaven-s-Feel-Simulator"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-gray-400 transition-colors"
+        >
+          GitHub
+        </a>
+      </div>
     </div>
   );
 }

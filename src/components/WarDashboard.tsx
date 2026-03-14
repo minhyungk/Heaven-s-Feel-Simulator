@@ -229,15 +229,19 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
         </motion.button>
       </div>
 
-      {/* GitHub credit */}
-      <a
-        href="https://github.com/minhyungk/Heaven-s-Feel-Simulator"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-4 right-4 text-gray-700 hover:text-gray-400 text-xs transition-colors"
-      >
-        GitHub
-      </a>
+      {/* Version + GitHub credit */}
+      <div className="fixed bottom-4 right-4 text-gray-700 text-xs flex items-center gap-2">
+        <span>v0.1 beta</span>
+        <span className="text-gray-800">|</span>
+        <a
+          href="https://github.com/minhyungk/Heaven-s-Feel-Simulator"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-gray-400 transition-colors"
+        >
+          GitHub
+        </a>
+      </div>
     </div>
   );
 }
