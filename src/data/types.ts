@@ -93,6 +93,7 @@ const STAT_KEYS = ["strength", "endurance", "agility", "mana", "luck", "np"] as 
 // 예외 스탯 총합 오버라이드 (이름 기준)
 const SCORE_OVERRIDES: Record<string, number> = {
   "엘키두": 43,
+  "“산의 노인”": 38
 };
 
 export function getServantTotalScore(servant: Servant): number {
