@@ -69,14 +69,6 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
 }
 
 export default function WarDashboard({ war, onReroll, onHome }: Props) {
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Enter") onReroll();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onReroll]);
-
   const [showWinRate, setShowWinRate] = useState(false);
   const enemies = war.participants.filter((s) => s.id !== war.playerServant.id);
 
@@ -218,7 +210,7 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
       )}
 
       {/* Actions */}
-      <div className="flex gap-4 pb-12" style={{ marginTop: "1rem" }}>                              
+      <div className="flex gap-4 pb-24" style={{ marginTop: "1rem", marginBottom: "1rem" }}>                              
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
