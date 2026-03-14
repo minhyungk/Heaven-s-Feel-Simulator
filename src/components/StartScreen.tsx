@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface Props {
@@ -5,6 +6,14 @@ interface Props {
 }
 
 export default function StartScreen({ onStart }: Props) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Enter") onStart();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onStart]);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
       {/* Background magic circle */}
@@ -62,10 +71,15 @@ export default function StartScreen({ onStart }: Props) {
           HOLY GRAIL WAR
         </h1>
         <p className="text-xl 2xl:text-2xl text-gray-400 mb-2">성배전쟁 시뮬레이터</p>
-        <p className="text-sm 2xl:text-base text-gray-600 mb-12">
-          7기의 서번트가 소환됩니다. 당신의 서번트는 누구일까요?
-        </p>
-      </motion.div>
+        <p className="text-sm 2xl:text-base mb-12">고한다 </p>
+        <p className="text-sm 2xl:text-base mb-12">그대의 몸은 나에게, 나의 운명은 그대의 검에</p>
+        <p className="text-sm 2xl:text-base mb-12">성배의 인도에 따라 이 뜻, 이 이치에 따른다면 대답하라.</p>
+        <p className="text-sm 2xl:text-base mb-12">맹세를 여기에 </p>
+        <p className="text-sm 2xl:text-base mb-12">나는 온 세상 모든 선을 이루는 자,</p>
+        <p className="text-sm 2xl:text-base mb-12">나는 온 세상 모든 악을 베푸는 자</p>
+        <p className="text-sm 2xl:text-base mb-12">그대 삼대 언령을 두른 일곱 하늘</p>
+        <p className="text-sm 2xl:text-base mb-12">억지의 윤회로부터 오라, 천칭의 수호자여</p>
+      </motion.div> 
 
       {/* Start button */}
       <motion.button
@@ -76,7 +90,7 @@ export default function StartScreen({ onStart }: Props) {
         whileTap={{ scale: 0.95 }}
         onClick={onStart}
         className="z-10 px-12 2xl:px-16 py-4 2xl:py-5 text-xl 2xl:text-2xl font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer transition-all hover:bg-gold/10"
-        style={{ fontFamily: "var(--font-serif)" }}
+        style={{ fontFamily: "var(--font-serif)", marginTop: "1rem" }}
       >
         성배전쟁 참전
       </motion.button>
