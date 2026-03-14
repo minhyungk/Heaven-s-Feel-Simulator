@@ -104,7 +104,7 @@ export default function StartScreen({ onStart }: Props) {
       />
 
       {/* Copyright disclaimer */}
-      <div className="absolute bottom-10 left-0 right-0 text-center text-[10px] text-gray-700 z-10 px-4">
+      <div className="absolute bottom-5 left-0 right-0 text-center text-[15px] text-gray-700 z-10 px-4">
         This is a non-profit fan project. All rights to 'Fate' series and related assets belong to TYPE-MOON / FGO PROJECT.
       </div>
 
