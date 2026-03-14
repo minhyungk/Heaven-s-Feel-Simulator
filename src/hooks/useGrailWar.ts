@@ -45,7 +45,7 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
   return { participants, playerServant };
 }
 
-export type GamePhase = "start" | "gacha" | "dashboard";
+export type GamePhase = "start" | "gacha" | "dashboard" | "simulation";
 
 export function useGrailWar() {
   const [phase, setPhase] = useState<GamePhase>("start");
@@ -71,10 +71,18 @@ export function useGrailWar() {
     setPhase("gacha");
   }, []);
 
+  const startSimulation = useCallback(() => {
+    setPhase("simulation");
+  }, []);
+
+  const backToDashboard = useCallback(() => {
+    setPhase("dashboard");
+  }, []);
+
   const goHome = useCallback(() => {
     setWar(null);
     setPhase("start");
   }, []);
 
-  return { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome };
+  return { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard };
 }

@@ -9,6 +9,7 @@ interface Props {
   war: GrailWarResult;
   onReroll: () => void;
   onHome: () => void;
+  onStartSimulation: () => void;
 }
 
 function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant; enemyScore: number; winRate: number; index: number }) {
@@ -68,7 +69,7 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
   );
 }
 
-export default function WarDashboard({ war, onReroll, onHome }: Props) {
+export default function WarDashboard({ war, onReroll, onHome, onStartSimulation }: Props) {
   useEffect(() => {                                                                                                                                                                                                                                                                         
   const handler = (e: KeyboardEvent) => {                                                                                                                                                                                                                                                 
     if (e.key === "Enter") onReroll();                                                                                                                                                                                                                                                    
@@ -216,8 +217,19 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
         </motion.div>
       )}
 
+      {/* Start Simulation */}
+      <motion.button
+        whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 74, 74, 0.3)" }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onStartSimulation}
+        className="px-10 py-3 text-sm font-bold rounded-lg border-2 border-magic-red bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
+        style={{ fontFamily: "var(--font-serif)", marginTop: "1rem", marginBottom: "1.5rem" }}
+      >
+        전쟁 시작
+      </motion.button>
+
       {/* Actions */}
-      <div className="flex gap-4 pb-24" style={{ marginTop: "1rem", marginBottom: "1rem" }}>                              
+      <div className="flex gap-4 pb-24" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
