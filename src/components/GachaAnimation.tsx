@@ -35,6 +35,14 @@ export default function GachaAnimation({ servant, onComplete, onSkip }: Props) {
     return () => timers.forEach(clearTimeout);
   }, []);
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Enter") onSkip();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onSkip]);
+
   const classColor = CLASS_COLORS[servant.class];
 
   return (

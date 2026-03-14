@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { GrailWarResult } from "../hooks/useGrailWar";
 import type { Servant } from "../data/types";
@@ -69,6 +69,14 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
 }
 
 export default function WarDashboard({ war, onReroll, onHome }: Props) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Enter") onReroll();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onReroll]);
+
   const [showWinRate, setShowWinRate] = useState(false);
   const enemies = war.participants.filter((s) => s.id !== war.playerServant.id);
 
@@ -139,7 +147,8 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setShowWinRate(!showWinRate)}
-        className="mb-6 px-8 py-3 text-sm font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
+        className="px-8 py-3 text-sm font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
+        style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
       >
         {showWinRate ? "승률 닫기" : "승률 계산"}
       </motion.button>
@@ -209,7 +218,7 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
       )}
 
       {/* Actions */}
-      <div className="flex gap-4 pb-12">
+      <div className="flex gap-4 pb-12" style={{ marginTop: "1rem" }}>                              
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
