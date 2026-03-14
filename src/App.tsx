@@ -32,6 +32,7 @@ export default function App() {
             key="dashboard"
             war={war}
             onReroll={reroll}
+            onCatalyst={() => setShowCatalyst(true)}
             onHome={goHome}
             onStartSimulation={startSimulation}
           />

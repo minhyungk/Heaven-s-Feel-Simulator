@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Servant, ServantClass } from "../data/types";
 import { CLASS_COLORS, BASIC_CLASSES } from "../data/types";
 import servants from "../data/servants";

@@ -8,6 +8,7 @@ import ServantCard from "./ServantCard";
 interface Props {
   war: GrailWarResult;
   onReroll: () => void;
+  onCatalyst: () => void;
   onHome: () => void;
   onStartSimulation: () => void;
 }
@@ -69,7 +70,7 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
   );
 }
 
-export default function WarDashboard({ war, onReroll, onHome, onStartSimulation }: Props) {
+export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onStartSimulation }: Props) {
   useEffect(() => {                                                                                                                                                                                                                                                                         
   const handler = (e: KeyboardEvent) => {                                                                                                                                                                                                                                                 
     if (e.key === "Enter") onReroll();                                                                                                                                                                                                                                                    
@@ -234,16 +235,27 @@ export default function WarDashboard({ war, onReroll, onHome, onStartSimulation 
       </motion.button>
 
       {/* Actions */}
-      <div className="flex gap-4 pb-24" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onReroll}
-          className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
-          다시 소환
-        </motion.button>
+      <div className="flex flex-col items-center gap-3 pb-24" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
+        <div className="flex gap-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onReroll}
+            className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
+            다시 소환
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onCatalyst}
+            className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
+            촉매소환
+          </motion.button>
+        </div>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
