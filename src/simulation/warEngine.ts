@@ -1,12 +1,11 @@
 import type { Servant, ServantClass } from "../data/types";
-import { getServantTotalScore, statRankToScore } from "../data/types";
+import { getServantTotalScore, calcWinRate, statRankToScore } from "../data/types";
 
 // ─── Intent System ───
 
 export type Intent = "hunt" | "guard" | "hide";
 
 const INTENT_WEIGHTS: Record<ServantClass, [number, number, number]> = {
-  // [hunt, guard, hide]
   Saber:      [40, 45, 15],
   Archer:     [35, 40, 25],
   Lancer:     [50, 35, 15],
@@ -23,7 +22,6 @@ const INTENT_WEIGHTS: Record<ServantClass, [number, number, number]> = {
 
 function rollIntent(servant: Servant, day: number): Intent {
   if (day >= 7) return "hunt";
-
   const [h, g] = INTENT_WEIGHTS[servant.class];
   const roll = Math.random() * 100;
   if (roll < h) return "hunt";
@@ -44,12 +42,7 @@ function findClassSkillRank(servant: Servant, prefix: string): { rank: string; s
   return null;
 }
 
-function getNpRankBonus(servant: Servant): number {
-  const score = statRankToScore(servant.noblePhantasm.rank);
-  return score ?? 5;
-}
-
-// ─── Combat System ───
+// ─── Combat System (Elo-based) ───
 
 export interface SkillEffect {
   description: string;
@@ -60,9 +53,11 @@ export interface CombatResult {
   loser: Servant | null;
   isDraw: boolean;
   description: string;
-  winProbability: number; // attacker's win probability (0-1)
+  winProbabilityA: number; // A's final win probability after all modifiers
   skillEffects: SkillEffect[];
 }
+
+const KNIGHT_CLASSES: ServantClass[] = ["Saber", "Lancer", "Archer"];
 
 function resolveCombat(
   a: Servant,
@@ -71,27 +66,27 @@ function resolveCombat(
   intentB: Intent,
   day: number,
 ): CombatResult {
-  let powerA = getServantTotalScore(a) + getNpRankBonus(a);
-  let powerB = getServantTotalScore(b) + getNpRankBonus(b);
+  const scoreA = getServantTotalScore(a);
+  const scoreB = getServantTotalScore(b);
   const skillEffects: SkillEffect[] = [];
 
-  // ── Hunt vs Guard: guard gets +10% defense ──
+  // Base win rate from Elo (same formula as dashboard)
+  let winRateA = calcWinRate(scoreA, scoreB);
+
+  // ── Hunt vs Guard: guard gets +10% ──
   if (intentA === "hunt" && intentB === "guard") {
-    powerB *= 1.10;
+    winRateA = Math.max(winRateA - 0.10, 0.01);
   } else if (intentB === "hunt" && intentA === "guard") {
-    powerA *= 1.10;
+    winRateA = Math.min(winRateA + 0.10, 0.99);
   }
 
-  // ── Assassin ambush system ──
-  // 기척차단 rank determines ambush chance (max 30%)
-  // If ambush succeeds: +30% win rate bonus
+  // ── Assassin ambush: 기척차단 rank → ambush chance (max 30%), success → +30% ──
   if (a.class === "Assassin" && intentA === "hunt") {
     const pc = findClassSkillRank(a, "기척차단");
     if (pc) {
-      // Ambush chance: rank score / 8 * 30%, capped at 30%
       const ambushChance = Math.min(pc.score / 8 * 0.30, 0.30);
       if (Math.random() < ambushChance) {
-        powerA *= 1.30;
+        winRateA = Math.min(winRateA + 0.30, 0.99);
         skillEffects.push({ description: `${a.name}의 기습 성공! (기척차단 ${pc.rank})` });
       } else {
         skillEffects.push({ description: `${a.name}의 기습 실패 (기척차단 ${pc.rank})` });
@@ -103,7 +98,7 @@ function resolveCombat(
     if (pc) {
       const ambushChance = Math.min(pc.score / 8 * 0.30, 0.30);
       if (Math.random() < ambushChance) {
-        powerB *= 1.30;
+        winRateA = Math.max(winRateA - 0.30, 0.01);
         skillEffects.push({ description: `${b.name}의 기습 성공! (기척차단 ${pc.rank})` });
       } else {
         skillEffects.push({ description: `${b.name}의 기습 실패 (기척차단 ${pc.rank})` });
@@ -111,23 +106,21 @@ function resolveCombat(
     }
   }
 
-  // ── Anti-magic: Caster penalty vs 3기사 (Saber/Lancer/Archer) ──
-  // Only the 3 knight classes get a bonus, never a reverse penalty for Caster
-  const KNIGHT_CLASSES: ServantClass[] = ["Saber", "Lancer", "Archer"];
-
+  // ── Anti-magic: Caster vs 3기사 → knight gets bonus (0~20%), no reverse ──
   if (a.class === "Caster" && KNIGHT_CLASSES.includes(b.class)) {
     const antiMagic = findClassSkillRank(b, "대마력");
     if (antiMagic) {
       const casterDef = findClassSkillRank(a, "도구작성") ?? findClassSkillRank(a, "진지작성");
       const defScore = casterDef?.score ?? 0;
-      const rawPenalty = (antiMagic.score - defScore) / 8 * 0.20;
-      const penalty = Math.min(Math.max(rawPenalty, 0), 0.20); // 0% ~ 20%, never negative
-      if (penalty > 0) {
-        powerA *= (1 - penalty);
-        const pctStr = `${Math.round(penalty * 100)}%`;
+      const rawBonus = (antiMagic.score - defScore) / 8 * 0.20;
+      const bonus = Math.min(Math.max(rawBonus, 0), 0.20);
+      if (bonus > 0) {
+        winRateA = Math.max(winRateA - bonus, 0.01);
+        const pctStr = `${Math.round(bonus * 100)}%`;
         if (casterDef) {
+          const skillName = findClassSkillRank(a, "도구작성") ? "도구작성" : "진지작성";
           skillEffects.push({
-            description: `${b.name}의 대마력 ${antiMagic.rank}과 ${a.name}의 ${casterDef === findClassSkillRank(a, "도구작성") ? "도구작성" : "진지작성"} ${casterDef.rank}로 ${b.name}의 승률 ${pctStr} 상승`,
+            description: `${b.name}의 대마력 ${antiMagic.rank}과 ${a.name}의 ${skillName} ${casterDef.rank}로 ${b.name}의 승률 ${pctStr} 상승`,
           });
         } else {
           skillEffects.push({
@@ -142,11 +135,11 @@ function resolveCombat(
     if (antiMagic) {
       const casterDef = findClassSkillRank(b, "도구작성") ?? findClassSkillRank(b, "진지작성");
       const defScore = casterDef?.score ?? 0;
-      const rawPenalty = (antiMagic.score - defScore) / 8 * 0.20;
-      const penalty = Math.min(Math.max(rawPenalty, 0), 0.20);
-      if (penalty > 0) {
-        powerB *= (1 - penalty);
-        const pctStr = `${Math.round(penalty * 100)}%`;
+      const rawBonus = (antiMagic.score - defScore) / 8 * 0.20;
+      const bonus = Math.min(Math.max(rawBonus, 0), 0.20);
+      if (bonus > 0) {
+        winRateA = Math.min(winRateA + bonus, 0.99);
+        const pctStr = `${Math.round(bonus * 100)}%`;
         if (casterDef) {
           const skillName = findClassSkillRank(b, "도구작성") ? "도구작성" : "진지작성";
           skillEffects.push({
@@ -161,17 +154,8 @@ function resolveCombat(
     }
   }
 
-  // ── Random variance ±15-20% ──
-  const varianceA = 1 + (Math.random() * 0.4 - 0.2);
-  const varianceB = 1 + (Math.random() * 0.4 - 0.2);
-  const finalA = powerA * varianceA;
-  const finalB = powerB * varianceB;
-
-  // Calculate win probability for display (before variance)
-  const winProbability = powerA / (powerA + powerB);
-
-  // ── Draw check ──
-  const diff = Math.abs(finalA - finalB) / Math.max(finalA, finalB);
+  // ── Draw check (before random roll) ──
+  const diff = Math.abs(winRateA - 0.5);
   if (diff < 0.10) {
     let drawChance: number;
     if (day <= 2) drawChance = 0.30;
@@ -181,25 +165,23 @@ function resolveCombat(
 
     if (Math.random() < drawChance) {
       return {
-        winner: null,
-        loser: null,
-        isDraw: true,
-        description: `${a.name}(${a.class}) vs ${b.name}(${b.class}) → 무승부`,
-        winProbability,
+        winner: null, loser: null, isDraw: true,
+        description: `${a.name} vs ${b.name} → 무승부`,
+        winProbabilityA: winRateA,
         skillEffects,
       };
     }
   }
 
-  const winner = finalA >= finalB ? a : b;
-  const loser = finalA >= finalB ? b : a;
+  // ── Determine winner by rolling against winRateA ──
+  const roll = Math.random();
+  const winner = roll < winRateA ? a : b;
+  const loser = winner === a ? b : a;
 
   return {
-    winner,
-    loser,
-    isDraw: false,
-    description: `${a.name}(${a.class}) vs ${b.name}(${b.class}) → ${winner.name} 승리 (${loser.name} 탈락)`,
-    winProbability,
+    winner, loser, isDraw: false,
+    description: `${winner.name} 승리 (vs ${loser.name})`,
+    winProbabilityA: winRateA,
     skillEffects,
   };
 }
@@ -250,7 +232,6 @@ export function simulateRound(survivors: Servant[], day: number): RoundResult {
   const eliminated: Servant[] = [];
   const matched = new Set<number>();
 
-  // Pair hunters
   for (let i = 0; i + 1 < hunters.length; i += 2) {
     const a = hunters[i];
     const b = hunters[i + 1];
@@ -261,7 +242,6 @@ export function simulateRound(survivors: Servant[], day: number): RoundResult {
     if (result.loser) eliminated.push(result.loser);
   }
 
-  // Odd hunter vs random guard
   if (hunters.length % 2 === 1) {
     const oddHunter = hunters[hunters.length - 1];
     matched.add(oddHunter.servant.id);
@@ -278,17 +258,8 @@ export function simulateRound(survivors: Servant[], day: number): RoundResult {
   const eliminatedIds = new Set(eliminated.map((e) => e.id));
   const newSurvivors = survivors.filter((s) => !eliminatedIds.has(s.id));
 
-  return {
-    day,
-    intents,
-    battles,
-    eliminated,
-    survivors: newSurvivors,
-    isQuiet: battles.length === 0,
-  };
+  return { day, intents, battles, eliminated, survivors: newSurvivors, isQuiet: battles.length === 0 };
 }
-
-// ─── Full War Simulation ───
 
 export interface WarSimulationResult {
   rounds: RoundResult[];
@@ -308,9 +279,5 @@ export function simulateFullWar(participants: Servant[]): WarSimulationResult {
     day++;
   }
 
-  return {
-    rounds,
-    winner: survivors.length === 1 ? survivors[0] : null,
-    totalDays: rounds.length,
-  };
+  return { rounds, winner: survivors.length === 1 ? survivors[0] : null, totalDays: rounds.length };
 }
