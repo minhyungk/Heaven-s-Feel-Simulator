@@ -125,7 +125,7 @@ export default function StartScreen({ onStart, onCatalyst }: Props) {
 
       {/* Version + GitHub credit */}
       <div className="absolute bottom-4 right-4 text-gray-700 text-xs z-10 flex items-center gap-2">
-        <span>v0.1 beta</span>
+        <span>v0.2 beta</span>
         <span className="text-gray-800">|</span>
         <a
           href="https://github.com/minhyungk/Heaven-s-Feel-Simulator"
