@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 
 interface Props {
   onStart: () => void;
+  onCatalyst: () => void;
 }
 
-export default function StartScreen({ onStart }: Props) {
+export default function StartScreen({ onStart, onCatalyst }: Props) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Enter") onStart();
@@ -81,19 +82,33 @@ export default function StartScreen({ onStart }: Props) {
         <p className="text-sm 2xl:text-base mb-12">억지의 윤회로부터 오라, 천칭의 수호자여</p>
       </motion.div> 
 
-      {/* Start button */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
-        whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 215, 0, 0.4)" }}
-        whileTap={{ scale: 0.95 }}
-        onClick={onStart}
-        className="z-10 px-12 2xl:px-16 py-4 2xl:py-5 text-xl 2xl:text-2xl font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer transition-all hover:bg-gold/10"
-        style={{ fontFamily: "var(--font-serif)", marginTop: "1rem" }}
-      >
-        성배전쟁 참전
-      </motion.button>
+      {/* Buttons */}
+      <div className="z-10 flex gap-4" style={{ marginTop: "1rem" }}>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 215, 0, 0.4)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onStart}
+          className="px-12 2xl:px-16 py-4 2xl:py-5 text-xl 2xl:text-2xl font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer transition-all hover:bg-gold/10"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          성배전쟁 참전
+        </motion.button>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(74, 158, 255, 0.3)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onCatalyst}
+          className="px-8 2xl:px-12 py-4 2xl:py-5 text-lg 2xl:text-xl font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer transition-all hover:bg-magic-blue/10"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          촉매소환
+        </motion.button>
+      </div>
 
       {/* Bottom decorative line */}
       <motion.div
