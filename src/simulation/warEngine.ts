@@ -1,5 +1,9 @@
 import type { Servant, ServantClass } from "../data/types";
 import { getServantTotalScore, calcWinRate, statRankToScore } from "../data/types";
+import {
+  AMBUSH_MAX_CHANCE, AMBUSH_WIN_BONUS, ANTI_MAGIC_MAX_BONUS,
+  GUARD_DEFENSE_BONUS, DRAW_THRESHOLD, DRAW_CHANCES, FORCED_HUNT_DAY,
+} from "./config";
 
 // ─── Intent System ───
 
@@ -21,7 +25,7 @@ const INTENT_WEIGHTS: Record<ServantClass, [number, number, number]> = {
 };
 
 function rollIntent(servant: Servant, day: number): Intent {
-  if (day >= 7) return "hunt";
+  if (day >= FORCED_HUNT_DAY) return "hunt";
   const [h, g] = INTENT_WEIGHTS[servant.class];
   const roll = Math.random() * 100;
   if (roll < h) return "hunt";
@@ -53,162 +57,128 @@ export interface CombatResult {
   loser: Servant | null;
   isDraw: boolean;
   description: string;
-  winProbabilityA: number; // A's final win probability after all modifiers
+  winProbabilityA: number;
   skillEffects: SkillEffect[];
 }
 
 const KNIGHT_CLASSES: ServantClass[] = ["Saber", "Lancer", "Archer"];
 
+function applyAmbush(
+  servant: Servant, intent: Intent, isAttackerSide: boolean,
+  winRateA: number, skillEffects: SkillEffect[],
+): number {
+  if (servant.class !== "Assassin" || intent !== "hunt") return winRateA;
+  const pc = findClassSkillRank(servant, "기척 차단");
+  if (!pc) return winRateA;
+
+  const ambushChance = Math.min(pc.score / 8 * AMBUSH_MAX_CHANCE, AMBUSH_MAX_CHANCE);
+  if (Math.random() < ambushChance) {
+    skillEffects.push({ description: `${servant.name}의 기습 성공! (기척 차단 ${pc.rank})` });
+    return isAttackerSide
+      ? Math.min(winRateA + AMBUSH_WIN_BONUS, 0.99)
+      : Math.max(winRateA - AMBUSH_WIN_BONUS, 0.01);
+  } else {
+    skillEffects.push({ description: `${servant.name}의 기습 실패 (기척 차단 ${pc.rank})` });
+    return winRateA;
+  }
+}
+
+function applyAntiMagic(
+  caster: Servant, knight: Servant, knightIsA: boolean,
+  winRateA: number, skillEffects: SkillEffect[],
+): number {
+  if (caster.class !== "Caster" || !KNIGHT_CLASSES.includes(knight.class)) return winRateA;
+
+  const antiMagic = findClassSkillRank(knight, "대 마력");
+  if (!antiMagic) return winRateA;
+
+  const toolMaking = findClassSkillRank(caster, "도구작성");
+  const territoryCreation = findClassSkillRank(caster, "진지작성");
+  const casterDef = toolMaking ?? territoryCreation;
+  const defScore = casterDef?.score ?? 0;
+  const rawBonus = (antiMagic.score - defScore) / 8 * ANTI_MAGIC_MAX_BONUS;
+  const bonus = Math.min(Math.max(rawBonus, 0), ANTI_MAGIC_MAX_BONUS);
+
+  if (bonus <= 0) return winRateA;
+
+  const pctStr = `${Math.round(bonus * 100)}%`;
+  if (casterDef) {
+    const skillName = toolMaking ? "도구작성" : "진지작성";
+    skillEffects.push({
+      description: `${knight.name}의 대 마력 ${antiMagic.rank}과 ${caster.name}의 ${skillName} ${casterDef.rank}로 ${knight.name}의 승률 ${pctStr} 상승`,
+    });
+  } else {
+    skillEffects.push({
+      description: `${knight.name}의 대 마력 ${antiMagic.rank}로 ${knight.name}의 승률 ${pctStr} 상승`,
+    });
+  }
+
+  return knightIsA
+    ? Math.min(winRateA + bonus, 0.99)
+    : Math.max(winRateA - bonus, 0.01);
+}
+
+function getDrawChance(day: number): number {
+  for (const [maxDay, chance] of DRAW_CHANCES) {
+    if (day <= maxDay) return chance;
+  }
+  return 0;
+}
+
 function resolveCombat(
-  a: Servant,
-  b: Servant,
-  intentA: Intent,
-  intentB: Intent,
+  a: Servant, b: Servant,
+  intentA: Intent, intentB: Intent,
   day: number,
 ): CombatResult {
   const scoreA = getServantTotalScore(a);
   const scoreB = getServantTotalScore(b);
   const skillEffects: SkillEffect[] = [];
 
-  // Base win rate from Elo (same formula as dashboard)
+  // Base Elo win rate
   let winRateA = calcWinRate(scoreA, scoreB);
 
-  // ── Hunt vs Guard: guard gets +10% ──
+  // Hunt vs Guard
   if (intentA === "hunt" && intentB === "guard") {
-    winRateA = Math.max(winRateA - 0.10, 0.01);
+    winRateA = Math.max(winRateA - GUARD_DEFENSE_BONUS, 0.01);
   } else if (intentB === "hunt" && intentA === "guard") {
-    winRateA = Math.min(winRateA + 0.10, 0.99);
+    winRateA = Math.min(winRateA + GUARD_DEFENSE_BONUS, 0.99);
   }
 
-  // ── Assassin ambush: 기척차단 rank → ambush chance (max 30%), success → +30% ──
-  if (a.class === "Assassin" && intentA === "hunt") {
-    const pc = findClassSkillRank(a, "기척차단");
-    if (pc) {
-      const ambushChance = Math.min(pc.score / 8 * 0.30, 0.30);
-      if (Math.random() < ambushChance) {
-        winRateA = Math.min(winRateA + 0.30, 0.99);
-        skillEffects.push({ description: `${a.name}의 기습 성공! (기척차단 ${pc.rank})` });
-      } else {
-        skillEffects.push({ description: `${a.name}의 기습 실패 (기척차단 ${pc.rank})` });
-      }
-    }
-  }
-  if (b.class === "Assassin" && intentB === "hunt") {
-    const pc = findClassSkillRank(b, "기척차단");
-    if (pc) {
-      const ambushChance = Math.min(pc.score / 8 * 0.30, 0.30);
-      if (Math.random() < ambushChance) {
-        winRateA = Math.max(winRateA - 0.30, 0.01);
-        skillEffects.push({ description: `${b.name}의 기습 성공! (기척차단 ${pc.rank})` });
-      } else {
-        skillEffects.push({ description: `${b.name}의 기습 실패 (기척차단 ${pc.rank})` });
-      }
-    }
-  }
+  // Assassin ambush
+  winRateA = applyAmbush(a, intentA, true, winRateA, skillEffects);
+  winRateA = applyAmbush(b, intentB, false, winRateA, skillEffects);
 
-  // ── Anti-magic: Caster vs 3기사 → knight gets bonus (0~20%), no reverse ──
-  if (a.class === "Caster" && KNIGHT_CLASSES.includes(b.class)) {
-    const antiMagic = findClassSkillRank(b, "대마력");
-    if (antiMagic) {
-      const casterDef = findClassSkillRank(a, "도구작성") ?? findClassSkillRank(a, "진지작성");
-      const defScore = casterDef?.score ?? 0;
-      const rawBonus = (antiMagic.score - defScore) / 8 * 0.20;
-      const bonus = Math.min(Math.max(rawBonus, 0), 0.20);
-      if (bonus > 0) {
-        winRateA = Math.max(winRateA - bonus, 0.01);
-        const pctStr = `${Math.round(bonus * 100)}%`;
-        if (casterDef) {
-          const skillName = findClassSkillRank(a, "도구작성") ? "도구작성" : "진지작성";
-          skillEffects.push({
-            description: `${b.name}의 대마력 ${antiMagic.rank}과 ${a.name}의 ${skillName} ${casterDef.rank}로 ${b.name}의 승률 ${pctStr} 상승`,
-          });
-        } else {
-          skillEffects.push({
-            description: `${b.name}의 대마력 ${antiMagic.rank}로 ${b.name}의 승률 ${pctStr} 상승`,
-          });
-        }
-      }
-    }
-  }
-  if (b.class === "Caster" && KNIGHT_CLASSES.includes(a.class)) {
-    const antiMagic = findClassSkillRank(a, "대마력");
-    if (antiMagic) {
-      const casterDef = findClassSkillRank(b, "도구작성") ?? findClassSkillRank(b, "진지작성");
-      const defScore = casterDef?.score ?? 0;
-      const rawBonus = (antiMagic.score - defScore) / 8 * 0.20;
-      const bonus = Math.min(Math.max(rawBonus, 0), 0.20);
-      if (bonus > 0) {
-        winRateA = Math.min(winRateA + bonus, 0.99);
-        const pctStr = `${Math.round(bonus * 100)}%`;
-        if (casterDef) {
-          const skillName = findClassSkillRank(b, "도구작성") ? "도구작성" : "진지작성";
-          skillEffects.push({
-            description: `${a.name}의 대마력 ${antiMagic.rank}과 ${b.name}의 ${skillName} ${casterDef.rank}로 ${a.name}의 승률 ${pctStr} 상승`,
-          });
-        } else {
-          skillEffects.push({
-            description: `${a.name}의 대마력 ${antiMagic.rank}로 ${a.name}의 승률 ${pctStr} 상승`,
-          });
-        }
-      }
-    }
-  }
+  // Anti-magic (Caster vs Knight)
+  winRateA = applyAntiMagic(a, b, false, winRateA, skillEffects); // a=Caster, b=Knight → knight(b) bonus = winRateA decreases
+  winRateA = applyAntiMagic(b, a, true, winRateA, skillEffects);  // b=Caster, a=Knight → knight(a) bonus = winRateA increases
 
-  // ── Draw check (before random roll) ──
-  const diff = Math.abs(winRateA - 0.5);
-  if (diff < 0.10) {
-    let drawChance: number;
-    if (day <= 2) drawChance = 0.30;
-    else if (day <= 4) drawChance = 0.20;
-    else if (day <= 6) drawChance = 0.10;
-    else drawChance = 0;
-
-    if (Math.random() < drawChance) {
+  // Draw check
+  if (Math.abs(winRateA - 0.5) < DRAW_THRESHOLD) {
+    if (Math.random() < getDrawChance(day)) {
       return {
         winner: null, loser: null, isDraw: true,
         description: `${a.name} vs ${b.name} → 무승부`,
-        winProbabilityA: winRateA,
-        skillEffects,
+        winProbabilityA: winRateA, skillEffects,
       };
     }
   }
 
-  // ── Determine winner by rolling against winRateA ──
-  const roll = Math.random();
-  const winner = roll < winRateA ? a : b;
+  // Roll winner
+  const winner = Math.random() < winRateA ? a : b;
   const loser = winner === a ? b : a;
 
   return {
     winner, loser, isDraw: false,
     description: `${winner.name} 승리 (vs ${loser.name})`,
-    winProbabilityA: winRateA,
-    skillEffects,
+    winProbabilityA: winRateA, skillEffects,
   };
 }
 
 // ─── Round Logic ───
 
-export interface ServantIntent {
-  servant: Servant;
-  intent: Intent;
-}
-
-export interface BattleEvent {
-  attacker: Servant;
-  defender: Servant;
-  intentA: Intent;
-  intentB: Intent;
-  result: CombatResult;
-}
-
-export interface RoundResult {
-  day: number;
-  intents: ServantIntent[];
-  battles: BattleEvent[];
-  eliminated: Servant[];
-  survivors: Servant[];
-  isQuiet: boolean;
-}
+export interface ServantIntent { servant: Servant; intent: Intent; }
+export interface BattleEvent { attacker: Servant; defender: Servant; intentA: Intent; intentB: Intent; result: CombatResult; }
+export interface RoundResult { day: number; intents: ServantIntent[]; battles: BattleEvent[]; eliminated: Servant[]; survivors: Servant[]; isQuiet: boolean; }
 
 function shuffle<T>(arr: T[]): T[] {
   const result = [...arr];
@@ -220,64 +190,49 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export function simulateRound(survivors: Servant[], day: number): RoundResult {
-  const intents: ServantIntent[] = survivors.map((s) => ({
-    servant: s,
-    intent: rollIntent(s, day),
-  }));
-
+  const intents: ServantIntent[] = survivors.map((s) => ({ servant: s, intent: rollIntent(s, day) }));
   const hunters = shuffle(intents.filter((i) => i.intent === "hunt"));
   const guards = shuffle(intents.filter((i) => i.intent === "guard"));
-
   const battles: BattleEvent[] = [];
   const eliminated: Servant[] = [];
   const matched = new Set<number>();
 
   for (let i = 0; i + 1 < hunters.length; i += 2) {
-    const a = hunters[i];
-    const b = hunters[i + 1];
-    matched.add(a.servant.id);
-    matched.add(b.servant.id);
+    const a = hunters[i], b = hunters[i + 1];
+    matched.add(a.servant.id); matched.add(b.servant.id);
     const result = resolveCombat(a.servant, b.servant, a.intent, b.intent, day);
     battles.push({ attacker: a.servant, defender: b.servant, intentA: a.intent, intentB: b.intent, result });
     if (result.loser) eliminated.push(result.loser);
   }
 
   if (hunters.length % 2 === 1) {
-    const oddHunter = hunters[hunters.length - 1];
-    matched.add(oddHunter.servant.id);
-    const availableGuards = guards.filter((g) => !matched.has(g.servant.id));
-    if (availableGuards.length > 0) {
-      const guard = availableGuards[Math.floor(Math.random() * availableGuards.length)];
+    const odd = hunters[hunters.length - 1];
+    matched.add(odd.servant.id);
+    const available = guards.filter((g) => !matched.has(g.servant.id));
+    if (available.length > 0) {
+      const guard = available[Math.floor(Math.random() * available.length)];
       matched.add(guard.servant.id);
-      const result = resolveCombat(oddHunter.servant, guard.servant, oddHunter.intent, guard.intent, day);
-      battles.push({ attacker: oddHunter.servant, defender: guard.servant, intentA: oddHunter.intent, intentB: guard.intent, result });
+      const result = resolveCombat(odd.servant, guard.servant, odd.intent, guard.intent, day);
+      battles.push({ attacker: odd.servant, defender: guard.servant, intentA: odd.intent, intentB: guard.intent, result });
       if (result.loser) eliminated.push(result.loser);
     }
   }
 
   const eliminatedIds = new Set(eliminated.map((e) => e.id));
-  const newSurvivors = survivors.filter((s) => !eliminatedIds.has(s.id));
-
-  return { day, intents, battles, eliminated, survivors: newSurvivors, isQuiet: battles.length === 0 };
+  return { day, intents, battles, eliminated, survivors: survivors.filter((s) => !eliminatedIds.has(s.id)), isQuiet: battles.length === 0 };
 }
 
-export interface WarSimulationResult {
-  rounds: RoundResult[];
-  winner: Servant | null;
-  totalDays: number;
-}
+export interface WarSimulationResult { rounds: RoundResult[]; winner: Servant | null; totalDays: number; }
 
 export function simulateFullWar(participants: Servant[]): WarSimulationResult {
   const rounds: RoundResult[] = [];
   let survivors = [...participants];
   let day = 1;
-
   while (survivors.length > 1 && day <= 20) {
     const round = simulateRound(survivors, day);
     rounds.push(round);
     survivors = round.survivors;
     day++;
   }
-
   return { rounds, winner: survivors.length === 1 ? survivors[0] : null, totalDays: rounds.length };
 }

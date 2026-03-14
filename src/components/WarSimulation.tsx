@@ -288,6 +288,17 @@ export default function WarSimulation({ participants, playerServant, onClose }: 
                     </p>
                   </div>
                 )}
+
+                {/* Tips */}
+                <div className="mt-3 p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                  <p className="text-[10px] text-gray-400 font-bold mb-1.5">참고</p>
+                  <ul className="text-[10px] text-gray-400 space-y-0.5 list-none pl-0">
+                    <li>⚔️ <span className="text-gray-400">사냥</span> vs 🛡 <span className="text-gray-500">경계</span>: 경계 측 승률 +10%</li>
+                    <li>🗡 <span className="text-gray-400">기척 차단</span>: 어새신이 사냥 시 기척 차단 랭크에 비례해 기습 판정 (성공 시 승률 +20%)</li>
+                    <li>🛡 <span className="text-gray-400">대 마력</span>: 3기사(세이버/랜서/아쳐) 캐스터 상대 시 랭크에 비례해 승률 보정</li>
+                    <li>📖 <span className="text-gray-400">도구작성/진지작성</span>: 캐스터의 대 마력 방어 — 랭크 차이로 보정량 결정</li>
+                  </ul>
+                </div>
               </div>
             </motion.div>
           )}
@@ -353,7 +364,7 @@ export default function WarSimulation({ participants, playerServant, onClose }: 
                   transition={{ duration: 3, repeat: Infinity }}
                   style={{ background: "radial-gradient(circle at 50% 30%, rgba(255,215,0,0.3) 0%, transparent 60%)" }}
                 />
-                <img src="/7999.png" alt="Holy Grail" className="block w-20 h-20 mx-auto mb-3 object-contain animate-pulse-glow relative z-10" />
+                <img src="/7999.png" alt="Holy Grail" style={{ display: "block", width: 80, height: 80, margin: "0 auto 0.75rem auto", objectFit: "contain" }} className="animate-pulse-glow relative z-10" />
                 <h2 className="text-2xl font-bold text-gold mb-2 relative z-10" style={{ fontFamily: "var(--font-serif)" }}>
                   성배 획득
                 </h2>

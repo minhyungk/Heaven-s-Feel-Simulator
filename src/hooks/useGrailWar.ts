@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import type { Servant, ServantClass } from "../data/types";
 import { BASIC_CLASSES } from "../data/types";
 import servants from "../data/servants";
+import { EXTRA_INVASION_CHANCE, EXTRA_INVASION_PLAYER_WEIGHT } from "../simulation/config";
 
 const EXTRA_CLASSES: ServantClass[] = ["Ruler", "Avenger", "MoonCancer", "AlterEgo", "Foreigner"];
 
@@ -21,7 +22,7 @@ function pickRandom<T>(arr: T[]): T {
 }
 
 function tryExtraInvasion(participants: Servant[], playerIdx: number): { invaded: boolean; extraServant: Servant | null; newParticipants: Servant[] } {
-  if (Math.random() > 0.15) return { invaded: false, extraServant: null, newParticipants: participants };
+  if (Math.random() > EXTRA_INVASION_CHANCE) return { invaded: false, extraServant: null, newParticipants: participants };
 
   // Find available extra class servants
   const extraPool = EXTRA_CLASSES.flatMap((cls) => getServantsByClass(cls));
@@ -31,7 +32,7 @@ function tryExtraInvasion(participants: Servant[], playerIdx: number): { invaded
 
   // Pick which slot to replace: player has ~2/7 weight, others 1/7 each
   // Total weight = 2 + 6 = 8, player chance = 2/8 = 25%
-  const weights = participants.map((_, i) => (i === playerIdx ? 2 : 1));
+  const weights = participants.map((_, i) => (i === playerIdx ? EXTRA_INVASION_PLAYER_WEIGHT : 1));
   const totalWeight = weights.reduce((a, b) => a + b, 0);
   let roll = Math.random() * totalWeight;
   let replaceIdx = 0;
