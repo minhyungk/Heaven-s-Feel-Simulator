@@ -45,7 +45,25 @@ async function captureElement(el: HTMLElement): Promise<Blob | null> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mod = await import("html2canvas-pro") as any;
     const html2canvas = mod.default ?? mod;
-    const canvas = await html2canvas(el, { backgroundColor: "#0a0a1a", scale: 2, useCORS: true });
+
+    // Force a consistent desktop-like width for capture so mobile doesn't
+    // produce a narrow, overly-tall image with giant profile pics.
+    const CAPTURE_WIDTH = 600;
+    const origStyle = el.style.cssText;
+    el.style.width = `${CAPTURE_WIDTH}px`;
+    el.style.maxWidth = `${CAPTURE_WIDTH}px`;
+    el.style.minWidth = `${CAPTURE_WIDTH}px`;
+
+    const canvas = await html2canvas(el, {
+      backgroundColor: "#0a0a1a",
+      scale: 2,
+      useCORS: true,
+      windowWidth: CAPTURE_WIDTH,
+    });
+
+    // Restore original styles
+    el.style.cssText = origStyle;
+
     return new Promise((resolve) => canvas.toBlob((b: Blob | null) => resolve(b), "image/png"));
   } catch {
     return null;
