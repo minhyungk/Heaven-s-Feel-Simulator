@@ -71,9 +71,9 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
           {/* Stats summary */}
           <div className="shrink-0 grid grid-cols-2 gap-x-3 2xl:gap-x-4 gap-y-0.5 text-[0.7rem] 2xl:text-xs">
             {STAT_LABELS.map(({ key, label }) => (
-              <div key={key} className="flex gap-1">
-                <span className="text-gray-600">{label}</span>
-                <span className="text-gray-300 font-mono">{servant.stats[key]}</span>
+              <div key={key} className="flex">
+                <span className="text-gray-600" style={{ width: "2.2em" }}>{label}</span>
+                <span className="text-gray-300 font-mono" style={{ width: "2.5em" }}>{servant.stats[key]}</span>
               </div>
             ))}
           </div>

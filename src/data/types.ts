@@ -81,7 +81,7 @@ export function statRankToScore(rank: StatRank): number | null {
   const letter = rank[0];
   const modifier = rank.slice(1);
   const value = base[letter];
-  if (value === undefined) return null;
+  if (value === undefined) return 5;
   if (modifier === "++") return value + 1;
   if (modifier === "+") return value + 0.5;
   if (modifier === "-") return value - 0.5;
@@ -90,7 +90,15 @@ export function statRankToScore(rank: StatRank): number | null {
 
 const STAT_KEYS = ["strength", "endurance", "agility", "mana", "luck", "np"] as const;
 
+// 예외 스탯 총합 오버라이드 (이름 기준)
+const SCORE_OVERRIDES: Record<string, number> = {
+  "엘키두": 43,
+};
+
 export function getServantTotalScore(servant: Servant): number {
+  if (SCORE_OVERRIDES[servant.name] !== undefined) {
+    return SCORE_OVERRIDES[servant.name];
+  }
   let total = 0;
   for (const key of STAT_KEYS) {
     const score = statRankToScore(servant.stats[key]);

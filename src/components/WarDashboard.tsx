@@ -81,16 +81,13 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
     winRate: individualWinRates[i],
   }));
 
-  // 최종 우승 확률
-  // 1. 기하 평균 (강한 적 한 명의 영향력을 키움)
-  const geometricMean = Math.pow(
-    individualWinRates.reduce((acc, rate) => acc * rate, 1),
-    1 / enemies.length,
-  );
-  // 2. 최강자 패널티 (가장 이기기 어려운 상대)
-  const strongestWinRate = Math.min(...individualWinRates);
-  // 3. 기하평균 70% + 최강자 승률 30% 결합
-  const overallWinRate = Math.min(geometricMean * 0.7 + strongestWinRate * 0.3, 0.99);
+  // 최종 우승 확률: 지수 기반 공정 배분
+  // K값이 높을수록 강자의 우승 확률이 지배적
+  const K = 0.5;
+  const allScores = [myScore, ...enemyScores];
+  const powerScores = allScores.map((s) => Math.exp(K * s));
+  const totalPower = powerScores.reduce((a, b) => a + b, 0);
+  const overallWinRate = powerScores[0] / totalPower;
 
   return (
     <div className="min-h-screen flex flex-col items-center px-4" style={{ paddingTop: "2rem" }}>
