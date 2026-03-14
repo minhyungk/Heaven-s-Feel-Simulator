@@ -55,6 +55,7 @@ export const CLASS_COLORS: Record<ServantClass, string> = {
   Foreigner: "#a855f7",
 };
 
+// 레이더 차트용 (기존)
 export function statRankToNumber(rank: StatRank): number {
   if (!rank || rank === "?") return 5;
   if (rank === "EX") return 60;
@@ -68,4 +69,39 @@ export function statRankToNumber(rank: StatRank): number {
   else if (modifier === "+") value += 5;
   else if (modifier === "-") value -= 5;
   return value;
+}
+
+// 승률 계산용: E=3, D=4, C=5, B=6, A=7, EX=8, +=+0.5, ++=+1
+export function statRankToScore(rank: StatRank): number | null {
+  if (!rank || rank === "?") return null;
+  if (rank === "EX") return 8;
+  const base: Record<string, number> = {
+    "E": 3, "D": 4, "C": 5, "B": 6, "A": 7,
+  };
+  const letter = rank[0];
+  const modifier = rank.slice(1);
+  const value = base[letter];
+  if (value === undefined) return null;
+  if (modifier === "++") return value + 1;
+  if (modifier === "+") return value + 0.5;
+  if (modifier === "-") return value - 0.5;
+  return value;
+}
+
+const STAT_KEYS = ["strength", "endurance", "agility", "mana", "luck", "np"] as const;
+
+export function getServantTotalScore(servant: Servant): number {
+  let total = 0;
+  for (const key of STAT_KEYS) {
+    const score = statRankToScore(servant.stats[key]);
+    if (score !== null) total += score;
+  }
+  return total;
+}
+
+// Elo 기반 예상 승률: 1 / (1 + 10^((Rb - Ra) / D))
+// D=10 정도면 점수 합산 차이에 적절한 민감도
+export function calcWinRate(myScore: number, enemyScore: number): number {
+  const D = 10;
+  return 1 / (1 + Math.pow(10, (enemyScore - myScore) / D));
 }

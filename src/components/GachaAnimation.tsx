@@ -84,9 +84,7 @@ export default function GachaAnimation({ servant, onComplete, onSkip }: Props) {
                   }}
                 >
                   <div className="text-center">
-                    <div className="text-6xl mb-4 animate-pulse-glow" style={{ color: classColor }}>
-                      ⚔
-                    </div>
+                    <img src="/7999.png" alt="Holy Grail" className="w-24 h-24 mx-auto mb-4 animate-pulse-glow object-contain" />
                     <div className="text-sm tracking-[0.3em] uppercase" style={{ color: classColor, fontFamily: "var(--font-serif)" }}>
                       Servant
                     </div>

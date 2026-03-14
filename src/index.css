@@ -19,6 +19,11 @@
   box-sizing: border-box;
 }
 
+html {
+  /* QHD+ 대응: viewport 기반 스케일링 */
+  font-size: clamp(16px, 1.1vw, 22px);
+}
+
 body {
   font-family: var(--font-sans);
   background: var(--color-dark-bg);
@@ -29,6 +34,26 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+/* Ruby text alignment fix */
+ruby {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+ruby rt {
+  display: block;
+  text-align: center;
+  font-size: 0.65em;
+  line-height: 1.5;
+  order: -1;
+}
+
+ruby rp {
+  display: none;
 }
 
 /* Magic circle animation */
@@ -87,12 +112,6 @@ body {
   transform: rotateY(180deg);
 }
 
-/* Star rating */
-.star-gold {
-  color: var(--color-gold);
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
-
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -103,4 +122,10 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #333;
   border-radius: 3px;
+}
+
+.enemy-list-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important; /* 여기서 간격을 직접 조절하세요 */
 }
