@@ -3,9 +3,13 @@ import type { Servant, ServantClass } from "../data/types";
 import { BASIC_CLASSES } from "../data/types";
 import servants from "../data/servants";
 
+const EXTRA_CLASSES: ServantClass[] = ["Ruler", "Avenger", "MoonCancer", "AlterEgo", "Foreigner"];
+
 export interface GrailWarResult {
   participants: Servant[];
   playerServant: Servant;
+  hasExtraInvasion: boolean;
+  extraServant: Servant | null; // the extra class servant that invaded
 }
 
 function getServantsByClass(cls: ServantClass): Servant[] {
@@ -16,11 +20,36 @@ function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function tryExtraInvasion(participants: Servant[], playerIdx: number): { invaded: boolean; extraServant: Servant | null; newParticipants: Servant[] } {
+  if (Math.random() > 0.15) return { invaded: false, extraServant: null, newParticipants: participants };
+
+  // Find available extra class servants
+  const extraPool = EXTRA_CLASSES.flatMap((cls) => getServantsByClass(cls));
+  if (extraPool.length === 0) return { invaded: false, extraServant: null, newParticipants: participants };
+
+  const extraServant = pickRandom(extraPool);
+
+  // Pick which slot to replace: player has ~2/7 weight, others 1/7 each
+  // Total weight = 2 + 6 = 8, player chance = 2/8 = 25%
+  const weights = participants.map((_, i) => (i === playerIdx ? 2 : 1));
+  const totalWeight = weights.reduce((a, b) => a + b, 0);
+  let roll = Math.random() * totalWeight;
+  let replaceIdx = 0;
+  for (let i = 0; i < weights.length; i++) {
+    roll -= weights[i];
+    if (roll <= 0) { replaceIdx = i; break; }
+  }
+
+  const newParticipants = [...participants];
+  newParticipants[replaceIdx] = extraServant;
+
+  return { invaded: true, extraServant, newParticipants };
+}
+
 function summonGrailWar(catalyst?: Servant): GrailWarResult {
   if (catalyst) {
     const participants: Servant[] = [catalyst];
     const remainingClasses = BASIC_CLASSES.filter((cls) => cls !== catalyst.class);
-    // If catalyst is an extra class, remove a random basic class to keep 7 total
     if (!BASIC_CLASSES.includes(catalyst.class)) {
       const removeIdx = Math.floor(Math.random() * remainingClasses.length);
       remainingClasses.splice(removeIdx, 1);
@@ -31,7 +60,14 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
         participants.push(pickRandom(pool));
       }
     }
-    return { participants, playerServant: catalyst };
+    // Extra invasion for non-player slots only when using catalyst
+    const { invaded, extraServant, newParticipants } = tryExtraInvasion(participants, 0);
+    // If player slot was replaced, keep catalyst as player
+    const playerServant = invaded && newParticipants[0].id !== catalyst.id
+      ? newParticipants[0] // extra replaced player slot
+      : catalyst;
+
+    return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant };
   }
 
   const participants: Servant[] = [];
@@ -41,8 +77,12 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
       participants.push(pickRandom(pool));
     }
   }
-  const playerServant = pickRandom(participants);
-  return { participants, playerServant };
+  const playerIdx = Math.floor(Math.random() * participants.length);
+
+  const { invaded, extraServant, newParticipants } = tryExtraInvasion(participants, playerIdx);
+  const playerServant = newParticipants[playerIdx];
+
+  return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant };
 }
 
 export type GamePhase = "start" | "gacha" | "dashboard" | "simulation";

@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
 
-export default function MagicCircle() {
+interface Props {
+  corrupted?: boolean;
+}
+
+export default function MagicCircle({ corrupted }: Props) {
+  const circleColor = corrupted ? "#9333ea" : "#4a9eff";
+  const starColor = corrupted ? "#ff4a4a" : "#ff4a4a";
+  const glowColor = corrupted
+    ? "radial-gradient(circle, rgba(147,51,234,0.5) 0%, transparent 70%)"
+    : "radial-gradient(circle, rgba(74,158,255,0.4) 0%, transparent 70%)";
+
   return (
     <motion.div
       className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -16,15 +26,14 @@ export default function MagicCircle() {
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         >
           <svg viewBox="0 0 200 200" className="w-full h-full">
-            <circle cx="100" cy="100" r="95" fill="none" stroke="#4a9eff" strokeWidth="0.3" opacity="0.6" />
-            <circle cx="100" cy="100" r="92" fill="none" stroke="#4a9eff" strokeWidth="0.5" opacity="0.4" />
-            {/* Rune-like marks on outer ring */}
+            <circle cx="100" cy="100" r="95" fill="none" stroke={circleColor} strokeWidth="0.3" opacity="0.6" />
+            <circle cx="100" cy="100" r="92" fill="none" stroke={circleColor} strokeWidth="0.5" opacity="0.4" />
             {Array.from({ length: 12 }).map((_, i) => {
               const angle = (i * 30 * Math.PI) / 180;
               const x = 100 + 88 * Math.cos(angle);
               const y = 100 + 88 * Math.sin(angle);
               return (
-                <circle key={i} cx={x} cy={y} r="1.5" fill="#4a9eff" opacity="0.6" />
+                <circle key={i} cx={x} cy={y} r="1.5" fill={circleColor} opacity="0.6" />
               );
             })}
           </svg>
@@ -40,7 +49,7 @@ export default function MagicCircle() {
             <polygon
               points="100,15 122,72 185,72 133,108 152,168 100,135 48,168 67,108 15,72 78,72"
               fill="none"
-              stroke="#ff4a4a"
+              stroke={starColor}
               strokeWidth="0.6"
               opacity="0.5"
             />
@@ -55,9 +64,7 @@ export default function MagicCircle() {
         >
           <div
             className="w-20 h-20 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(74,158,255,0.4) 0%, transparent 70%)",
-            }}
+            style={{ background: glowColor }}
           />
         </motion.div>
       </div>

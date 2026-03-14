@@ -49,6 +49,7 @@ export default function App() {
       {phase === "gacha" && war && (
         <GachaAnimation
           servant={war.playerServant}
+          isExtraInvasion={war.hasExtraInvasion}
           onComplete={gachaComplete}
           onSkip={skipToBoard}
         />

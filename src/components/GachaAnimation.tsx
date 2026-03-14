@@ -6,6 +6,7 @@ import MagicCircle from "./MagicCircle";
 
 interface Props {
   servant: Servant;
+  isExtraInvasion?: boolean;
   onComplete: () => void;
   onSkip: () => void;
 }
@@ -13,7 +14,7 @@ interface Props {
 const STAGES = ["blackout", "circle", "card", "reveal", "info"] as const;
 type GachaStage = (typeof STAGES)[number];
 
-export default function GachaAnimation({ servant, onComplete, onSkip }: Props) {
+export default function GachaAnimation({ servant, isExtraInvasion, onComplete, onSkip }: Props) {
   const [stage, setStage] = useState<GachaStage>("blackout");
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -75,9 +76,33 @@ export default function GachaAnimation({ servant, onComplete, onSkip }: Props) {
         SKIP →
       </button>
 
+      {/* Extra invasion flash */}
+      {isExtraInvasion && (stage === "circle" || stage === "card") && (
+        <motion.div
+          className="absolute inset-0 z-20 pointer-events-none"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.3, 0, 0.2, 0] }}
+          transition={{ duration: 2, delay: 0.5 }}
+          style={{ background: "radial-gradient(circle, rgba(147,51,234,0.4) 0%, rgba(255,74,74,0.2) 50%, transparent 80%)" }}
+        />
+      )}
+
+      {/* Corruption text */}
+      {isExtraInvasion && stage === "circle" && (
+        <motion.p
+          className="absolute top-1/4 z-30 text-sm font-bold tracking-[0.3em] uppercase pointer-events-none"
+          style={{ color: "#9333ea", fontFamily: "var(--font-serif)" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 0.5, 1, 0] }}
+          transition={{ duration: 2.5, delay: 0.3 }}
+        >
+          ― 성배 오류 ―
+        </motion.p>
+      )}
+
       {/* Magic circle */}
       <AnimatePresence>
-        {(stage === "circle" || stage === "card") && <MagicCircle />}
+        {(stage === "circle" || stage === "card") && <MagicCircle corrupted={isExtraInvasion} />}
       </AnimatePresence>
 
       {/* Card */}

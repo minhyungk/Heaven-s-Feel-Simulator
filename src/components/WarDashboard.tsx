@@ -112,6 +112,11 @@ export default function WarDashboard({ war, onReroll, onHome, onStartSimulation 
           제6차 성배전쟁
         </h1>
         <p className="text-gray-500 text-sm 2xl:text-base">7기의 서번트가 소환되었습니다</p>
+        {war.hasExtraInvasion && war.extraServant && (
+          <p className="text-xs mt-1" style={{ color: "#9333ea" }}>
+            ⚠ 성배 오류 — {war.extraServant.name}({war.extraServant.class}) 난입
+          </p>
+        )}
       </motion.div>
 
       {/* My Servant */}
