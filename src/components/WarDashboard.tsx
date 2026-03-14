@@ -162,6 +162,7 @@ export default function WarDashboard({ war, onReroll, onHome }: Props) {
               <div className="text-center mb-4">
                 <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">예측 승률</p>
                 <p className="text-[10px] text-gray-600">스탯 합산 기반 Elo 승률 (E=3 ~ EX=8, +=+0.5)</p>
+                <p className="text-[10px] text-gray-600">EX는 측정불가를 의미하나 계산 편의상 8점으로 책정돼 오류가 있을 수 있음</p>
               </div>
 
               {/* My score */}
