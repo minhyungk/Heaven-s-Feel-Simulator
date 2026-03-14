@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Servant } from "../data/types";
 import { CLASS_COLORS } from "../data/types";
@@ -10,31 +10,40 @@ interface Props {
   onSkip: () => void;
 }
 
-type GachaStage = "blackout" | "circle" | "card" | "reveal" | "info";
+const STAGES = ["blackout", "circle", "card", "reveal", "info"] as const;
+type GachaStage = (typeof STAGES)[number];
 
 export default function GachaAnimation({ servant, onComplete, onSkip }: Props) {
   const [stage, setStage] = useState<GachaStage>("blackout");
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  const clearTimers = useCallback(() => {
+    timersRef.current.forEach(clearTimeout);
+    timersRef.current = [];
+  }, []);
 
   const advance = useCallback(() => {
+    clearTimers();
     setStage((prev) => {
-      const order: GachaStage[] = ["blackout", "circle", "card", "reveal", "info"];
-      const idx = order.indexOf(prev);
-      if (idx < order.length - 1) return order[idx + 1];
+      const idx = STAGES.indexOf(prev);
+      if (idx < STAGES.length - 1) return STAGES[idx + 1];
       onComplete();
       return prev;
     });
-  }, [onComplete]);
+  }, [onComplete, clearTimers]);
 
+  // Auto-progress timers
   useEffect(() => {
-    const timers = [
+    timersRef.current = [
       setTimeout(() => setStage("circle"), 800),
       setTimeout(() => setStage("card"), 2500),
       setTimeout(() => setStage("reveal"), 4000),
       setTimeout(() => setStage("info"), 5500),
     ];
-    return () => timers.forEach(clearTimeout);
-  }, []);
+    return clearTimers;
+  }, [clearTimers]);
 
+  // Enter key to skip entirely
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Enter") onSkip();
