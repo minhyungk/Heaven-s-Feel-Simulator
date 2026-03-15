@@ -77,7 +77,7 @@ export function statRankToNumber(rank: StatRank): number {
 
 // 승률 계산용: E=3, D=4, C=5, B=6, A=7, EX=8, +=+0.5, ++=+1
 export function statRankToScore(rank: StatRank): number | null {
-  if (!rank || rank === "?") return 5;
+  if (!rank || rank === "?") return 7;
   if (rank === "EX") return 8;
   const base: Record<string, number> = {
     "E": 3, "D": 4, "C": 5, "B": 6, "A": 7,
