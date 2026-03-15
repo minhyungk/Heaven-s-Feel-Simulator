@@ -1,8 +1,10 @@
+export const APP_VERSION = "v0.2.1 beta";
+
 export type ServantClass =
   | "Saber" | "Archer" | "Lancer" | "Rider"
   | "Caster" | "Assassin" | "Berserker"
   | "Ruler" | "Avenger" | "MoonCancer"
-  | "AlterEgo" | "Foreigner";
+  | "AlterEgo" | "Foreigner" | "Pretender" | "Shielder";
 
 export type StatRank = string; // "A+", "B", "EX", etc.
 
@@ -53,6 +55,8 @@ export const CLASS_COLORS: Record<ServantClass, string> = {
   MoonCancer: "#06b6d4",
   AlterEgo: "#14b8a6",
   Foreigner: "#a855f7",
+  Pretender: "#f59e0b",
+  Shielder: "#9ca3af",
 };
 
 // 레이더 차트용 (기존)
@@ -73,7 +77,7 @@ export function statRankToNumber(rank: StatRank): number {
 
 // 승률 계산용: E=3, D=4, C=5, B=6, A=7, EX=8, +=+0.5, ++=+1
 export function statRankToScore(rank: StatRank): number | null {
-  if (!rank || rank === "?") return null;
+  if (!rank || rank === "?") return 5;
   if (rank === "EX") return 8;
   const base: Record<string, number> = {
     "E": 3, "D": 4, "C": 5, "B": 6, "A": 7,

@@ -4,7 +4,7 @@ import type { Servant, ServantClass } from "../data/types";
 import { CLASS_COLORS, BASIC_CLASSES } from "../data/types";
 import servants from "../data/servants";
 
-const EXTRA_CLASSES: ServantClass[] = ["Ruler", "Avenger", "MoonCancer", "AlterEgo", "Foreigner"];
+const EXTRA_CLASSES: ServantClass[] = ["Ruler", "Avenger", "MoonCancer", "AlterEgo", "Foreigner", "Pretender", "Shielder"];
 const ALL_CLASSES = [...BASIC_CLASSES, ...EXTRA_CLASSES];
 
 interface Props {

@@ -6,7 +6,7 @@
 const API_BASE = "https://api.atlasacademy.io";
 const VALID_CLASSES = new Set([
   "saber", "archer", "lancer", "rider", "caster", "assassin", "berserker",
-  "ruler", "avenger", "moonCancer", "alterEgo", "foreigner",
+  "ruler", "avenger", "moonCancer", "alterEgo", "foreigner", "pretender", "shielder",
 ]);
 
 function mapClassName(cls) {
@@ -15,6 +15,7 @@ function mapClassName(cls) {
     caster: "Caster", assassin: "Assassin", berserker: "Berserker",
     ruler: "Ruler", avenger: "Avenger", moonCancer: "MoonCancer",
     alterEgo: "AlterEgo", foreigner: "Foreigner",
+    pretender: "Pretender", shielder: "Shielder",
   };
   return map[cls] || cls;
 }
