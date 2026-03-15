@@ -22,6 +22,8 @@ const INTENT_WEIGHTS: Record<ServantClass, [number, number, number]> = {
   MoonCancer: [35, 30, 35],
   AlterEgo:   [45, 35, 20],
   Foreigner:  [40, 20, 40],
+  Pretender:  [30, 25, 45],
+  Shielder:   [20, 60, 20],
 };
 
 function rollIntent(servant: Servant, day: number): Intent {
