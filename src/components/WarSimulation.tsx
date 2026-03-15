@@ -403,7 +403,7 @@ export default function WarSimulation({ participants, playerServant, onClose }: 
                   disabled={!wish.trim()}
                   className="relative z-10 px-8 py-2 text-sm font-bold rounded-lg border border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors disabled:opacity-30 disabled:cursor-default"
                 >
-                  소원을 빌다
+                  소원 빌기
                 </motion.button>
               </div>
             ) : playerWon && wishSubmitted ? (
