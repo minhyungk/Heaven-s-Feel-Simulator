@@ -6,10 +6,11 @@ import GachaAnimation from "./components/GachaAnimation";
 import WarDashboard from "./components/WarDashboard";
 import WarSimulation from "./components/WarSimulation";
 import CatalystModal from "./components/CatalystModal";
+import RankingPage from "./components/RankingPage";
 import type { Servant } from "./data/types";
 
 export default function App() {
-  const { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard } = useGrailWar();
+  const { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard, goToRankings, backFromRankings } = useGrailWar();
   const [showCatalyst, setShowCatalyst] = useState(false);
 
   const handleCatalystSelect = (servant: Servant) => {
@@ -25,7 +26,11 @@ export default function App() {
             key="start"
             onStart={() => startWar()}
             onCatalyst={() => setShowCatalyst(true)}
+            onRankings={goToRankings}
           />
+        )}
+        {phase === "rankings" && (
+          <RankingPage key="rankings" onBack={backFromRankings} />
         )}
         {phase === "dashboard" && war && (
           <WarDashboard
@@ -34,6 +39,7 @@ export default function App() {
             onReroll={reroll}
             onCatalyst={() => setShowCatalyst(true)}
             onHome={goHome}
+            onRankings={goToRankings}
             onStartSimulation={startSimulation}
           />
         )}
@@ -42,7 +48,10 @@ export default function App() {
             key="simulation"
             participants={war.participants}
             playerServant={war.playerServant}
+            summonType={war.summonType}
+            catalyst={war.catalyst}
             onClose={backToDashboard}
+            onRankings={goToRankings}
           />
         )}
       </AnimatePresence>

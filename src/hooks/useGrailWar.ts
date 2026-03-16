@@ -11,6 +11,8 @@ export interface GrailWarResult {
   playerServant: Servant;
   hasExtraInvasion: boolean;
   extraServant: Servant | null; // the extra class servant that invaded
+  summonType: "random" | "catalyst";
+  catalyst: Servant | null;
 }
 
 function getServantsByClass(cls: ServantClass): Servant[] {
@@ -68,7 +70,7 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
       ? newParticipants[0] // extra replaced player slot
       : catalyst;
 
-    return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant };
+    return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant, summonType: "catalyst", catalyst };
   }
 
   const participants: Servant[] = [];
@@ -83,10 +85,10 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
   const { invaded, extraServant, newParticipants } = tryExtraInvasion(participants, playerIdx);
   const playerServant = newParticipants[playerIdx];
 
-  return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant };
+  return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant, summonType: "random", catalyst: null };
 }
 
-export type GamePhase = "start" | "gacha" | "dashboard" | "simulation";
+export type GamePhase = "start" | "gacha" | "dashboard" | "simulation" | "rankings";
 
 export function useGrailWar() {
   const [phase, setPhase] = useState<GamePhase>("start");
@@ -125,5 +127,13 @@ export function useGrailWar() {
     setPhase("start");
   }, []);
 
-  return { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard };
+  const goToRankings = useCallback(() => {
+    setPhase("rankings");
+  }, []);
+
+  const backFromRankings = useCallback(() => {
+    setPhase("start");
+  }, []);
+
+  return { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard, goToRankings, backFromRankings };
 }

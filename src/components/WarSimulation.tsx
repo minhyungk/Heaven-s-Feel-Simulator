@@ -1,9 +1,10 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Servant } from "../data/types";
 import { CLASS_COLORS } from "../data/types";
 import type { RoundResult, Intent } from "../simulation/warEngine";
 import { simulateRound, simulateFullWar } from "../simulation/warEngine";
+import { supabase } from "../lib/supabase";
 
 const INTENT_ICONS: Record<Intent, string> = {
   hunt: "⚔️",
@@ -20,7 +21,10 @@ const INTENT_LABELS: Record<Intent, string> = {
 interface Props {
   participants: Servant[];
   playerServant: Servant;
+  summonType: "random" | "catalyst";
+  catalyst: Servant | null;
   onClose: () => void;
+  onRankings: () => void;
 }
 
 function ServantFace({ servant, size = 7 }: { servant: Servant; size?: number }) {
@@ -70,18 +74,39 @@ async function captureElement(el: HTMLElement): Promise<Blob | null> {
   }
 }
 
-export default function WarSimulation({ participants, playerServant, onClose }: Props) {
+export default function WarSimulation({ participants, playerServant, summonType, catalyst, onClose, onRankings }: Props) {
   const [rounds, setRounds] = useState<RoundResult[]>([]);
   const [survivors, setSurvivors] = useState<Servant[]>(participants);
   const [isFinished, setIsFinished] = useState(false);
   const [wish, setWish] = useState("");
   const [wishSubmitted, setWishSubmitted] = useState(false);
   const captureRef = useRef<HTMLDivElement>(null);
+  const hasRecorded = useRef(false);
 
   const currentDay = rounds.length + 1;
   const winner = isFinished && survivors.length === 1 ? survivors[0] : null;
   const playerWon = winner?.id === playerServant.id;
   const playerLostDay = rounds.find((r) => r.eliminated.some((e) => e.id === playerServant.id))?.day;
+
+  useEffect(() => {
+    if (!isFinished || !winner || hasRecorded.current) return;
+    hasRecorded.current = true;
+    supabase.from("war_results").insert({
+      total_days: rounds.length,
+      player_won: playerWon,
+      summon_type: summonType,
+      winner_servant_id: winner.id,
+      winner_servant_name: winner.name,
+      winner_class: winner.class,
+      catalyst_servant_id: catalyst?.id ?? null,
+      catalyst_servant_name: catalyst?.name ?? null,
+      catalyst_class: catalyst?.class ?? null,
+      participants: participants.map((p) => ({ id: p.id, name: p.name, class: p.class })),
+    }).then(({ error }) => {
+      if (error) console.error("[supabase] insert failed:", error.message);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFinished, winner]);
 
   const advanceRound = useCallback(() => {
     if (isFinished) return;
@@ -498,9 +523,9 @@ export default function WarSimulation({ participants, playerServant, onClose }: 
       )}
 
       {/* Controls */}
-      <div className="flex gap-3 pb-12" style={{ marginTop: "1rem" }}>
+      <div className="flex flex-col items-center gap-3 pb-12" style={{ marginTop: "1rem" }}>
         {!isFinished && (
-          <>
+          <div className="flex gap-3">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -518,7 +543,7 @@ export default function WarSimulation({ participants, playerServant, onClose }: 
             >
               자동 진행
             </motion.button>
-          </>
+          </div>
         )}
         {isFinished && (
           <motion.button
@@ -531,14 +556,24 @@ export default function WarSimulation({ participants, playerServant, onClose }: 
             다시 시뮬레이션
           </motion.button>
         )}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onClose}
-          className="px-6 py-3 text-sm font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
-        >
-          대시보드로
-        </motion.button>
+        <div className="flex gap-3">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onClose}
+            className="px-6 py-3 text-sm font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
+          >
+            대시보드로
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onRankings}
+            className="px-6 py-3 text-sm font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
+          >
+            랭킹
+          </motion.button>
+        </div>
       </div>
     </div>
   );

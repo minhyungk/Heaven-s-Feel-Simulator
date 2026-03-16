@@ -10,6 +10,7 @@ interface Props {
   onReroll: () => void;
   onCatalyst: () => void;
   onHome: () => void;
+  onRankings: () => void;
   onStartSimulation: () => void;
 }
 
@@ -70,7 +71,7 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
   );
 }
 
-export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onStartSimulation }: Props) {
+export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRankings, onStartSimulation }: Props) {
   useEffect(() => {                                                                                                                                                                                                                                                                         
   const handler = (e: KeyboardEvent) => {                                                                                                                                                                                                                                                 
     if (e.key === "Enter") onReroll();                                                                                                                                                                                                                                                    
@@ -256,14 +257,24 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onStar
             촉매소환
           </motion.button>
         </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onHome}
-          className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
-        >
-          메인으로
-        </motion.button>
+        <div className="flex gap-3 justify-center">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onHome}
+            className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
+          >
+            메인으로
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onRankings}
+            className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
+          >
+            랭킹
+          </motion.button>
+        </div>
       </div>
 
       {/* Version + GitHub credit */}
