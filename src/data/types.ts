@@ -1,4 +1,4 @@
-export const APP_VERSION = "v0.2.1 beta";
+export const APP_VERSION = "v0.2.2 beta";
 
 export type ServantClass =
   | "Saber" | "Archer" | "Lancer" | "Rider"
