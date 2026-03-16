@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Servant } from "../data/types";
-import { CLASS_COLORS } from "../data/types";
+import { CLASS_COLORS, APP_VERSION } from "../data/types";
 import type { RoundResult, Intent } from "../simulation/warEngine";
 import { simulateRound, simulateFullWar } from "../simulation/warEngine";
 import { supabase } from "../lib/supabase";
@@ -102,6 +102,7 @@ export default function WarSimulation({ participants, playerServant, summonType,
       catalyst_servant_name: catalyst?.name ?? null,
       catalyst_class: catalyst?.class ?? null,
       participants: participants.map((p) => ({ id: p.id, name: p.name, class: p.class })),
+      app_version: APP_VERSION,
     }).then(({ error }) => {
       if (error) console.error("[supabase] insert failed:", error.message);
     });
