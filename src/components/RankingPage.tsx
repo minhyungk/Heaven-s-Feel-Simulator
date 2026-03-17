@@ -100,52 +100,26 @@ export default function RankingPage({ onBack }: Props) {
 
       const [countRes, winnerRes, summonRes, catalystRes] = await Promise.all([
         supabase.from("war_results").select("id", { count: "exact", head: true }),
-        supabase.from("war_results").select("winner_servant_id, winner_servant_name, winner_class").limit(2000),
+        supabase.rpc("get_winner_ranking", { lim: 10 }),
         supabase.rpc("get_summon_ranking", { lim: 10 }),
-        supabase
-          .from("war_results")
-          .select("catalyst_servant_id, catalyst_servant_name, catalyst_class")
-          .eq("summon_type", "catalyst")
-          .limit(2000),
+        supabase.rpc("get_catalyst_ranking", { lim: 10 }),
       ]);
 
       setTotalWars(countRes.count ?? null);
 
-      const winnerMap = new Map<string, RankEntry>();
-      for (const row of winnerRes.data ?? []) {
-        const key = String(row.winner_servant_id ?? row.winner_servant_name);
-        const existing = winnerMap.get(key);
-        if (existing) existing.count++;
-        else winnerMap.set(key, {
-          id: row.winner_servant_id ?? null,
-          name: row.winner_servant_name,
-          class: row.winner_class,
-          count: 1,
-        });
-      }
-      const winnerRanking = [...winnerMap.values()].sort((a, b) => b.count - a.count).slice(0, 10);
+      type RpcRow = { servant_id: number | null; servant_name: string; servant_class: string; count: number };
 
-      const summonRanking: RankEntry[] = (summonRes.data ?? []).map((r: { servant_name: string; servant_class: string; count: number }) => ({
-        id: koNameClassToId.get(`${r.servant_name}|${r.servant_class}`) ?? koNameToId.get(r.servant_name) ?? null,
-        name: r.servant_name,
-        class: r.servant_class,
-        count: Number(r.count),
-      }));
+      const toRanking = (rows: RpcRow[]): RankEntry[] =>
+        rows.map((r) => ({
+          id: r.servant_id ?? koNameClassToId.get(`${r.servant_name}|${r.servant_class}`) ?? koNameToId.get(r.servant_name) ?? null,
+          name: r.servant_name,
+          class: r.servant_class,
+          count: Number(r.count),
+        }));
 
-      const catalystMap = new Map<string, RankEntry>();
-      for (const row of catalystRes.data ?? []) {
-        if (!row.catalyst_servant_name) continue;
-        const key = String(row.catalyst_servant_id ?? row.catalyst_servant_name);
-        const existing = catalystMap.get(key);
-        if (existing) existing.count++;
-        else catalystMap.set(key, {
-          id: row.catalyst_servant_id ?? null,
-          name: row.catalyst_servant_name,
-          class: row.catalyst_class ?? "",
-          count: 1,
-        });
-      }
-      const catalystRanking = [...catalystMap.values()].sort((a, b) => b.count - a.count).slice(0, 10);
+      const winnerRanking = toRanking((winnerRes.data ?? []) as RpcRow[]);
+      const summonRanking = toRanking((summonRes.data ?? []) as RpcRow[]);
+      const catalystRanking = toRanking((catalystRes.data ?? []) as RpcRow[]);
 
       setData({ winner: winnerRanking, summon: summonRanking, catalyst: catalystRanking });
       setLoading(false);
