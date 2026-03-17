@@ -6,12 +6,15 @@ import defaultServants, { filterServants } from "../data/servants";
 
 interface ServantDataContextType {
   servants: Servant[];
+  /** JA-only servants not in current language pool (for catalyst summon) */
+  jaOnlyServants: Servant[];
   loading: boolean;
   byId: Map<number, Servant>;
 }
 
 const ServantDataContext = createContext<ServantDataContextType>({
   servants: defaultServants,
+  jaOnlyServants: [],
   loading: false,
   byId: new Map(defaultServants.map((s) => [s.id, s])),
 });
@@ -46,29 +49,39 @@ async function loadServants(lang: string): Promise<Servant[]> {
 export function ServantDataProvider({ children }: { children: ReactNode }) {
   const { i18n } = useTranslation();
   const [servants, setServants] = useState<Servant[]>(defaultServants);
+  const [jaOnlyServants, setJaOnlyServants] = useState<Servant[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const lang = i18n.language;
     if (lang === "ko") {
       setServants(defaultServants);
-      return;
+    } else {
+      setLoading(true);
+      loadServants(lang).then((data) => {
+        setServants(data);
+        setLoading(false);
+      });
     }
-    setLoading(true);
-    loadServants(lang).then((data) => {
-      setServants(data);
-      setLoading(false);
-    });
   }, [i18n.language]);
+
+  // Load JA-only servants (those not in current language pool) for catalyst summon
+  useEffect(() => {
+    loadServants("ja").then((jaServants) => {
+      const currentIds = new Set(servants.map((s) => s.id));
+      setJaOnlyServants(jaServants.filter((s) => !currentIds.has(s.id)));
+    });
+  }, [servants]);
 
   const byId = useMemo(() => {
     const map = new Map<number, Servant>();
     for (const s of servants) map.set(s.id, s);
+    for (const s of jaOnlyServants) map.set(s.id, s);
     return map;
-  }, [servants]);
+  }, [servants, jaOnlyServants]);
 
   return (
-    <ServantDataContext.Provider value={{ servants, loading, byId }}>
+    <ServantDataContext.Provider value={{ servants, jaOnlyServants, loading, byId }}>
       {children}
     </ServantDataContext.Provider>
   );

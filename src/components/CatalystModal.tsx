@@ -15,21 +15,24 @@ interface Props {
 
 export default function CatalystModal({ onSelect, onClose }: Props) {
   const { t } = useTranslation();
-  const { servants } = useServantData();
+  const { servants, jaOnlyServants } = useServantData();
   const [query, setQuery] = useState("");
   const [classFilter, setClassFilter] = useState<ServantClass | null>(null);
 
+  // Merge current language servants + JA-only servants for catalyst summon
+  const allServants = useMemo(() => [...servants, ...jaOnlyServants], [servants, jaOnlyServants]);
+
   const filtered = useMemo(() => {
-    return servants.filter((s) => {
+    return allServants.filter((s) => {
       if (classFilter && s.class !== classFilter) return false;
       if (query && !s.name.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     });
-  }, [query, classFilter]);
+  }, [allServants, query, classFilter]);
 
   const availableClasses = useMemo(() => {
-    return ALL_CLASSES.filter((cls) => servants.some((s) => s.class === cls));
-  }, []);
+    return ALL_CLASSES.filter((cls) => allServants.some((s) => s.class === cls));
+  }, [allServants]);
 
   return (
     <motion.div
