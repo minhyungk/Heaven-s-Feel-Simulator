@@ -31,8 +31,8 @@ interface Props {
   onBack: () => void;
 }
 
-function RankRow({ rank, displayName, className, countLabel, imageUrl }: {
-  rank: number; displayName: string; className: string; countLabel: string; imageUrl?: string;
+function RankRow({ rank, displayName, className, countLabel, imageUrl, pct }: {
+  rank: number; displayName: string; className: string; countLabel: string; imageUrl?: string; pct: number;
 }) {
   const color = CLASS_COLORS[className as ServantClass] ?? "#888";
   return (
@@ -40,11 +40,19 @@ function RankRow({ rank, displayName, className, countLabel, imageUrl }: {
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: rank * 0.04 }}
-      className="flex items-center gap-3 py-2 border-b border-white/5"
+      className="relative flex items-center gap-3 py-2 border-b border-white/5 overflow-hidden"
     >
-      <span className="w-6 text-right text-sm font-mono text-gray-500 shrink-0">{rank}</span>
+      {/* Background bar */}
+      <motion.div
+        className="absolute inset-y-0 left-0 pointer-events-none"
+        initial={{ width: 0 }}
+        animate={{ width: `${pct}%` }}
+        transition={{ delay: rank * 0.04 + 0.2, duration: 0.6, ease: "easeOut" }}
+        style={{ background: `linear-gradient(90deg, ${color}30, ${color}12)` }}
+      />
+      <span className="relative w-6 text-right text-sm font-mono text-gray-500 shrink-0">{rank}</span>
       <div
-        className="w-10 h-10 rounded-full overflow-hidden shrink-0 border"
+        className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border"
         style={{ borderColor: color }}
       >
         {imageUrl ? (
@@ -53,11 +61,11 @@ function RankRow({ rank, displayName, className, countLabel, imageUrl }: {
           <div className="w-full h-full flex items-center justify-center text-sm" style={{ background: `${color}20` }}>⚔</div>
         )}
       </div>
-      <div className="flex-1 min-w-0">
+      <div className="relative flex-1 min-w-0">
         <p className="text-sm font-medium text-gray-100 truncate">{displayName}</p>
         <p className="text-xs" style={{ color }}>{className}</p>
       </div>
-      <span className="text-sm font-mono font-bold text-gold shrink-0">{countLabel}</span>
+      <span className="relative text-sm font-mono font-bold text-gold shrink-0">{countLabel}</span>
     </motion.div>
   );
 }
@@ -209,19 +217,23 @@ export default function RankingPage({ onBack }: Props) {
           <div className="text-center text-gray-600 py-16 text-sm">{t("ranking.noData")}</div>
         ) : (
           <div>
-            {entries.map((entry, i) => {
-              const { displayName, imageUrl } = getDisplay(entry);
-              return (
-                <RankRow
-                  key={entry.name}
-                  rank={i + 1}
-                  displayName={displayName}
-                  className={entry.class}
-                  countLabel={t("ranking.count", { count: entry.count })}
-                  imageUrl={imageUrl}
-                />
-              );
-            })}
+            {(() => {
+              const maxCount = Math.max(...entries.map((e) => e.count), 1);
+              return entries.map((entry, i) => {
+                const { displayName, imageUrl } = getDisplay(entry);
+                return (
+                  <RankRow
+                    key={entry.name}
+                    rank={i + 1}
+                    displayName={displayName}
+                    className={entry.class}
+                    countLabel={t("ranking.count", { count: entry.count })}
+                    imageUrl={imageUrl}
+                    pct={Math.round((entry.count / maxCount) * 100)}
+                  />
+                );
+              });
+            })()}
           </div>
         )}
       </div>
