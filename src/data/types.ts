@@ -1,4 +1,4 @@
-export const APP_VERSION = "v0.2.2 beta";
+export const APP_VERSION = "v0.3.0 beta";
 
 export type ServantClass =
   | "Saber" | "Archer" | "Lancer" | "Rider"
@@ -94,15 +94,15 @@ export function statRankToScore(rank: StatRank): number | null {
 
 const STAT_KEYS = ["strength", "endurance", "agility", "mana", "luck", "np"] as const;
 
-// 예외 스탯 총합 오버라이드 (이름 기준)
-const SCORE_OVERRIDES: Record<string, number> = {
-  "엘키두": 43,
-  "“산의 노인”": 38
+// 예외 스탯 총합 오버라이드 (ID 기준)
+const SCORE_OVERRIDES: Record<number, number> = {
+  56: 43,   // Enkidu / 엘키두
+  110: 38,  // King Hassan / “산의 노인”
 };
 
 export function getServantTotalScore(servant: Servant): number {
-  if (SCORE_OVERRIDES[servant.name] !== undefined) {
-    return SCORE_OVERRIDES[servant.name];
+  if (SCORE_OVERRIDES[servant.id] !== undefined) {
+    return SCORE_OVERRIDES[servant.id];
   }
   let total = 0;
   for (const key of STAT_KEYS) {

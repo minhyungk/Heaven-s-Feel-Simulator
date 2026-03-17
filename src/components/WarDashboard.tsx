@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import type { GrailWarResult } from "../hooks/useGrailWar";
 import type { Servant } from "../data/types";
 import { getServantTotalScore, calcWinRate, CLASS_COLORS, APP_VERSION } from "../data/types";
+import { useServantResolver } from "../contexts/ServantDataContext";
 import ServantCard from "./ServantCard";
 
 interface Props {
@@ -14,7 +16,9 @@ interface Props {
   onStartSimulation: () => void;
 }
 
-function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant; enemyScore: number; winRate: number; index: number }) {
+function WinRateBar({ servant: rawServant, enemyScore, winRate, index }: { servant: Servant; enemyScore: number; winRate: number; index: number }) {
+  const resolve = useServantResolver();
+  const servant = resolve(rawServant);
   const pct = Math.round(winRate * 100);
   const classColor = CLASS_COLORS[servant.class];
   const isAdvantage = pct >= 50;
@@ -72,12 +76,15 @@ function WinRateBar({ servant, enemyScore, winRate, index }: { servant: Servant;
 }
 
 export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRankings, onStartSimulation }: Props) {
-  useEffect(() => {                                                                                                                                                                                                                                                                         
-  const handler = (e: KeyboardEvent) => {                                                                                                                                                                                                                                                 
-    if (e.key === "Enter") onReroll();                                                                                                                                                                                                                                                    
-    };                                                                                                                                                                                                                                                                                      
-    window.addEventListener("keydown", handler);                                                                                                                                                                                                                                            
-    return () => window.removeEventListener("keydown", handler);                                                                                                                                                                                                                            
+  const { t } = useTranslation();
+  const resolve = useServantResolver();
+
+  useEffect(() => {
+  const handler = (e: KeyboardEvent) => {
+    if (e.key === "Enter") onReroll();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
   }, [onReroll]);
   const [showWinRate, setShowWinRate] = useState(false);
   const enemies = war.participants.filter((s) => s.id !== war.playerServant.id);
@@ -92,7 +99,6 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
   }));
 
   // 최종 우승 확률: 지수 기반 공정 배분
-  // K값이 높을수록 강자의 우승 확률이 지배적
   const K = 0.5;
   const allScores = [myScore, ...enemyScores];
   const powerScores = allScores.map((s) => Math.exp(K * s));
@@ -111,12 +117,12 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
           className="text-3xl md:text-4xl 2xl:text-5xl font-bold mb-2 text-gold"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          제6차 성배전쟁
+          {t("dashboard.title")}
         </h1>
-        <p className="text-gray-500 text-sm 2xl:text-base">7기의 서번트가 소환되었습니다</p>
+        <p className="text-gray-500 text-sm 2xl:text-base">{t("dashboard.summoned")}</p>
         {war.hasExtraInvasion && war.extraServant && (
           <p className="text-sm mt-2 font-bold" style={{ color: "#9333ea" }}>
-            ⚠ 성배 오류 — {war.extraServant.name}({war.extraServant.class}) 난입
+            {t("dashboard.grailError", { name: resolve(war.extraServant).name, class: war.extraServant.class })}
           </p>
         )}
       </motion.div>
@@ -129,7 +135,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
         className="w-full max-w-xl 2xl:max-w-2xl mb-8 2xl:mb-10"
       >
         <h2 className="text-center text-sm 2xl:text-base text-gold/70 uppercase tracking-[0.2em] mb-3 font-bold">
-          MY SERVANT
+          {t("dashboard.myServant")}
         </h2>
         <ServantCard servant={war.playerServant} isPlayer />
       </motion.div>
@@ -138,7 +144,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
       <div className="w-full max-w-xl 2xl:max-w-2xl mb-6 2xl:mb-8">
         <div className="h-px bg-gradient-to-r from-transparent via-magic-red/30 to-transparent" />
         <p className="text-center text-xs 2xl:text-sm text-magic-red/50 mt-2 uppercase tracking-[0.3em]">
-          Enemy Servants
+          {t("dashboard.enemyServants")}
         </p>
       </div>
 
@@ -157,7 +163,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
         className="px-8 py-3 text-sm font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
         style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
       >
-        {showWinRate ? "승률 닫기" : "승률 계산"}
+        {showWinRate ? t("dashboard.closeWinRate") : t("dashboard.calcWinRate")}
       </motion.button>
 
       {/* Win Rate Panel */}
@@ -173,14 +179,14 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
             <div className="rounded-xl p-5 space-y-4" style={{ background: "#0d0d24", border: "1px solid #4a9eff22" }}>
               {/* Header */}
               <div className="text-center mb-4">
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">예측 승률</p>
-                <p className="text-[10px] text-gray-600">스탯 합산 기반 Elo 승률 (E=3 ~ EX=8, +=+0.5)</p>
-                <p className="text-[10px] text-gray-600">EX는 측정불가를 의미하나 계산 편의상 8점으로 책정돼 오류가 있을 수 있음</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{t("dashboard.predictedWinRate")}</p>
+                <p className="text-[10px] text-gray-600">{t("dashboard.winRateDesc")}</p>
+                <p className="text-[10px] text-gray-600">{t("dashboard.winRateWarning")}</p>
               </div>
 
               {/* My score */}
               <div className="text-center mb-4 p-3 rounded-lg bg-white/5">
-                <span className="text-xs text-gray-500">내 서번트 스탯 합계: </span>
+                <span className="text-xs text-gray-500">{t("dashboard.myStatTotal")} </span>
                 <span className="text-sm font-bold text-gold font-mono">{myScore.toFixed(1)}</span>
               </div>
 
@@ -196,7 +202,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
 
               {/* Overall */}
               <div className="text-center">
-                <p className="text-xs text-gray-500 mb-1">성배전쟁 우승 확률 (전원 격파)</p>
+                <p className="text-xs text-gray-500 mb-1">{t("dashboard.overallWinRate")}</p>
                 <p
                   className="text-2xl font-bold font-mono"
                   style={{ color: overallWinRate > 0.1 ? "#4ade80" : overallWinRate > 0.03 ? "#facc15" : "#f87171" }}
@@ -218,8 +224,13 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
           className="w-full max-w-xl 2xl:max-w-2xl mb-8 p-3 rounded-lg bg-white/5 border border-white/10 text-center"
         >
           <p className="text-xs 2xl:text-sm text-gray-500">
-            💡 <span className="text-gray-400">참고:</span> Caster 클래스는 Saber/Lancer/Archer의{" "}
-            <span className="text-magic-blue">대마력</span> 클래스 스킬에 의해 마술 공격이 약화될 수 있습니다.
+            {t("dashboard.casterNote")
+              .split(/<highlight>|<\/highlight>|<blue>|<\/blue>/)
+              .map((part, i) => {
+                if (i === 1) return <span key={i} className="text-gray-400">{part}</span>;
+                if (i === 3) return <span key={i} className="text-magic-blue">{part}</span>;
+                return <span key={i}>{part}</span>;
+              })}
           </p>
         </motion.div>
       )}
@@ -232,7 +243,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
         className="px-10 py-3 text-sm font-bold rounded-lg border-2 border-magic-red bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
         style={{ fontFamily: "var(--font-serif)", marginTop: "1rem", marginBottom: "1.5rem" }}
       >
-        전쟁 시작
+        {t("dashboard.startWar")}
       </motion.button>
 
       {/* Actions */}
@@ -245,7 +256,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
             className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            다시 소환
+            {t("dashboard.reroll")}
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -254,7 +265,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
             className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            촉매소환
+            {t("start.catalystSummon")}
           </motion.button>
         </div>
         <div className="flex gap-3 justify-center">
@@ -264,7 +275,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
             onClick={onHome}
             className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
           >
-            메인으로
+            {t("dashboard.goHome")}
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -272,7 +283,7 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
             onClick={onRankings}
             className="px-8 2xl:px-10 py-3 2xl:py-4 text-sm 2xl:text-base font-bold rounded-lg border border-gray-700 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
           >
-            랭킹
+            {t("dashboard.rankings")}
           </motion.button>
         </div>
       </div>

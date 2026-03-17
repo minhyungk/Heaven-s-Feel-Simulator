@@ -1,0 +1,10 @@
+{
+  "ambushSuccess": "{{name}}の奇襲成功！ (気配遮断 {{rank}})",
+  "ambushFail": "{{name}}の奇襲失敗 (気配遮断 {{rank}})",
+  "antiMagicWithDef": "{{knight}}の対魔力 {{antiMagicRank}}と{{caster}}の{{skillName}} {{defRank}}により{{knight}}の勝率 {{bonus}} 上昇",
+  "antiMagicNoDef": "{{knight}}の対魔力 {{antiMagicRank}}により{{knight}}の勝率 {{bonus}} 上昇",
+  "drawResult": "{{a}} vs {{b}} → 引き分け",
+  "winResult": "{{winner}} 勝利 (vs {{loser}})",
+  "toolMaking": "道具作成",
+  "territoryCreation": "陣地作成"
+}

@@ -7,6 +7,8 @@ import WarDashboard from "./components/WarDashboard";
 import WarSimulation from "./components/WarSimulation";
 import CatalystModal from "./components/CatalystModal";
 import RankingPage from "./components/RankingPage";
+import LanguageSwitcher from "./components/LanguageSwitcher";
+import { ServantDataProvider } from "./contexts/ServantDataContext";
 import type { Servant } from "./data/types";
 
 export default function App() {
@@ -19,7 +21,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <ServantDataProvider>
       <AnimatePresence mode="wait">
         {phase === "start" && (
           <StartScreen
@@ -73,6 +75,8 @@ export default function App() {
           />
         )}
       </AnimatePresence>
-    </>
+
+      <LanguageSwitcher />
+    </ServantDataProvider>
   );
 }

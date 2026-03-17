@@ -1,6 +1,6 @@
 /**
  * Atlas Academy API에서 전체 서번트 데이터를 크롤링하여 JSON으로 저장합니다.
- * 실행: node scripts/fetch-servants.mjs
+ * 실행: node scripts/fetch-servants.mjs [--region=KR|EN|JP]
  */
 
 const API_BASE = "https://api.atlasacademy.io";
@@ -8,6 +8,18 @@ const VALID_CLASSES = new Set([
   "saber", "archer", "lancer", "rider", "caster", "assassin", "berserker",
   "ruler", "avenger", "moonCancer", "alterEgo", "foreigner", "pretender", "shielder",
 ]);
+
+// CLI 인자에서 --region 파싱
+const regionArg = process.argv.find(a => a.startsWith("--region="));
+const REGION = regionArg ? regionArg.split("=")[1].toUpperCase() : "KR";
+
+// Atlas Academy API 리전 매핑
+const API_REGION_MAP = { KR: "KR", EN: "NA", JP: "JP" };
+const apiRegion = API_REGION_MAP[REGION] ?? "KR";
+
+// 출력 파일명 매핑
+const LANG_MAP = { KR: "ko", EN: "en", JP: "ja" };
+const lang = LANG_MAP[REGION] ?? "ko";
 
 function mapClassName(cls) {
   const map = {
@@ -70,13 +82,11 @@ function transformServant(raw) {
 }
 
 async function main() {
-  console.log("Fetching full servant list from Atlas Academy...");
+  console.log(`Fetching full servant list from Atlas Academy (region: ${REGION}, API: ${apiRegion})...`);
 
-  // 기본 리스트 가져오기
-  const listRes = await fetch(`${API_BASE}/export/KR/basic_servant.json`);
+  const listRes = await fetch(`${API_BASE}/export/${apiRegion}/basic_servant.json`);
   const basicList = await listRes.json();
 
-  // 유효한 클래스의 플레이어블 서번트만 필터
   const playable = basicList.filter(s =>
     VALID_CLASSES.has(s.className) && s.collectionNo > 0
   );
@@ -88,7 +98,7 @@ async function main() {
     const { collectionNo, name } = playable[i];
     process.stdout.write(`  [${i + 1}/${playable.length}] ${name}...`);
     try {
-      const res = await fetch(`${API_BASE}/nice/KR/servant/${collectionNo}?lore=true`);
+      const res = await fetch(`${API_BASE}/nice/${apiRegion}/servant/${collectionNo}?lore=true`);
       if (res.ok) {
         const raw = await res.json();
         results.push(transformServant(raw));
@@ -104,7 +114,7 @@ async function main() {
   }
 
   const { writeFileSync } = await import("fs");
-  const outPath = "src/data/servants.json";
+  const outPath = `src/data/servants-${lang}.json`;
   writeFileSync(outPath, JSON.stringify(results, null, 2), "utf-8");
 
   // Class distribution

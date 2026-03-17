@@ -4,6 +4,8 @@ import {
   AMBUSH_MAX_CHANCE, AMBUSH_WIN_BONUS, ANTI_MAGIC_MAX_BONUS,
   GUARD_DEFENSE_BONUS, DRAW_THRESHOLD, DRAW_CHANCES, FORCED_HUNT_DAY,
 } from "./config";
+import { getSkillPrefixes } from "../i18n/skillKeys";
+import i18n from "../i18n";
 
 // ─── Intent System ───
 
@@ -51,14 +53,18 @@ function findClassSkillRank(servant: Servant, prefix: string): { rank: string; s
 // ─── Combat System (Elo-based) ───
 
 export interface SkillEffect {
-  description: string;
+  key: string;
+  params: Record<string, string>;
+  /** Maps param keys that contain servant names → servant IDs for cross-language resolution */
+  servantRefs?: Record<string, number>;
 }
 
 export interface CombatResult {
   winner: Servant | null;
   loser: Servant | null;
   isDraw: boolean;
-  description: string;
+  descriptionKey: string;
+  descriptionParams: Record<string, string>;
   winProbabilityA: number;
   skillEffects: SkillEffect[];
 }
@@ -70,17 +76,19 @@ function applyAmbush(
   winRateA: number, skillEffects: SkillEffect[],
 ): number {
   if (servant.class !== "Assassin" || intent !== "hunt") return winRateA;
-  const pc = findClassSkillRank(servant, "기척 차단");
+  const lang = i18n.language;
+  const prefixes = getSkillPrefixes(lang);
+  const pc = findClassSkillRank(servant, prefixes.presenceConcealment);
   if (!pc) return winRateA;
 
   const ambushChance = Math.min(pc.score / 8 * AMBUSH_MAX_CHANCE, AMBUSH_MAX_CHANCE);
   if (Math.random() < ambushChance) {
-    skillEffects.push({ description: `${servant.name}의 기습 성공! (기척 차단 ${pc.rank})` });
+    skillEffects.push({ key: "ambushSuccess", params: { name: servant.name, rank: pc.rank }, servantRefs: { name: servant.id } });
     return isAttackerSide
       ? Math.min(winRateA + AMBUSH_WIN_BONUS, 0.99)
       : Math.max(winRateA - AMBUSH_WIN_BONUS, 0.01);
   } else {
-    skillEffects.push({ description: `${servant.name}의 기습 실패 (기척 차단 ${pc.rank})` });
+    skillEffects.push({ key: "ambushFail", params: { name: servant.name, rank: pc.rank }, servantRefs: { name: servant.id } });
     return winRateA;
   }
 }
@@ -91,11 +99,14 @@ function applyAntiMagic(
 ): number {
   if (caster.class !== "Caster" || !KNIGHT_CLASSES.includes(knight.class)) return winRateA;
 
-  const antiMagic = findClassSkillRank(knight, "대 마력");
+  const lang = i18n.language;
+  const prefixes = getSkillPrefixes(lang);
+
+  const antiMagic = findClassSkillRank(knight, prefixes.magicResistance);
   if (!antiMagic) return winRateA;
 
-  const toolMaking = findClassSkillRank(caster, "도구작성");
-  const territoryCreation = findClassSkillRank(caster, "진지작성");
+  const toolMaking = findClassSkillRank(caster, prefixes.itemConstruction);
+  const territoryCreation = findClassSkillRank(caster, prefixes.territoryCreation);
   const casterDef = toolMaking ?? territoryCreation;
   const defScore = casterDef?.score ?? 0;
   const rawBonus = (antiMagic.score - defScore) / 8 * ANTI_MAGIC_MAX_BONUS;
@@ -105,13 +116,21 @@ function applyAntiMagic(
 
   const pctStr = `${Math.round(bonus * 100)}%`;
   if (casterDef) {
-    const skillName = toolMaking ? "도구작성" : "진지작성";
+    const skillNameKey = toolMaking ? "toolMaking" : "territoryCreation";
     skillEffects.push({
-      description: `${knight.name}의 대 마력 ${antiMagic.rank}과 ${caster.name}의 ${skillName} ${casterDef.rank}로 ${knight.name}의 승률 ${pctStr} 상승`,
+      key: "antiMagicWithDef",
+      params: {
+        knight: knight.name, antiMagicRank: antiMagic.rank,
+        caster: caster.name, skillName: i18n.t(`simulation:${skillNameKey}`), defRank: casterDef.rank,
+        bonus: pctStr,
+      },
+      servantRefs: { knight: knight.id, caster: caster.id },
     });
   } else {
     skillEffects.push({
-      description: `${knight.name}의 대 마력 ${antiMagic.rank}로 ${knight.name}의 승률 ${pctStr} 상승`,
+      key: "antiMagicNoDef",
+      params: { knight: knight.name, antiMagicRank: antiMagic.rank, bonus: pctStr },
+      servantRefs: { knight: knight.id },
     });
   }
 
@@ -159,7 +178,8 @@ function resolveCombat(
     if (Math.random() < getDrawChance(day)) {
       return {
         winner: null, loser: null, isDraw: true,
-        description: `${a.name} vs ${b.name} → 무승부`,
+        descriptionKey: "drawResult",
+        descriptionParams: { a: a.name, b: b.name },
         winProbabilityA: winRateA, skillEffects,
       };
     }
@@ -171,7 +191,8 @@ function resolveCombat(
 
   return {
     winner, loser, isDraw: false,
-    description: `${winner.name} 승리 (vs ${loser.name})`,
+    descriptionKey: "winResult",
+    descriptionParams: { winner: winner.name, loser: loser.name },
     winProbabilityA: winRateA, skillEffects,
   };
 }

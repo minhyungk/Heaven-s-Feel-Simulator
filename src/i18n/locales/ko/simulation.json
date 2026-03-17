@@ -1,0 +1,10 @@
+{
+  "ambushSuccess": "{{name}}의 기습 성공! (기척 차단 {{rank}})",
+  "ambushFail": "{{name}}의 기습 실패 (기척 차단 {{rank}})",
+  "antiMagicWithDef": "{{knight}}의 대 마력 {{antiMagicRank}}과 {{caster}}의 {{skillName}} {{defRank}}로 {{knight}}의 승률 {{bonus}} 상승",
+  "antiMagicNoDef": "{{knight}}의 대 마력 {{antiMagicRank}}로 {{knight}}의 승률 {{bonus}} 상승",
+  "drawResult": "{{a}} vs {{b}} → 무승부",
+  "winResult": "{{winner}} 승리 (vs {{loser}})",
+  "toolMaking": "도구작성",
+  "territoryCreation": "진지작성"
+}
