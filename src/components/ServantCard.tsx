@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import type { Servant } from "../data/types";
 import { CLASS_COLORS } from "../data/types";
+import { useServantResolver } from "../contexts/ServantDataContext";
 
 interface Props {
   servant: Servant;
@@ -9,16 +11,12 @@ interface Props {
   index?: number;
 }
 
-const STAT_LABELS = [
-  { key: "strength", label: "근력" },
-  { key: "endurance", label: "내구" },
-  { key: "agility", label: "민첩" },
-  { key: "mana", label: "마력" },
-  { key: "luck", label: "행운" },
-  { key: "np", label: "보구" },
-] as const;
+const STAT_KEYS = ["strength", "endurance", "agility", "mana", "luck", "np"] as const;
 
-export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
+export default function ServantCard({ servant: rawServant, isPlayer, index = 0 }: Props) {
+  const { t } = useTranslation();
+  const resolve = useServantResolver();
+  const servant = resolve(rawServant);
   const [expanded, setExpanded] = useState(false);
   const classColor = CLASS_COLORS[servant.class];
 
@@ -70,9 +68,9 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
 
           {/* Stats summary */}
           <div className="shrink-0 grid grid-cols-2 gap-x-3 2xl:gap-x-4 gap-y-0.5 text-[0.7rem] 2xl:text-xs">
-            {STAT_LABELS.map(({ key, label }) => (
+            {STAT_KEYS.map((key) => (
               <div key={key} className="flex">
-                <span className="text-gray-600" style={{ width: "2.2em" }}>{label}</span>
+                <span className="text-gray-600" style={{ width: "2.2em" }}>{t(`card.stats.${key}`)}</span>
                 <span className="text-gray-300 font-mono" style={{ width: "2.5em" }}>{servant.stats[key]}</span>
               </div>
             ))}
@@ -82,7 +80,7 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
         {/* Expand indicator */}
         <div className="text-center mt-2">
           <span className="text-gray-600 text-[0.65rem]">
-            {expanded ? "▲ 접기" : "▼ 상세 보기"}
+            {expanded ? t("card.collapse") : t("card.expand")}
           </span>
         </div>
       </motion.div>
@@ -107,7 +105,7 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
             >
               {/* Noble Phantasm */}
               <div className="p-3 rounded-lg" style={{ background: `${classColor}10`, border: `1px solid ${classColor}20` }}>
-                <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-1">보구 — {servant.noblePhantasm.rank} / {servant.noblePhantasm.type}</div>
+                <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-1">{t("card.noblePhantasm")} — {servant.noblePhantasm.rank} / {servant.noblePhantasm.type}</div>
                 <ruby className="text-sm 2xl:text-base font-bold text-white">
                   {servant.noblePhantasm.name}
                   <rp>(</rp><rt className="text-gray-400">{servant.noblePhantasm.ruby}</rt><rp>)</rp>
@@ -117,7 +115,7 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
 
               {/* Class Skills */}
               <div>
-                <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-2">클래스 스킬</div>
+                <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-2">{t("card.classSkills")}</div>
                 <div className="flex flex-wrap gap-2">
                   {servant.classSkills.map((s, i) => (
                     <span key={i} className="text-xs 2xl:text-sm px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">
@@ -129,7 +127,7 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
 
               {/* Personal Skills */}
               <div>
-                <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-2">보유 스킬</div>
+                <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-2">{t("card.personalSkills")}</div>
                 <div className="flex flex-wrap gap-2">
                   {servant.personalSkills.map((s, i) => (
                     <span key={i} className="text-xs 2xl:text-sm px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">
@@ -142,7 +140,7 @@ export default function ServantCard({ servant, isPlayer, index = 0 }: Props) {
               {/* Profile */}
               {servant.profile && (
                 <div>
-                  <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-2">프로필</div>
+                  <div className="text-[0.65rem] text-gray-500 uppercase tracking-wider mb-2">{t("card.profile")}</div>
                   <p className="text-xs 2xl:text-sm text-gray-400 leading-relaxed">{servant.profile}</p>
                 </div>
               )}

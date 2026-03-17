@@ -1,8 +1,9 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import type { Servant, ServantClass } from "../data/types";
 import { CLASS_COLORS, BASIC_CLASSES } from "../data/types";
-import servants from "../data/servants";
+import { useServantData } from "../contexts/ServantDataContext";
 
 const EXTRA_CLASSES: ServantClass[] = ["Ruler", "Avenger", "MoonCancer", "AlterEgo", "Foreigner", "Pretender", "Shielder"];
 const ALL_CLASSES = [...BASIC_CLASSES, ...EXTRA_CLASSES];
@@ -13,21 +14,25 @@ interface Props {
 }
 
 export default function CatalystModal({ onSelect, onClose }: Props) {
+  const { t } = useTranslation();
+  const { servants, jaOnlyServants } = useServantData();
   const [query, setQuery] = useState("");
   const [classFilter, setClassFilter] = useState<ServantClass | null>(null);
 
+  // Merge current language servants + JA-only servants for catalyst summon
+  const allServants = useMemo(() => [...servants, ...jaOnlyServants], [servants, jaOnlyServants]);
+
   const filtered = useMemo(() => {
-    return servants.filter((s) => {
+    return allServants.filter((s) => {
       if (classFilter && s.class !== classFilter) return false;
       if (query && !s.name.toLowerCase().includes(query.toLowerCase())) return false;
       return true;
     });
-  }, [query, classFilter]);
+  }, [allServants, query, classFilter]);
 
-  // Only show classes that have servants in the pool
   const availableClasses = useMemo(() => {
-    return ALL_CLASSES.filter((cls) => servants.some((s) => s.class === cls));
-  }, []);
+    return ALL_CLASSES.filter((cls) => allServants.some((s) => s.class === cls));
+  }, [allServants]);
 
   return (
     <motion.div
@@ -50,7 +55,7 @@ export default function CatalystModal({ onSelect, onClose }: Props) {
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-bold text-gold" style={{ fontFamily: "var(--font-serif)" }}>
-              촉매소환
+              {t("catalyst.title")}
             </h2>
             <button
               onClick={onClose}
@@ -65,7 +70,7 @@ export default function CatalystModal({ onSelect, onClose }: Props) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="서번트 이름 검색..."
+            placeholder={t("catalyst.searchPlaceholder")}
             className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-gray-600 outline-none focus:border-gold/50"
             autoFocus
           />
@@ -80,7 +85,7 @@ export default function CatalystModal({ onSelect, onClose }: Props) {
                   : "border-white/10 text-gray-500 hover:text-gray-300"
               }`}
             >
-              전체
+              {t("catalyst.all")}
             </button>
             {availableClasses.map((cls) => (
               <button
@@ -102,7 +107,7 @@ export default function CatalystModal({ onSelect, onClose }: Props) {
         {/* Results */}
         <div className="flex-1 overflow-y-auto p-2">
           {filtered.length === 0 ? (
-            <p className="text-center text-gray-600 text-sm py-8">검색 결과 없음</p>
+            <p className="text-center text-gray-600 text-sm py-8">{t("catalyst.noResults")}</p>
           ) : (
             filtered.map((servant) => (
               <button

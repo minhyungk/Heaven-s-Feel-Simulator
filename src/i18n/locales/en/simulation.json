@@ -1,0 +1,10 @@
+{
+  "ambushSuccess": "{{name}}'s ambush succeeded! (Presence Concealment {{rank}})",
+  "ambushFail": "{{name}}'s ambush failed (Presence Concealment {{rank}})",
+  "antiMagicWithDef": "{{knight}}'s Magic Resistance {{antiMagicRank}} vs {{caster}}'s {{skillName}} {{defRank}} — {{knight}}'s win rate +{{bonus}}",
+  "antiMagicNoDef": "{{knight}}'s Magic Resistance {{antiMagicRank}} — {{knight}}'s win rate +{{bonus}}",
+  "drawResult": "{{a}} vs {{b}} → Draw",
+  "winResult": "{{winner}} wins (vs {{loser}})",
+  "toolMaking": "Item Construction",
+  "territoryCreation": "Territory Creation"
+}

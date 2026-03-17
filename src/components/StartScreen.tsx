@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { APP_VERSION } from "../data/types";
 
 interface Props {
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) {
+  const { t } = useTranslation(["common", "incantation"]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Enter") onStart();
@@ -73,16 +76,16 @@ export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) 
         >
           HOLY GRAIL WAR
         </h1>
-        <p className="text-xl 2xl:text-2xl text-gray-400 mb-2">성배전쟁 시뮬레이터</p>
-        <p className="text-sm 2xl:text-base mb-12">고한다 </p>
-        <p className="text-sm 2xl:text-base mb-12">그대의 몸은 나에게, 나의 운명은 그대의 검에</p>
-        <p className="text-sm 2xl:text-base mb-12">성배의 인도에 따라 이 뜻, 이 이치에 따른다면 대답하라.</p>
-        <p className="text-sm 2xl:text-base mb-12">맹세를 여기에 </p>
-        <p className="text-sm 2xl:text-base mb-12">나는 온 세상 모든 선을 이루는 자,</p>
-        <p className="text-sm 2xl:text-base mb-12">나는 온 세상 모든 악을 베푸는 자</p>
-        <p className="text-sm 2xl:text-base mb-12">그대 삼대 언령을 두른 일곱 하늘</p>
-        <p className="text-sm 2xl:text-base mb-12">억지의 윤회로부터 오라, 천칭의 수호자여</p>
-      </motion.div> 
+        <p className="text-xl 2xl:text-2xl text-gray-400 mb-2">{t("start.subtitle")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line1")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line2")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line3")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line4")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line5")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line6")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line7")}</p>
+        <p className="text-sm 2xl:text-base mb-12">{t("incantation:line8")}</p>
+      </motion.div>
 
       {/* Buttons */}
       <div className="z-10 flex flex-col items-center gap-3" style={{ marginTop: "1rem" }}>
@@ -97,7 +100,7 @@ export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) 
             className="px-12 2xl:px-16 py-4 2xl:py-5 text-lg 2xl:text-2xl font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer transition-all hover:bg-gold/10"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            성배전쟁 참전
+            {t("start.joinWar")}
           </motion.button>
           <motion.button
             initial={{ opacity: 0, scale: 0.8 }}
@@ -109,7 +112,7 @@ export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) 
             className="px-8 2xl:px-12 py-4 2xl:py-5 text-lg 2xl:text-xl font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer transition-all hover:bg-magic-blue/10"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            촉매소환
+            {t("start.catalystSummon")}
           </motion.button>
         </div>
         <motion.button
@@ -122,7 +125,7 @@ export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) 
           className="px-12 py-3 text-lg font-bold rounded-lg border border-gray-600 bg-transparent text-gray-400 cursor-pointer transition-all hover:border-gray-400 hover:text-gray-200"
           style={{ fontFamily: "var(--font-serif)" }}
         >
-          랭킹
+          {t("start.rankings")}
         </motion.button>
       </div>
 

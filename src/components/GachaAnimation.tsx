@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import type { Servant } from "../data/types";
 import { CLASS_COLORS } from "../data/types";
+import { useServantResolver } from "../contexts/ServantDataContext";
 import MagicCircle from "./MagicCircle";
 
 interface Props {
@@ -14,7 +16,10 @@ interface Props {
 const STAGES = ["blackout", "circle", "card", "reveal", "info"] as const;
 type GachaStage = (typeof STAGES)[number];
 
-export default function GachaAnimation({ servant, isExtraInvasion, onComplete, onSkip }: Props) {
+export default function GachaAnimation({ servant: rawServant, isExtraInvasion, onComplete, onSkip }: Props) {
+  const { t } = useTranslation();
+  const resolve = useServantResolver();
+  const servant = resolve(rawServant);
   const [stage, setStage] = useState<GachaStage>("blackout");
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
@@ -73,7 +78,7 @@ export default function GachaAnimation({ servant, isExtraInvasion, onComplete, o
         onClick={(e) => { e.stopPropagation(); onSkip(); }}
         className="absolute top-6 right-6 z-50 text-gray-500 hover:text-gray-300 text-sm px-3 py-1 border border-gray-700 rounded cursor-pointer"
       >
-        SKIP →
+        {t("gacha.skip")}
       </button>
 
       {/* Extra invasion flash */}
@@ -96,7 +101,7 @@ export default function GachaAnimation({ servant, isExtraInvasion, onComplete, o
           animate={{ opacity: [0, 1, 0.5, 1, 0] }}
           transition={{ duration: 2.5, delay: 0.3 }}
         >
-          ― 성배 오류 ―
+          {t("gacha.grailError")}
         </motion.p>
       )}
 
@@ -128,7 +133,7 @@ export default function GachaAnimation({ servant, isExtraInvasion, onComplete, o
                   <div className="text-center">
                     <img src="/7999.png" alt="Holy Grail" className="w-24 h-24 mx-auto mb-4 animate-pulse-glow object-contain" />
                     <div className="text-sm tracking-[0.3em] uppercase" style={{ color: classColor, fontFamily: "var(--font-serif)" }}>
-                      Servant
+                      {t("gacha.servant")}
                     </div>
                   </div>
                 </div>
@@ -181,7 +186,7 @@ export default function GachaAnimation({ servant, isExtraInvasion, onComplete, o
                         transition={{ delay: 0.3 }}
                         className="mt-4 text-center"
                       >
-                        <p className="text-xs text-gray-500 mb-1">보구</p>
+                        <p className="text-xs text-gray-500 mb-1">{t("gacha.noblePhantasm")}</p>
                         <ruby className="text-sm text-gold font-bold">
                           {servant.noblePhantasm.name}
                           <rp>(</rp><rt className="text-[10px] text-gray-400">{servant.noblePhantasm.ruby}</rt><rp>)</rp>
@@ -204,7 +209,7 @@ export default function GachaAnimation({ servant, isExtraInvasion, onComplete, o
           animate={{ opacity: [0, 1, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          클릭하여 전쟁 대시보드로 →
+          {t("gacha.clickToDashboard")}
         </motion.p>
       )}
     </div>

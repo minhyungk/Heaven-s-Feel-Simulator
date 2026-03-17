@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import type { Servant, ServantClass } from "../data/types";
 import { BASIC_CLASSES } from "../data/types";
-import servants from "../data/servants";
+import { useServantData } from "../contexts/ServantDataContext";
 import { EXTRA_INVASION_CHANCE, EXTRA_INVASION_PLAYER_WEIGHT } from "../simulation/config";
 
 const EXTRA_CLASSES: ServantClass[] = ["Ruler", "Avenger", "MoonCancer", "AlterEgo", "Foreigner"];
@@ -10,30 +10,23 @@ export interface GrailWarResult {
   participants: Servant[];
   playerServant: Servant;
   hasExtraInvasion: boolean;
-  extraServant: Servant | null; // the extra class servant that invaded
+  extraServant: Servant | null;
   summonType: "random" | "catalyst";
   catalyst: Servant | null;
-}
-
-function getServantsByClass(cls: ServantClass): Servant[] {
-  return servants.filter((s) => s.class === cls);
 }
 
 function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function tryExtraInvasion(participants: Servant[], playerIdx: number): { invaded: boolean; extraServant: Servant | null; newParticipants: Servant[] } {
+function tryExtraInvasion(servantPool: Servant[], participants: Servant[], playerIdx: number): { invaded: boolean; extraServant: Servant | null; newParticipants: Servant[] } {
   if (Math.random() > EXTRA_INVASION_CHANCE) return { invaded: false, extraServant: null, newParticipants: participants };
 
-  // Find available extra class servants
-  const extraPool = EXTRA_CLASSES.flatMap((cls) => getServantsByClass(cls));
+  const extraPool = EXTRA_CLASSES.flatMap((cls) => servantPool.filter((s) => s.class === cls));
   if (extraPool.length === 0) return { invaded: false, extraServant: null, newParticipants: participants };
 
   const extraServant = pickRandom(extraPool);
 
-  // Pick which slot to replace: player has ~2/7 weight, others 1/7 each
-  // Total weight = 2 + 6 = 8, player chance = 2/8 = 25%
   const weights = participants.map((_, i) => (i === playerIdx ? EXTRA_INVASION_PLAYER_WEIGHT : 1));
   const totalWeight = weights.reduce((a, b) => a + b, 0);
   let roll = Math.random() * totalWeight;
@@ -49,7 +42,9 @@ function tryExtraInvasion(participants: Servant[], playerIdx: number): { invaded
   return { invaded: true, extraServant, newParticipants };
 }
 
-function summonGrailWar(catalyst?: Servant): GrailWarResult {
+function summonGrailWar(servantPool: Servant[], catalyst?: Servant): GrailWarResult {
+  const getByClass = (cls: ServantClass) => servantPool.filter((s) => s.class === cls);
+
   if (catalyst) {
     const participants: Servant[] = [catalyst];
     const remainingClasses = BASIC_CLASSES.filter((cls) => cls !== catalyst.class);
@@ -58,16 +53,14 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
       remainingClasses.splice(removeIdx, 1);
     }
     for (const cls of remainingClasses) {
-      const pool = getServantsByClass(cls).filter((s) => s.id !== catalyst.id);
+      const pool = getByClass(cls).filter((s) => s.id !== catalyst.id);
       if (pool.length > 0) {
         participants.push(pickRandom(pool));
       }
     }
-    // Extra invasion for non-player slots only when using catalyst
-    const { invaded, extraServant, newParticipants } = tryExtraInvasion(participants, 0);
-    // If player slot was replaced, keep catalyst as player
+    const { invaded, extraServant, newParticipants } = tryExtraInvasion(servantPool, participants, 0);
     const playerServant = invaded && newParticipants[0].id !== catalyst.id
-      ? newParticipants[0] // extra replaced player slot
+      ? newParticipants[0]
       : catalyst;
 
     return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant, summonType: "catalyst", catalyst };
@@ -75,14 +68,14 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
 
   const participants: Servant[] = [];
   for (const cls of BASIC_CLASSES) {
-    const pool = getServantsByClass(cls);
+    const pool = getByClass(cls);
     if (pool.length > 0) {
       participants.push(pickRandom(pool));
     }
   }
   const playerIdx = Math.floor(Math.random() * participants.length);
 
-  const { invaded, extraServant, newParticipants } = tryExtraInvasion(participants, playerIdx);
+  const { invaded, extraServant, newParticipants } = tryExtraInvasion(servantPool, participants, playerIdx);
   const playerServant = newParticipants[playerIdx];
 
   return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant, summonType: "random", catalyst: null };
@@ -91,14 +84,15 @@ function summonGrailWar(catalyst?: Servant): GrailWarResult {
 export type GamePhase = "start" | "gacha" | "dashboard" | "simulation" | "rankings";
 
 export function useGrailWar() {
+  const { servants } = useServantData();
   const [phase, setPhase] = useState<GamePhase>("start");
   const [war, setWar] = useState<GrailWarResult | null>(null);
 
   const startWar = useCallback((catalyst?: Servant) => {
-    const result = summonGrailWar(catalyst);
+    const result = summonGrailWar(servants, catalyst);
     setWar(result);
     setPhase("gacha");
-  }, []);
+  }, [servants]);
 
   const skipToBoard = useCallback(() => {
     setPhase("dashboard");
@@ -109,10 +103,10 @@ export function useGrailWar() {
   }, []);
 
   const reroll = useCallback(() => {
-    const result = summonGrailWar();
+    const result = summonGrailWar(servants);
     setWar(result);
     setPhase("gacha");
-  }, []);
+  }, [servants]);
 
   const startSimulation = useCallback(() => {
     setPhase("simulation");
