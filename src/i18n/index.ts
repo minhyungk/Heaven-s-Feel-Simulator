@@ -17,7 +17,7 @@ function detectLanguage(): string {
   const nav = navigator.language.toLowerCase();
   if (nav.startsWith("ja")) return "ja";
   if (nav.startsWith("ko")) return "ko";
-  return "en";
+  return "ko";
 }
 
 i18n.use(initReactI18next).init({
