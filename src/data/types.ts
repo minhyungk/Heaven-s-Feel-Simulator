@@ -96,8 +96,8 @@ const STAT_KEYS = ["strength", "endurance", "agility", "mana", "luck", "np"] as 
 
 // 예외 스탯 총합 오버라이드 (ID 기준)
 const SCORE_OVERRIDES: Record<number, number> = {
-  56: 43,   // Enkidu / 엘키두
-  110: 38,  // King Hassan / “산의 노인”
+  143: 43,   // Enkidu / 엘키두
+  154: 38,  // King Hassan / “산의 노인”
 };
 
 export function getServantTotalScore(servant: Servant): number {
