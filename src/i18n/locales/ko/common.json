@@ -3,7 +3,8 @@
     "subtitle": "성배전쟁 시뮬레이터",
     "joinWar": "성배전쟁 참전",
     "catalystSummon": "촉매소환",
-    "rankings": "랭킹"
+    "rankings": "랭킹",
+    "designatedSummon": "지정 소환"
   },
   "gacha": {
     "skip": "SKIP →",
@@ -101,6 +102,17 @@
     "searchPlaceholder": "서번트 이름 검색...",
     "all": "전체",
     "noResults": "검색 결과 없음"
+  },
+  "designated": {
+    "title": "지정 소환",
+    "myServant": "내 서번트",
+    "enemyServants": "적 서번트",
+    "enemy": "적",
+    "selectPlayer": "내 서번트를 선택하세요",
+    "selectEnemy": "적 서번트 {{remaining}}기 선택",
+    "confirm": "소환 확정",
+    "preset4th": "4차 성배전쟁",
+    "preset5th": "5차 성배전쟁"
   },
   "ranking": {
     "back": "← 돌아가기",

@@ -6,11 +6,12 @@ import { APP_VERSION } from "../data/types";
 interface Props {
   onStart: () => void;
   onCatalyst: () => void;
+  onDesignated: () => void;
   onStartTRPG: () => void;
   onRankings: () => void;
 }
 
-export default function StartScreen({ onStart, onCatalyst, onStartTRPG, onRankings }: Props) {
+export default function StartScreen({ onStart, onCatalyst, onDesignated, onStartTRPG, onRankings }: Props) {
   const { t } = useTranslation(["common", "incantation", "trpg"]);
 
   useEffect(() => {
@@ -116,6 +117,18 @@ export default function StartScreen({ onStart, onCatalyst, onStartTRPG, onRankin
             {t("start.catalystSummon")}
           </motion.button>
         </div>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.75, duration: 0.5 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(74, 158, 255, 0.2)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onDesignated}
+          className="px-8 py-3 text-lg font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer transition-all hover:bg-magic-blue/10"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          {t("start.designatedSummon")}
+        </motion.button>
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

@@ -96,6 +96,20 @@ export function useGrailWar() {
     setPhase("gacha");
   }, [servants]);
 
+  const designatedSummon = useCallback((playerServant: Servant, enemies: Servant[]) => {
+    const participants = [playerServant, ...enemies];
+    setWar({
+      participants,
+      playerServant,
+      hasExtraInvasion: false,
+      extraServant: null,
+      summonType: "catalyst",
+      catalyst: playerServant,
+    });
+    setPendingTRPG(false);
+    setPhase("gacha");
+  }, []);
+
   const startWarForTRPG = useCallback(() => {
     const result = summonGrailWar(servants);
     setWar(result);
@@ -152,5 +166,5 @@ export function useGrailWar() {
     setPhase("start");
   }, []);
 
-  return { phase, war, startWar, startWarForTRPG, gachaComplete, skipToBoard, reroll, goHome, startSimulation, startTRPG, backToDashboard, goToRankings, backFromRankings };
+  return { phase, war, startWar, designatedSummon, startWarForTRPG, gachaComplete, skipToBoard, reroll, goHome, startSimulation, startTRPG, backToDashboard, goToRankings, backFromRankings };
 }

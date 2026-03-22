@@ -3,7 +3,8 @@
     "subtitle": "Holy Grail War Simulator",
     "joinWar": "Join the War",
     "catalystSummon": "Catalyst Summon",
-    "rankings": "Rankings"
+    "rankings": "Rankings",
+    "designatedSummon": "Designated Summon"
   },
   "gacha": {
     "skip": "SKIP →",
@@ -101,6 +102,17 @@
     "searchPlaceholder": "Search servant name...",
     "all": "All",
     "noResults": "No results found"
+  },
+  "designated": {
+    "title": "Designated Summon",
+    "myServant": "My Servant",
+    "enemyServants": "Enemy Servants",
+    "enemy": "Enemy",
+    "selectPlayer": "Select your Servant",
+    "selectEnemy": "Select {{remaining}} more",
+    "confirm": "Confirm Summon",
+    "preset4th": "4th Holy Grail War",
+    "preset5th": "5th Holy Grail War"
   },
   "ranking": {
     "back": "← Back",
