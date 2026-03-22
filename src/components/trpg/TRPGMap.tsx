@@ -3,6 +3,7 @@ import type { TRPGGameState, TileId } from "../../engine/types";
 import { TILES, getTileNames, getAreaEffect } from "../../engine/map";
 import { useServantResolver } from "../../contexts/ServantDataContext";
 import MapTile from "./MapTile";
+import type { OccupantInfo } from "./MapTile";
 import i18n from "../../i18n";
 
 interface Props {
@@ -22,20 +23,24 @@ export default function TRPGMap({ state, highlightTiles, onTileClick }: Props) {
   const playerImageUrl = resolvedPlayer.imageUrl ?? undefined;
 
   // Build occupancy map (player perspective)
-  const tileOccupants = new Map<TileId, { isPlayer: boolean; classes: string[] }>();
+  const tileOccupants = new Map<TileId, { isPlayer: boolean; occupants: OccupantInfo[] }>();
   for (const m of state.masters) {
     if (!m.isAlive) continue;
-    const existing = tileOccupants.get(m.position) ?? { isPlayer: false, classes: [] };
+    const existing = tileOccupants.get(m.position) ?? { isPlayer: false, occupants: [] };
     if (m.isPlayer) {
       existing.isPlayer = true;
-      existing.classes.push(state.servantMap[m.servantId].class);
     } else {
-      // 모든 적 위치 표시: 정보 공개 수준에 따라 클래스명 또는 ???
       const info = state.enemyInfo[m.servantId];
-      if (info && (info.fogLevel === "statsRevealed" || info.fogLevel === "fullyRevealed") && info.knownClass) {
-        existing.classes.push(info.knownClass);
+      const isRevealed = info && (info.fogLevel === "statsRevealed" || info.fogLevel === "fullyRevealed");
+      if (isRevealed && info.knownClass) {
+        const servant = state.servantMap[m.servantId];
+        const resolved = servant ? resolve(servant) : null;
+        existing.occupants.push({
+          label: info.knownClass,
+          imageUrl: resolved?.imageUrl ?? undefined,
+        });
       } else {
-        existing.classes.push("???");
+        existing.occupants.push({ label: "???" });
       }
     }
     tileOccupants.set(m.position, existing);
@@ -60,7 +65,7 @@ export default function TRPGMap({ state, highlightTiles, onTileClick }: Props) {
               effect={effect}
               isPlayerHere={isPlayerHere}
               playerImageUrl={isPlayerHere ? playerImageUrl : undefined}
-              occupantClasses={occupant?.classes ?? []}
+              occupants={occupant?.occupants ?? []}
               isHighlighted={isHighlighted}
               onClick={onTileClick ? () => onTileClick(tile.id) : undefined}
             />

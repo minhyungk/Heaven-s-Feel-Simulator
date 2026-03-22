@@ -2,13 +2,18 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import type { TileId, AreaEffect } from "../../engine/types";
 
+export interface OccupantInfo {
+  label: string;
+  imageUrl?: string;
+}
+
 interface Props {
   tileId: TileId;
   name: string;
   effect: AreaEffect;
   isPlayerHere: boolean;
   playerImageUrl?: string;
-  occupantClasses: string[];
+  occupants: OccupantInfo[];
   isHighlighted: boolean;
   onClick?: () => void;
 }
@@ -22,7 +27,7 @@ const EFFECT_COLORS: Record<string, string> = {
   none: "#4a9eff",
 };
 
-export default function MapTile({ name, effect, isPlayerHere, playerImageUrl, occupantClasses, isHighlighted, onClick }: Props) {
+export default function MapTile({ name, effect, isPlayerHere, playerImageUrl, occupants, isHighlighted, onClick }: Props) {
   const { t } = useTranslation("trpg");
   const borderColor = isPlayerHere ? "#ffd700" : isHighlighted ? "#4a9eff" : "#333";
   const bgColor = isPlayerHere ? "rgba(255,215,0,0.08)" : isHighlighted ? "rgba(74,158,255,0.08)" : "rgba(255,255,255,0.02)";
@@ -58,19 +63,29 @@ export default function MapTile({ name, effect, isPlayerHere, playerImageUrl, oc
             )}
           </motion.div>
         )}
-        {occupantClasses.map((cls, i) => (
-          <span
-            key={i}
-            className="text-[10px] px-1 rounded font-bold"
-            style={{
-              background: cls === "???" ? "rgba(255,74,74,0.15)" : "rgba(255,255,255,0.08)",
-              color: cls === "???" ? "#ff6b6b" : "#ccc",
-              border: cls === "???" ? "1px solid rgba(255,74,74,0.3)" : "none",
-              animation: cls === "???" ? "pulse 2s ease-in-out infinite" : "none",
-            }}
-          >
-            {cls === "???" ? "⚔ ???" : cls}
-          </span>
+        {occupants.map((occ, i) => (
+          occ.imageUrl ? (
+            <div
+              key={i}
+              className="w-5 h-5 rounded-full overflow-hidden border border-red-500/60"
+              style={{ boxShadow: "0 0 6px rgba(255,74,74,0.3)" }}
+            >
+              <img src={occ.imageUrl} alt={occ.label} className="w-full h-full object-cover" />
+            </div>
+          ) : (
+            <span
+              key={i}
+              className="text-[10px] px-1 rounded font-bold"
+              style={{
+                background: occ.label === "???" ? "rgba(255,74,74,0.15)" : "rgba(255,255,255,0.08)",
+                color: occ.label === "???" ? "#ff6b6b" : "#ccc",
+                border: occ.label === "???" ? "1px solid rgba(255,74,74,0.3)" : "none",
+                animation: occ.label === "???" ? "pulse 2s ease-in-out infinite" : "none",
+              }}
+            >
+              {occ.label === "???" ? "⚔ ???" : occ.label}
+            </span>
+          )
         ))}
       </div>
 
