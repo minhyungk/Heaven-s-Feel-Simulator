@@ -7,12 +7,13 @@ import WarDashboard from "./components/WarDashboard";
 import WarSimulation from "./components/WarSimulation";
 import CatalystModal from "./components/CatalystModal";
 import RankingPage from "./components/RankingPage";
+import TRPGGame from "./components/trpg/TRPGGame";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import { ServantDataProvider } from "./contexts/ServantDataContext";
 import type { Servant } from "./data/types";
 
 export default function App() {
-  const { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard, goToRankings, backFromRankings } = useGrailWar();
+  const { phase, war, startWar, startWarForTRPG, gachaComplete, skipToBoard, reroll, goHome, startSimulation, startTRPG, backToDashboard, goToRankings, backFromRankings } = useGrailWar();
   const [showCatalyst, setShowCatalyst] = useState(false);
 
   const handleCatalystSelect = (servant: Servant) => {
@@ -28,6 +29,7 @@ export default function App() {
             key="start"
             onStart={() => startWar()}
             onCatalyst={() => setShowCatalyst(true)}
+            onStartTRPG={startWarForTRPG}
             onRankings={goToRankings}
           />
         )}
@@ -43,6 +45,7 @@ export default function App() {
             onHome={goHome}
             onRankings={goToRankings}
             onStartSimulation={startSimulation}
+            onStartTRPG={startTRPG}
           />
         )}
         {phase === "simulation" && war && (
@@ -54,6 +57,14 @@ export default function App() {
             catalyst={war.catalyst}
             onClose={backToDashboard}
             onRankings={goToRankings}
+          />
+        )}
+        {phase === "trpg" && war && (
+          <TRPGGame
+            key="trpg"
+            participants={war.participants}
+            playerServant={war.playerServant}
+            onClose={backToDashboard}
           />
         )}
       </AnimatePresence>

@@ -1,0 +1,160 @@
+{
+  "title": "Manual Battle Mode",
+  "header": {
+    "day": "Night {{day}}",
+    "seals": "Command Seals: {{count}}",
+    "position": "Position: {{tile}}"
+  },
+  "intent": {
+    "title": "Choose Action",
+    "hunt": "Hunt",
+    "huntDesc": "Actively search for enemies",
+    "guard": "Guard",
+    "guardDesc": "Maintain defensive stance (+10% in combat)",
+    "hide": "Hide",
+    "hideDesc": "Stay hidden and avoid detection"
+  },
+  "movement": {
+    "title": "Choose Movement",
+    "current": "Current Location",
+    "stay": "Stay",
+    "ridingBonus": "Riding Bonus: 2-tile movement",
+    "mapSelect": "Select a tile on the map to move"
+  },
+  "encounter": {
+    "title": "Encounter!",
+    "ambushTitle": "Ambush!",
+    "ambushMessage": "Ambushed a hiding {{class}} Servant!",
+    "message": "Encountered a {{class}} Servant!",
+    "fight": "Fight",
+    "escape": "Escape",
+    "escapeChance": "Escape chance: {{chance}}%",
+    "winRate": "Win rate: {{rate}}%",
+    "sealEscape": "Use Command Seal (Guaranteed Escape)",
+    "sealBoost": "Use Command Seal (Combat +30%)",
+    "sealNP": "Use Command Seal (NP Full Power)",
+    "noEscape": "Day 7+ — Escape is impossible!",
+    "escapePenalty": "{{name}}: Stats -{{penalty}} from escape"
+  },
+  "combat": {
+    "title": "Combat Result",
+    "victory": "{{name}} wins!",
+    "defeat": "Defeat...",
+    "draw": "Draw — Both survive",
+    "winRate": "Win rate: {{rate}}%"
+  },
+  "survivors": {
+    "title": "Survivors",
+    "unknown": "???",
+    "classRevealed": "{{class}} (???)",
+    "alive": "Alive",
+    "dead": "Eliminated",
+    "you": "You"
+  },
+  "commandSeal": {
+    "title": "Command Seals",
+    "remaining": "{{count}} remaining",
+    "boost": "Combat Boost (+30%)",
+    "escape": "Forced Escape (100%)",
+    "npFullPower": "NP Full Power (NP bonus 2x)",
+    "madControl": "Mad Enhancement Control"
+  },
+  "defeatEscape": {
+    "title": "Imminent Defeat!",
+    "message": "You are about to lose. Will you attempt to escape?",
+    "tryEscape": "Escape ({{chance}}%) — Stat Penalty",
+    "sealEscape": "Use Command Seal (Guaranteed Escape) — Stat Penalty"
+  },
+  "playerEscaped": {
+    "title": "Escape Successful!",
+    "message": "You successfully escaped!"
+  },
+  "forcedBridge": {
+    "title": "Forced Assembly!",
+    "message": "From Day 7 onwards, all Servants are forcibly summoned to Fuyuki Bridge. Escape is impossible."
+  },
+  "action": {
+    "indicator": "Action {{current}}/{{max}}"
+  },
+  "enemyEscaped": {
+    "title": "Enemy Escaped!",
+    "message": "{{name}} has escaped!",
+    "sealMessage": "{{name}} used a Command Seal to successfully escape!"
+  },
+  "counterSeal": {
+    "title": "Enemy Master's Command Seal!",
+    "message": "The enemy Master is about to use a Command Seal... Will you counter with yours?",
+    "decline": "Do not use",
+    "enemySeals": "Enemy Seals"
+  },
+  "map": {
+    "title": "Fuyuki City Map"
+  },
+  "area": {
+    "leyline": "Ley Line — Caster Territory Creation bonus",
+    "stealth": "Stealth Bonus — Detection -10%",
+    "encounter": "High encounter zone",
+    "neutral": "Neutral zone — Reduced combat chance",
+    "exposed": "Open area — Stealth penalty, Archer +5%"
+  },
+  "log": {
+    "encounter": "{{class}} encountered {{enemyClass}} at {{tile}}",
+    "ambush": "{{name}}'s ambush! Emerged from the shadows",
+    "ambushDetection": "Detected {{name}} while they were hiding!",
+    "antiMagic": "{{name}}'s Magic Resistance blocked the magic attack",
+    "specialAttack": "True Name Release — {{np}}! Special attack against {{target}}!",
+    "commandSeal": "Master used a Command Seal! ({{type}})",
+    "commandSealWithClass": "{{class}}'s Master used a Command Seal! ({{type}})",
+    "quietNight": "Night {{day}} — A quiet night passes",
+    "draw": "{{a}} vs {{b}} — The battle is inconclusive",
+    "victory": "{{winner}} defeated {{loser}}",
+    "escapeSuccess": "{{name}} successfully escaped",
+    "escapeFail": "{{name}} failed to escape!",
+    "sealEscape": "{{name}} used a Command Seal to escape!",
+    "escapeRecovery": "{{name}} has recovered! (Escape penalty cleared)",
+    "npDeploy": "{{name}}'s '{{np}}' Noble Phantasm deployed!",
+    "noEscape": "Day 7+ — Escape is impossible!",
+    "playerDetected": "Detected by {{seeker}} while hiding!",
+    "detected": "{{hider}} was detected by {{seeker}}!",
+    "madDisobey": "{{name}}'s Mad Enhancement activates! Acts as {{overriddenIntent}} instead of {{originalIntent}}",
+    "madDisobeyClass": "{{class}}'s Mad Enhancement activates! Acts as {{overriddenIntent}} instead of {{originalIntent}}",
+    "aiCombatSameTile": "{{classA}} and {{classB}} are fighting at {{tile}}!",
+    "aiCombatAdjacent": "Sounds of battle nearby... ({{classA}} vs {{classB}})",
+    "aiCombatDistant": "Magical disturbance detected in the distance...",
+    "elimination": "{{name}} has been eliminated",
+    "independentAction": "{{name}} persists through Independent Action for {{days}} days",
+    "gameOver": "Holy Grail War concluded — {{winner}} is victorious"
+  },
+  "nightEnd": {
+    "title": "The night has passed",
+    "continue": "Next Night →"
+  },
+  "gameOver": {
+    "victory": "Holy Grail War Victory!",
+    "defeat": "Defeat...",
+    "winnerMessage": "{{name}} obtained the Grail after {{days}} days",
+    "loserMessage": "Your Servant has fallen",
+    "backToDashboard": "Back to Dashboard",
+    "playAgain": "Try Again"
+  },
+  "sealBoost": "{{name}}'s Master used a Command Seal to boost combat power!",
+  "npFullPower": "{{name}}'s Master deployed Noble Phantasm '{{np}}' with a Command Seal!",
+  "detectedPenalty": "{{name}} suffered a detection penalty",
+  "territoryBonus": "{{name}}'s Territory Creation activated",
+  "territoryCreation": "{{name}}'s Territory Creation {{rank}} activated! Combat bonus",
+  "specialAttack": "{{attacker}}'s '{{npName}}' — Special attack against {{defender}}! ({{traits}}, {{multiplier}})",
+  "startTRPG": "Manual Battle",
+  "startTRPGDesc": "Make strategic choices and join the Holy Grail War directly",
+  "tips": {
+    "title": "Battle Guide",
+    "npDeploy": "NP Deploy: Uses Command Seal, combat bonus based on NP rank (C=+10%, A=+17.5%, EX=+20%)",
+    "specialAttack": "Special Attack: Auto-triggers based on enemy traits (win rate +7.5~22.5%)",
+    "escape": "Escape: Based on AGI/LCK difference, Riding/Presence Concealment bonus (base 50%)",
+    "noEscapeDay7": "Day 7+: No escape allowed, all servants gather at Fuyuki Bridge",
+    "guard": "Guard: +10% defense bonus in combat",
+    "ambush": "Assassin Ambush: When hunting, ambush chance based on Presence Concealment (+20% if success)",
+    "antiMagic": "Magic Resistance: Saber/Lancer/Archer get bonus vs Caster",
+    "territory": "Territory Creation: Combat bonus after 2+ turns on same tile"
+  },
+  "spectating": "Spectating..."
+}

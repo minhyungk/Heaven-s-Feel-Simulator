@@ -81,26 +81,45 @@ function summonGrailWar(servantPool: Servant[], catalyst?: Servant): GrailWarRes
   return { participants: newParticipants, playerServant, hasExtraInvasion: invaded, extraServant, summonType: "random", catalyst: null };
 }
 
-export type GamePhase = "start" | "gacha" | "dashboard" | "simulation" | "rankings";
+export type GamePhase = "start" | "gacha" | "dashboard" | "simulation" | "rankings" | "trpg";
 
 export function useGrailWar() {
   const { servants } = useServantData();
   const [phase, setPhase] = useState<GamePhase>("start");
   const [war, setWar] = useState<GrailWarResult | null>(null);
+  const [pendingTRPG, setPendingTRPG] = useState(false);
 
   const startWar = useCallback((catalyst?: Servant) => {
     const result = summonGrailWar(servants, catalyst);
     setWar(result);
+    setPendingTRPG(false);
+    setPhase("gacha");
+  }, [servants]);
+
+  const startWarForTRPG = useCallback(() => {
+    const result = summonGrailWar(servants);
+    setWar(result);
+    setPendingTRPG(true);
     setPhase("gacha");
   }, [servants]);
 
   const skipToBoard = useCallback(() => {
-    setPhase("dashboard");
-  }, []);
+    if (pendingTRPG) {
+      setPendingTRPG(false);
+      setPhase("trpg");
+    } else {
+      setPhase("dashboard");
+    }
+  }, [pendingTRPG]);
 
   const gachaComplete = useCallback(() => {
-    setPhase("dashboard");
-  }, []);
+    if (pendingTRPG) {
+      setPendingTRPG(false);
+      setPhase("trpg");
+    } else {
+      setPhase("dashboard");
+    }
+  }, [pendingTRPG]);
 
   const reroll = useCallback(() => {
     const result = summonGrailWar(servants);
@@ -110,6 +129,10 @@ export function useGrailWar() {
 
   const startSimulation = useCallback(() => {
     setPhase("simulation");
+  }, []);
+
+  const startTRPG = useCallback(() => {
+    setPhase("trpg");
   }, []);
 
   const backToDashboard = useCallback(() => {
@@ -129,5 +152,5 @@ export function useGrailWar() {
     setPhase("start");
   }, []);
 
-  return { phase, war, startWar, gachaComplete, skipToBoard, reroll, goHome, startSimulation, backToDashboard, goToRankings, backFromRankings };
+  return { phase, war, startWar, startWarForTRPG, gachaComplete, skipToBoard, reroll, goHome, startSimulation, startTRPG, backToDashboard, goToRankings, backFromRankings };
 }
