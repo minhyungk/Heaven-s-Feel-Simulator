@@ -37,7 +37,7 @@ export function revealOnEncounter(info: EnemyInfo, servantClass: ServantClass, p
   if (info.fogLevel === "fullyRevealed") return info;
   return {
     ...info,
-    fogLevel: info.fogLevel === "fullyRevealed" ? "fullyRevealed" : "statsRevealed",
+    fogLevel: "statsRevealed",
     knownClass: servantClass,
     knownStats: true,
     lastKnownPosition: position,
