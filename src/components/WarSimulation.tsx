@@ -70,18 +70,28 @@ async function captureElement(el: HTMLElement): Promise<Blob | null> {
 }
 
 export default function WarSimulation({ participants, playerServant: rawPlayerServant, summonType, catalyst, onClose, onRankings }: Props) {
-  const { t } = useTranslation(["common", "simulation"]);
+  const { t } = useTranslation(["common", "simulation", "trpg"]);
   const resolve = useServantResolver();
   const { byId } = useServantData();
   const playerServant = resolve(rawPlayerServant);
 
-  /** Resolve servant names in skill effect params using current language */
+  /** Keys with a colon already include a namespace; others belong to simulation */
+  function effectKey(key: string): string {
+    return key.includes(":") ? key : `simulation:${key}`;
+  }
+
+  /** Resolve servant names and nested i18n keys in skill effect params */
   function resolveEffectParams(effect: SkillEffect): Record<string, string> {
-    if (!effect.servantRefs) return effect.params;
     const params = { ...effect.params };
-    for (const [key, id] of Object.entries(effect.servantRefs)) {
-      const s = byId.get(id);
-      if (s) params[key] = s.name;
+    if (effect.servantRefs) {
+      for (const [key, id] of Object.entries(effect.servantRefs)) {
+        const s = byId.get(id);
+        if (s) params[key] = s.name;
+      }
+    }
+    // Resolve nested i18n keys (e.g. skillName: "territoryCreation" → "진지작성")
+    if (params.skillName) {
+      params.skillName = t(`simulation:${params.skillName}`);
     }
     return params;
   }
@@ -315,7 +325,7 @@ export default function WarSimulation({ participants, playerServant: rawPlayerSe
                             {b.result.skillEffects.length > 0 && (
                               <div className="mb-2 space-y-0.5">
                                 {b.result.skillEffects.map((effect, j) => (
-                                  <p key={j} className="text-xs text-magic-blue text-center">{t(`simulation:${effect.key}`, resolveEffectParams(effect))}</p>
+                                  <p key={j} className="text-xs text-magic-blue text-center">{t(effectKey(effect.key), resolveEffectParams(effect))}</p>
                                 ))}
                               </div>
                             )}
@@ -403,7 +413,7 @@ export default function WarSimulation({ participants, playerServant: rawPlayerSe
                       {round.battles.some((b) => b.result.skillEffects.length > 0) && (
                         <div className="text-xs text-magic-blue">
                           {round.battles.flatMap((b) => b.result.skillEffects).map((e, j) => (
-                            <span key={j}>{j > 0 && " / "}{t(`simulation:${e.key}`, resolveEffectParams(e))}</span>
+                            <span key={j}>{j > 0 && " / "}{t(effectKey(e.key), resolveEffectParams(e))}</span>
                           ))}
                         </div>
                       )}
