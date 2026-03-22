@@ -14,6 +14,7 @@ interface Props {
   onHome: () => void;
   onRankings: () => void;
   onStartSimulation: () => void;
+  onStartTRPG: () => void;
 }
 
 function WinRateBar({ servant: rawServant, enemyScore, winRate, index }: { servant: Servant; enemyScore: number; winRate: number; index: number }) {
@@ -75,7 +76,7 @@ function WinRateBar({ servant: rawServant, enemyScore, winRate, index }: { serva
   );
 }
 
-export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRankings, onStartSimulation }: Props) {
+export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRankings, onStartSimulation, onStartTRPG }: Props) {
   const { t } = useTranslation();
   const resolve = useServantResolver();
 
@@ -235,16 +236,27 @@ export default function WarDashboard({ war, onReroll, onCatalyst, onHome, onRank
         </motion.div>
       )}
 
-      {/* Start Simulation */}
-      <motion.button
-        whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 74, 74, 0.3)" }}
-        whileTap={{ scale: 0.95 }}
-        onClick={onStartSimulation}
-        className="px-10 py-3 text-sm font-bold rounded-lg border-2 border-magic-red bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
-        style={{ fontFamily: "var(--font-serif)", marginTop: "1rem", marginBottom: "1.5rem" }}
-      >
-        {t("dashboard.startWar")}
-      </motion.button>
+      {/* Start Buttons */}
+      <div className="flex gap-3 justify-center" style={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 74, 74, 0.3)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onStartSimulation}
+          className="px-10 py-3 text-sm font-bold rounded-lg border-2 border-magic-red bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          {t("dashboard.startWar")}
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(74, 158, 255, 0.3)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onStartTRPG}
+          className="px-10 py-3 text-sm font-bold rounded-lg border-2 border-magic-blue bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          {t("trpg:startTRPG")}
+        </motion.button>
+      </div>
 
       {/* Actions */}
       <div className="flex flex-col items-center gap-3 pb-24" style={{ marginTop: "1rem", marginBottom: "1rem" }}>

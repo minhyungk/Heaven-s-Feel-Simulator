@@ -1,0 +1,160 @@
+{
+  "title": "手動戦闘モード",
+  "header": {
+    "day": "第{{day}}日目 夜",
+    "seals": "令呪残量: {{count}}画",
+    "position": "現在位置: {{tile}}"
+  },
+  "intent": {
+    "title": "行動選択",
+    "hunt": "狩り",
+    "huntDesc": "積極的に敵を探索する",
+    "guard": "警戒",
+    "guardDesc": "防御態勢を維持する（戦闘時+10%）",
+    "hide": "隠遁",
+    "hideDesc": "隠れて発覚を避ける"
+  },
+  "movement": {
+    "title": "移動先選択",
+    "current": "現在地",
+    "stay": "留まる",
+    "ridingBonus": "騎乗ボーナス: 2タイル移動可能",
+    "mapSelect": "マップでタイルを選択して移動"
+  },
+  "encounter": {
+    "title": "遭遇！",
+    "ambushTitle": "奇襲！",
+    "ambushMessage": "隠遁中の{{class}}サーヴァントを奇襲した！",
+    "message": "{{class}}のサーヴァントと遭遇した！",
+    "fight": "戦闘",
+    "escape": "逃走",
+    "escapeChance": "逃走確率: {{chance}}%",
+    "winRate": "勝率: {{rate}}%",
+    "sealEscape": "令呪使用（確定逃走）",
+    "sealBoost": "令呪使用（戦闘力+30%）",
+    "sealNP": "令呪使用（宝具全力）",
+    "noEscape": "7日目以降 — 逃走不可！",
+    "escapePenalty": "{{name}}: 逃走によりステータス -{{penalty}}"
+  },
+  "combat": {
+    "title": "戦闘結果",
+    "victory": "{{name}} 勝利！",
+    "defeat": "敗北...",
+    "draw": "引き分け — 両者生存",
+    "winRate": "勝率: {{rate}}%"
+  },
+  "survivors": {
+    "title": "生存者状況",
+    "unknown": "???",
+    "classRevealed": "{{class}} (???)",
+    "alive": "生存",
+    "dead": "脱落",
+    "you": "あなた"
+  },
+  "commandSeal": {
+    "title": "令呪",
+    "remaining": "残り{{count}}画",
+    "boost": "戦闘力ブースト（+30%）",
+    "escape": "強制逃走（100%）",
+    "npFullPower": "宝具全力（宝具補正2倍）",
+    "madControl": "狂化制御"
+  },
+  "defeatEscape": {
+    "title": "敗北の危機！",
+    "message": "敗北しそうだ。逃走を試みますか？",
+    "tryEscape": "逃走する（{{chance}}%）— ステータスペナルティ有",
+    "sealEscape": "令呪使用（確定逃走）— ステータスペナルティ有"
+  },
+  "playerEscaped": {
+    "title": "逃走成功！",
+    "message": "逃走に成功した！"
+  },
+  "forcedBridge": {
+    "title": "強制集合！",
+    "message": "7日目以降、全サーヴァントが冬木大橋に強制召集されます。逃走は不可能です。"
+  },
+  "action": {
+    "indicator": "行動 {{current}}/{{max}}"
+  },
+  "enemyEscaped": {
+    "title": "敵逃走！",
+    "message": "{{name}}が逃走した！",
+    "sealMessage": "敵{{name}}が令呪を使用して逃走に成功した！"
+  },
+  "counterSeal": {
+    "title": "敵マスターの令呪！",
+    "message": "相手マスターが令呪を使用しようとしています...対抗して使用しますか？",
+    "decline": "使用しない",
+    "enemySeals": "敵令呪"
+  },
+  "map": {
+    "title": "冬木市マップ"
+  },
+  "area": {
+    "leyline": "霊脈 — キャスター陣地作成ボーナス",
+    "stealth": "隠密ボーナス — 発覚確率-10%",
+    "encounter": "遭遇確率上昇エリア",
+    "neutral": "中立地帯 — 戦闘確率減少",
+    "exposed": "開けた場所 — 隠密ペナルティ、アーチャー+5%"
+  },
+  "log": {
+    "encounter": "{{class}}が{{tile}}で{{enemyClass}}と遭遇した",
+    "ambush": "{{name}}の奇襲！影の中から現れた",
+    "ambushDetection": "隠遁中の{{name}}を発見した！",
+    "antiMagic": "{{name}}の対魔力が魔術攻撃を防いだ",
+    "specialAttack": "真名解放 — {{np}}！ {{target}}特攻が発動する！",
+    "commandSeal": "マスターが令呪を使用した！（{{type}}）",
+    "commandSealWithClass": "{{class}}のマスターが令呪を使用した！（{{type}}）",
+    "quietNight": "第{{day}}日目 夜 — 静かな夜が訪れた",
+    "draw": "{{a}} vs {{b}} — 決着がつかなかった",
+    "victory": "{{winner}}が{{loser}}を打ち倒した",
+    "escapeSuccess": "{{name}}が逃走に成功した",
+    "escapeFail": "{{name}}の逃走失敗！",
+    "sealEscape": "{{name}}が令呪を使って逃走した！",
+    "escapeRecovery": "{{name}}が気力を取り戻した！（逃走ペナルティ回復）",
+    "npDeploy": "{{name}}の'{{np}}'宝具展開！",
+    "noEscape": "7日目以降 — 逃走不可！",
+    "playerDetected": "隠遁中に{{seeker}}に発覚された！",
+    "detected": "{{hider}}が{{seeker}}に発覚された！",
+    "madDisobey": "{{name}}の狂化が発動！{{originalIntent}}の代わりに{{overriddenIntent}}で行動する",
+    "madDisobeyClass": "{{class}}の狂化が発動！{{originalIntent}}の代わりに{{overriddenIntent}}で行動する",
+    "aiCombatSameTile": "{{classA}}と{{classB}}が{{tile}}で交戦中！",
+    "aiCombatAdjacent": "近くで交戦音が聞こえる...（{{classA}} vs {{classB}}）",
+    "aiCombatDistant": "遠くで魔力の波動が感知された...",
+    "elimination": "{{name}}が脱落した",
+    "independentAction": "{{name}}が単独行動で{{days}}日間残存する",
+    "gameOver": "聖杯戦争終結 — {{winner}}が勝利した"
+  },
+  "nightEnd": {
+    "title": "夜が過ぎた",
+    "continue": "次の夜へ →"
+  },
+  "gameOver": {
+    "victory": "聖杯戦争勝利！",
+    "defeat": "敗北...",
+    "winnerMessage": "{{name}}が{{days}}日で聖杯を獲得しました",
+    "loserMessage": "あなたのサーヴァントが倒れました",
+    "backToDashboard": "ダッシュボードへ戻る",
+    "playAgain": "再挑戦"
+  },
+  "sealBoost": "{{name}}のマスターが令呪で戦闘力を強化した！",
+  "npFullPower": "{{name}}のマスターが令呪で'{{np}}'宝具を展開した！",
+  "detectedPenalty": "{{name}}が隠密発覚ペナルティを受けた",
+  "territoryBonus": "{{name}}の陣地作成が発動した",
+  "territoryCreation": "{{name}}の陣地作成{{rank}}発動！戦闘力ボーナス",
+  "specialAttack": "{{attacker}}の'{{npName}}'宝具 — {{defender}}に'{{traits}}'特攻！（{{multiplier}}）",
+  "startTRPG": "手動戦闘参戦",
+  "startTRPGDesc": "戦略的な選択をしながら聖杯戦争に参戦する",
+  "tips": {
+    "title": "戦闘ガイド",
+    "npDeploy": "宝具展開: 令呪消費、宝具ランクに応じた戦闘力補正 (NP C=+10%, A=+17.5%, EX=+20%)",
+    "specialAttack": "特攻: 相手の特性に応じて自動発動 (勝率 +7.5~22.5%)",
+    "escape": "逃走: 敏捷・幸運差、騎乗・気配遮断でボーナス (基本50%)",
+    "noEscapeDay7": "7日目以降: 逃走不可、全員冬木大橋集合",
+    "guard": "警戒: 戦闘時防御補正 +10%",
+    "ambush": "アサシン奇襲: 狩り時、気配遮断ランクに応じて奇襲 (成功時 +20%)",
+    "antiMagic": "対魔力: セイバー/ランサー/アーチャーがキャスター相手に補正",
+    "territory": "陣地作成: 同タイルに2ターン以上で戦闘力ボーナス"
+  },
+  "spectating": "観戦中..."
+}

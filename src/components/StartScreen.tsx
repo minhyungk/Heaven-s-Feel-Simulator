@@ -6,11 +6,13 @@ import { APP_VERSION } from "../data/types";
 interface Props {
   onStart: () => void;
   onCatalyst: () => void;
+  onDesignated: () => void;
+  onStartTRPG: () => void;
   onRankings: () => void;
 }
 
-export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) {
-  const { t } = useTranslation(["common", "incantation"]);
+export default function StartScreen({ onStart, onCatalyst, onDesignated, onStartTRPG, onRankings }: Props) {
+  const { t } = useTranslation(["common", "incantation", "trpg"]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -115,6 +117,30 @@ export default function StartScreen({ onStart, onCatalyst, onRankings }: Props) 
             {t("start.catalystSummon")}
           </motion.button>
         </div>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.75, duration: 0.5 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(74, 158, 255, 0.2)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onDesignated}
+          className="px-8 py-3 text-lg font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer transition-all hover:bg-magic-blue/10"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          {t("start.designatedSummon")}
+        </motion.button>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 74, 74, 0.3)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onStartTRPG}
+          className="px-8 py-3 text-lg font-bold rounded-lg border border-magic-red bg-transparent text-magic-red cursor-pointer transition-all hover:bg-magic-red/10"
+          style={{ fontFamily: "var(--font-serif)" }}
+        >
+          {t("trpg:startTRPG")}
+        </motion.button>
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

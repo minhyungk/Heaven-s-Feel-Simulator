@@ -1,0 +1,160 @@
+{
+  "title": "수동 전투 모드",
+  "header": {
+    "day": "제{{day}}일차 밤",
+    "seals": "영주 잔여: {{count}}획",
+    "position": "현재 위치: {{tile}}"
+  },
+  "intent": {
+    "title": "행동 선택",
+    "hunt": "사냥",
+    "huntDesc": "적극적으로 적을 탐색합니다",
+    "guard": "경계",
+    "guardDesc": "방어적 태세를 유지합니다 (전투 시 +10%)",
+    "hide": "은신",
+    "hideDesc": "숨어서 발각을 피합니다"
+  },
+  "movement": {
+    "title": "이동 선택",
+    "current": "현재 위치",
+    "stay": "제자리",
+    "ridingBonus": "기승 보너스: 2타일 이동 가능",
+    "mapSelect": "맵에서 이동할 타일을 선택하세요"
+  },
+  "encounter": {
+    "title": "조우!",
+    "ambushTitle": "기습!",
+    "ambushMessage": "은신 중이던 {{class}} 서번트를 기습했습니다!",
+    "message": "{{class}} 서번트와 조우했습니다!",
+    "fight": "전투",
+    "escape": "도주",
+    "escapeChance": "도주 확률: {{chance}}%",
+    "winRate": "승률: {{rate}}%",
+    "sealEscape": "영주 사용 (확정 도주)",
+    "sealBoost": "영주 사용 (전투력 +30%)",
+    "sealNP": "영주 사용 (보구 풀파워)",
+    "noEscape": "7일차 이후 — 도주할 수 없다!",
+    "escapePenalty": "{{name}}: 도주로 인해 스탯 -{{penalty}}"
+  },
+  "combat": {
+    "title": "전투 결과",
+    "victory": "{{name}} 승리!",
+    "defeat": "패배...",
+    "draw": "무승부 — 양측 생존",
+    "winRate": "승률: {{rate}}%"
+  },
+  "survivors": {
+    "title": "생존자 현황",
+    "unknown": "???",
+    "classRevealed": "{{class}} (???)",
+    "alive": "생존",
+    "dead": "탈락",
+    "you": "당신"
+  },
+  "commandSeal": {
+    "title": "영주",
+    "remaining": "{{count}}획 남음",
+    "boost": "전투력 부스트 (+30%)",
+    "escape": "강제 도주 (100%)",
+    "npFullPower": "보구 풀파워 (보구 보정 2x)",
+    "madControl": "광화 제어"
+  },
+  "counterSeal": {
+    "title": "적 마스터의 영주!",
+    "message": "상대 마스터가 영주를 사용하려 합니다... 맞서 사용하시겠습니까?",
+    "decline": "사용하지 않음",
+    "enemySeals": "적 영주"
+  },
+  "defeatEscape": {
+    "title": "패배 위기!",
+    "message": "패배할 것 같다. 도주를 시도하시겠습니까?",
+    "tryEscape": "도주하기 ({{chance}}%) — 스탯 페널티 O",
+    "sealEscape": "영주 사용 (확정 도주) — 스탯 페널티 O"
+  },
+  "playerEscaped": {
+    "title": "도주 성공!",
+    "message": "도주에 성공했다!"
+  },
+  "forcedBridge": {
+    "title": "강제 집합!",
+    "message": "7일차 이후, 모든 서번트가 후유키 대교로 강제 소환됩니다. 도주는 불가능합니다."
+  },
+  "action": {
+    "indicator": "행동 {{current}}/{{max}}"
+  },
+  "enemyEscaped": {
+    "title": "적 도주!",
+    "message": "{{name}}(이)가 도주했다!",
+    "sealMessage": "적 {{name}}(이)가 영주를 사용해 성공적으로 도주했다!"
+  },
+  "map": {
+    "title": "후유키 시 맵"
+  },
+  "area": {
+    "leyline": "영맥 — 캐스터 진지작성 보너스",
+    "stealth": "은신 보너스 — 발각 확률 -10%",
+    "encounter": "조우 확률 상승 구역",
+    "neutral": "중립지대 — 전투 확률 감소",
+    "exposed": "개활지 — 은신 페널티, Archer +5%"
+  },
+  "log": {
+    "encounter": "{{class}}(이)가 {{tile}}에서 {{enemyClass}}와 조우했다",
+    "ambush": "{{name}}의 기습! 그림자 속에서 나타났다",
+    "ambushDetection": "은신 중이던 {{name}}을(를) 발견했다!",
+    "antiMagic": "{{name}}의 대마력이 마술 공격을 막아냈다",
+    "specialAttack": "진명 해방 — {{attacker}}의 '{{np}}' {{target}} 특공이 발동한다!",
+    "commandSeal": "마스터가 영주를 사용했다! ({{type}})",
+    "commandSealWithClass": "{{class}}의 마스터가 영주를 사용했다! ({{type}})",
+    "quietNight": "제{{day}}일차 밤 — 고요한 밤이 찾아왔다",
+    "draw": "{{a}} vs {{b}} — 승부가 나지 않았다",
+    "victory": "{{winner}}(이)가 {{loser}}를 쓰러뜨렸다",
+    "escapeSuccess": "{{name}}(이)가 성공적으로 도주했다",
+    "escapeFail": "{{name}}의 도주 실패!",
+    "sealEscape": "{{name}}(이)가 영주를 사용해서 도주했다!",
+    "escapeRecovery": "{{name}}(이)가 기운을 차렸다! (도주 페널티 회복)",
+    "npDeploy": "{{name}}의 '{{np}}' 보구 전개!",
+    "noEscape": "7일차 이후 — 도주할 수 없다!",
+    "playerDetected": "은신 중에 {{seeker}}에게 발각당했다!",
+    "detected": "{{hider}}(이)가 {{seeker}}에게 발각되었다!",
+    "madDisobey": "{{name}}의 광화가 발동! {{originalIntent}} 대신 {{overriddenIntent}}(으)로 행동한다",
+    "madDisobeyClass": "{{class}}의 광화가 발동! {{originalIntent}} 대신 {{overriddenIntent}}(으)로 행동한다",
+    "aiCombatSameTile": "{{classA}}(과)와 {{classB}}(이)가 {{tile}}에서 교전 중!",
+    "aiCombatAdjacent": "인근에서 교전음이 들린다... ({{classA}} vs {{classB}})",
+    "aiCombatDistant": "먼 곳에서 마력 파동이 감지되었다...",
+    "elimination": "{{name}}(이)가 탈락했다",
+    "independentAction": "{{name}}(이)가 단독행동으로 {{days}}일간 잔존한다",
+    "gameOver": "성배전쟁 종결 — {{winner}}(이)가 승리했다"
+  },
+  "nightEnd": {
+    "title": "밤이 지나갔다",
+    "continue": "다음 밤으로 →"
+  },
+  "gameOver": {
+    "victory": "성배전쟁 승리!",
+    "defeat": "패배...",
+    "winnerMessage": "{{name}}(이)가 {{days}}일 만에 성배를 획득했습니다",
+    "loserMessage": "당신의 서번트가 쓰러졌습니다",
+    "backToDashboard": "대시보드로 돌아가기",
+    "playAgain": "다시 도전"
+  },
+  "sealBoost": "{{name}}의 마스터가 영주로 전투력을 강화했다!",
+  "npFullPower": "{{name}}의 마스터가 영주로 '{{np}}' 보구를 전개했다!",
+  "detectedPenalty": "{{name}}(이)가 은신 발각 페널티를 받았다",
+  "territoryBonus": "{{name}}의 진지작성이 발동했다",
+  "territoryCreation": "{{name}}의 진지작성 {{rank}} 발동! 전투력 보너스",
+  "specialAttack": "{{attacker}}의 '{{npName}}' 보구 — {{defender}}에게 '{{traits}}' 특공! ({{multiplier}})",
+  "startTRPG": "수동 전투 참전",
+  "startTRPGDesc": "직접 전략적 선택을 하며 성배전쟁에 참전합니다",
+  "tips": {
+    "title": "전투 가이드",
+    "npDeploy": "보구 전개: 영주 소비, 보구 랭크에 비례한 전투력 보정 (NP C=+10%, A=+17.5%, EX=+20%)",
+    "specialAttack": "특공: 상대 특성에 따라 보구 특공이 자동 발동 (승률 +7.5~22.5%)",
+    "escape": "도주 확률: 민첩·행운 차이, 기승·기척차단 보유 시 보너스 (기본 50%)",
+    "noEscapeDay7": "7일차 이후: 도주 불가, 전원 후유키 대교 집합",
+    "guard": "경계 자세: 전투 시 방어 보정 +10%",
+    "ambush": "어쌔신 기습: 사냥 의도 시 기척 차단 랭크에 비례해 기습 (성공 시 +20%)",
+    "antiMagic": "대마력: 세이버/랜서/아쳐가 캐스터 상대 시 승률 보정",
+    "territory": "진지작성: 같은 타일에 2턴 이상 체류 시 전투력 보너스"
+  },
+  "spectating": "관전 중..."
+}

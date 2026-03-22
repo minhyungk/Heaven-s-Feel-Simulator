@@ -3,7 +3,8 @@
     "subtitle": "聖杯戦争シミュレーター",
     "joinWar": "聖杯戦争参戦",
     "catalystSummon": "触媒召喚",
-    "rankings": "ランキング"
+    "rankings": "ランキング",
+    "designatedSummon": "指定召喚"
   },
   "gacha": {
     "skip": "SKIP →",
@@ -101,6 +102,17 @@
     "searchPlaceholder": "サーヴァント名検索...",
     "all": "全て",
     "noResults": "検索結果なし"
+  },
+  "designated": {
+    "title": "指定召喚",
+    "myServant": "マイサーヴァント",
+    "enemyServants": "敵サーヴァント",
+    "enemy": "敵",
+    "selectPlayer": "自分のサーヴァントを選択",
+    "selectEnemy": "残り{{remaining}}騎を選択",
+    "confirm": "召喚確定",
+    "preset4th": "第四次聖杯戦争",
+    "preset5th": "第五次聖杯戦争"
   },
   "ranking": {
     "back": "← 戻る",
