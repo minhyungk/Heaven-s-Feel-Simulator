@@ -156,5 +156,10 @@
     "antiMagic": "Magic Resistance: Saber/Lancer/Archer get bonus vs Caster",
     "territory": "Territory Creation: Combat bonus after 2+ turns on same tile"
   },
-  "spectating": "Spectating..."
+  "spectating": "Spectating...",
+  "tabs": {
+    "status": "Status",
+    "log": "Log",
+    "servant": "My Servant"
+  }
 }

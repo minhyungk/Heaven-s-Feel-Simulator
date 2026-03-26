@@ -58,6 +58,14 @@ export function useTRPGGame(participants: Servant[], playerServantId: number) {
     dispatch({ type: "resolveAI" });
   }, []);
 
+  const manaSupply = useCallback(() => {
+    dispatch({ type: "manaSupply" });
+  }, []);
+
+  const skipManaSupply = useCallback(() => {
+    dispatch({ type: "skipManaSupply" });
+  }, []);
+
   return {
     state,
     selectIntent,
@@ -69,5 +77,7 @@ export function useTRPGGame(participants: Servant[], playerServantId: number) {
     setWish,
     advancePhase,
     resolveAI,
+    manaSupply,
+    skipManaSupply,
   };
 }

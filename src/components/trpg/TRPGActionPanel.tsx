@@ -11,6 +11,8 @@ import i18n from "../../i18n";
 import IntentSelection from "./IntentSelection";
 import EncounterDecision from "./EncounterDecision";
 import CombatResult from "./CombatResult";
+import { RESULT_COLORS, RESULT_LABELS_KO, RESULT_LABELS_EN, RESULT_LABELS_JA } from "../../engine/manaSupply";
+import type { ManaSupplyResult } from "../../engine/manaSupply";
 
 interface Props {
   state: TRPGGameState;
@@ -23,6 +25,8 @@ interface Props {
   onSetWish: (wish: string) => void;
   onAdvancePhase: () => void;
   onClose: () => void;
+  onManaSupply?: () => void;
+  onSkipManaSupply?: () => void;
 }
 
 export default function TRPGActionPanel({
@@ -30,6 +34,7 @@ export default function TRPGActionPanel({
   onSelectIntent, onEncounterDecision,
   onUseCommandSeal, onCounterSealDecision, onDefeatEscapeDecision,
   onSetWish, onAdvancePhase, onClose,
+  onManaSupply, onSkipManaSupply,
 }: Props) {
   const { t } = useTranslation(["trpg", "simulation"]);
   const resolve = useServantResolver();
@@ -119,6 +124,7 @@ export default function TRPGActionPanel({
               state={state}
               onContinue={() => {}}
               hideButton
+              overrideResultText={t("trpg:defeatEscape.losing")}
             />
 
             <p className="text-sm text-gray-400 my-4">{t("trpg:defeatEscape.message")}</p>
@@ -162,7 +168,11 @@ export default function TRPGActionPanel({
         {state.phase === "playerEscaped" && (
           <div className="text-center">
             <p className="text-xs text-magic-blue uppercase tracking-wider mb-3">{t("trpg:playerEscaped.title")}</p>
-            <p className="text-sm text-gray-400 mb-4">{t("trpg:playerEscaped.message")}</p>
+            <p className="text-sm text-gray-400 mb-4">
+              {state.escapedViaSeal
+                ? t("trpg:playerEscaped.sealMessage")
+                : t("trpg:playerEscaped.message")}
+            </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -271,6 +281,66 @@ export default function TRPGActionPanel({
           </div>
         )}
 
+        {state.phase === "manaSupplyPrompt" && (
+          <div className="text-center">
+            <p className="text-xs text-purple-400 uppercase tracking-wider mb-3">{t("trpg:manaSupply.title", "마력 공급")}</p>
+            <p className="text-sm text-gray-400 mb-4">{t("trpg:manaSupply.prompt", "서번트에게 마력을 공급하시겠습니까?")}</p>
+            <div className="flex gap-3 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onManaSupply}
+                className="px-6 py-3 text-sm font-bold rounded-lg border-2 border-purple-500 bg-transparent text-purple-400 cursor-pointer hover:bg-purple-500/10 transition-colors"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {t("trpg:manaSupply.supply", "마력 공급")}
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onSkipManaSupply}
+                className="px-6 py-3 text-sm font-bold rounded-lg border border-gray-600 bg-transparent text-gray-400 cursor-pointer hover:bg-white/5 transition-colors"
+              >
+                {t("trpg:manaSupply.skip", "건너뛰기")}
+              </motion.button>
+            </div>
+          </div>
+        )}
+
+        {state.phase === "manaSupplyResult" && state.lastManaSupplyOutcome && (() => {
+          const outcome = state.lastManaSupplyOutcome!;
+          const resultLabels: Record<string, Record<string, string>> = {
+            ko: RESULT_LABELS_KO, en: RESULT_LABELS_EN, ja: RESULT_LABELS_JA,
+          };
+          const labels = resultLabels[i18n.language] ?? RESULT_LABELS_EN;
+          const resultColor = RESULT_COLORS[outcome.result as ManaSupplyResult] ?? "#9ca3af";
+          return (
+            <div className="text-center">
+              <p className="text-xs text-purple-400 uppercase tracking-wider mb-3">{t("trpg:manaSupply.title", "마력 공급")}</p>
+              <p className="text-lg font-bold mb-2" style={{ color: resultColor }}>
+                {labels[outcome.result] ?? outcome.result}
+              </p>
+              <p className="text-sm text-gray-300 mb-4 italic leading-relaxed">
+                {outcome.narration}
+              </p>
+              {outcome.statDelta !== 0 && (
+                <p className="text-xs mb-2" style={{ color: outcome.statDelta > 0 ? "#4ade80" : "#ef4444" }}>
+                  {t("trpg:manaSupply.statChange", `전투력 ${outcome.statDelta > 0 ? "+" : ""}${outcome.statDelta}`)}
+                </p>
+              )}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onAdvancePhase}
+                className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {t("trpg:nightEnd.continue")}
+              </motion.button>
+            </div>
+          );
+        })()}
+
         {state.phase === "nightEnd" && (
           <div className="text-center">
             <p className="text-sm text-gray-400 mb-4">{t("trpg:nightEnd.title")}</p>
@@ -304,6 +374,8 @@ export default function TRPGActionPanel({
               transition={{ duration: 3, repeat: Infinity }}
               style={{ background: "radial-gradient(circle, rgba(255,215,0,0.2), transparent 70%)" }}
             />
+            <div className="text-4xl mb-3 relative z-10">🏆</div>
+            <img src="/7999.png" alt="Holy Grail" style={{ display: "block", width: 80, height: 80, margin: "0 auto 0.75rem auto", objectFit: "contain" }} className="animate-pulse-glow relative z-10" />
             <h2 className="text-2xl font-bold mb-2 relative z-10" style={{ fontFamily: "var(--font-serif)", color: "#ffd700" }}>
               {t("common:simulation.grailObtained")}
             </h2>

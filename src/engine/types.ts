@@ -24,6 +24,8 @@ export type TRPGPhase =
   | "combatResult"
   | "forcedBridgeNotice"
   | "aiTurn"
+  | "manaSupplyPrompt"
+  | "manaSupplyResult"
   | "nightEnd"
   | "grailWish"
   | "gameOver";
@@ -103,6 +105,8 @@ export interface MasterState {
   itemBoostCount: number;
   /** 도주 페널티 (다음 전투 스탯 감소) */
   escapePenalty: number;
+  /** 호감도 (0~100) */
+  affection: number;
 }
 
 export interface EnemyInfo {
@@ -167,6 +171,15 @@ export interface TRPGGameState {
   wish: string | null;
   /** 현재 밤의 행동 횟수 (0-based, 최대 2회) */
   actionCount: number;
+  /** 동맹 목록 */
+  alliances: { servantIds: [number, number]; formedOnDay: number; betrayalChance: number }[];
+  /** 마지막 마력공급 결과 */
+  lastManaSupplyOutcome: {
+    result: string;
+    statDelta: number;
+    affectionDelta: number;
+    narration: string;
+  } | null;
 }
 
 // ─── TRPG 액션 ───
@@ -180,7 +193,9 @@ export type TRPGAction =
   | { type: "defeatEscapeDecision"; useSeal: boolean }
   | { type: "setWish"; wish: string }
   | { type: "advancePhase" }
-  | { type: "resolveAI" };
+  | { type: "resolveAI" }
+  | { type: "manaSupply" }
+  | { type: "skipManaSupply" };
 
 // ─── 기존 warEngine 호환 타입 ───
 

@@ -96,8 +96,8 @@ export default function EncounterDecision({ state, playerServant, onDecision, on
             ["mana", "MANA"], ["luck", "LUCK"], ["np", "NP"],
           ] as const).map(([key, label]) => (
             <div key={key} className="text-center">
-              <span className="text-gray-600">{label}</span>
-              <p className="text-gray-400 font-bold">{enemyServant.stats[key]}</p>
+              <span className="text-gray-500 text-[12px]">{label}</span>
+              <p className="text-gray-400 text-[10px] font-bold">{enemyServant.stats[key]}</p>
             </div>
           ))}
         </div>

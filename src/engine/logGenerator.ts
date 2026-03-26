@@ -132,6 +132,42 @@ export function logIndependentAction(day: number, name: string, remainingDays: n
   }, { name: servantId });
 }
 
+// ─── 호감도 변화 ───
+export function logAffectionChange(day: number, name: string, delta: number, servantId: number): LogEntry {
+  const sign = delta > 0 ? "+" : "";
+  return makeLog(day, "affection", "trpg:log.affectionChange", {
+    name, delta: `${sign}${delta}`,
+  }, { name: servantId });
+}
+
+// ─── 마력공급 ───
+export function logManaSupply(day: number, name: string, result: string, narration: string, servantId: number): LogEntry {
+  return makeLog(day, "manaSupply", "trpg:log.manaSupply", {
+    name, result, narration,
+  }, { name: servantId });
+}
+
+// ─── 명령 거부 ───
+export function logCommandRefusal(day: number, name: string, orderedIntent: string, actualIntent: string, servantId: number): LogEntry {
+  return makeLog(day, "affection", "trpg:log.commandRefusal", {
+    name, ordered: orderedIntent, actual: actualIntent,
+  }, { name: servantId });
+}
+
+// ─── 동맹 결성 ───
+export function logAllianceFormed(day: number, nameA: string, nameB: string, idA: number, idB: number): LogEntry {
+  return makeLog(day, "alliance", "trpg:log.allianceFormed", {
+    nameA, nameB,
+  }, { a: idA, b: idB });
+}
+
+// ─── 배신 ───
+export function logBetrayal(day: number, betrayerName: string, victimName: string, betrayerId: number, victimId: number): LogEntry {
+  return makeLog(day, "alliance", "trpg:log.betrayal", {
+    betrayer: betrayerName, victim: victimName,
+  }, { betrayer: betrayerId, victim: victimId });
+}
+
 // ─── 게임 종료 ───
 export function logGameOver(day: number, winnerName: string, winnerId: number): LogEntry {
   return makeLog(day, "gameOver", "trpg:log.gameOver", { winner: winnerName }, { winner: winnerId });

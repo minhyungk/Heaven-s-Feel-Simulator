@@ -123,7 +123,12 @@
     "aiCombatDistant": "먼 곳에서 마력 파동이 감지되었다...",
     "elimination": "{{name}}(이)가 탈락했다",
     "independentAction": "{{name}}(이)가 단독행동으로 {{days}}일간 잔존한다",
-    "gameOver": "성배전쟁 종결 — {{winner}}(이)가 승리했다"
+    "gameOver": "성배전쟁 종결 — {{winner}}(이)가 승리했다",
+    "affectionChange": "{{name}}의 호감도가 {{delta}} 변화했다",
+    "commandRefusal": "{{name}}(이)가 명령을 거부했다! ({{ordered}} → {{actual}})",
+    "manaSupply": "마력공급 — {{name}}: {{result}} ({{narration}})",
+    "allianceFormed": "{{nameA}}(과)와 {{nameB}}(이)가 동맹을 결성했다",
+    "betrayal": "{{betrayer}}(이)가 {{victim}}를 배신했다!"
   },
   "nightEnd": {
     "title": "밤이 지나갔다",
@@ -156,5 +161,33 @@
     "antiMagic": "대마력: 세이버/랜서/아쳐가 캐스터 상대 시 승률 보정",
     "territory": "진지작성: 같은 타일에 2턴 이상 체류 시 전투력 보너스"
   },
-  "spectating": "관전 중..."
+  "spectating": "관전 중...",
+  "manaSupply": {
+    "title": "마력공급",
+    "prompt": "마력을 공급하시겠습니까?",
+    "supply": "마력 공급하기",
+    "skip": "건너뛰기",
+    "resultTitle": "마력공급 결과",
+    "perfect": "대만족",
+    "good": "만족",
+    "normal": "보통",
+    "poor": "불만",
+    "critical_fail": "극실패",
+    "statChange": "스탯 변화: {{delta}}",
+    "affectionChange": "호감도: {{delta}}",
+    "continue": "계속하기"
+  },
+  "affection": {
+    "hostile": "적대",
+    "wary": "경계",
+    "neutral": "중립",
+    "trusting": "신뢰",
+    "intimate": "친밀",
+    "devoted": "헌신"
+  },
+  "tabs": {
+    "status": "전황",
+    "log": "로그",
+    "servant": "내 서번트"
+  }
 }

@@ -129,3 +129,45 @@ ruby rp {
   flex-direction: column !important;
   gap: 20px !important; /* 여기서 간격을 직접 조절하세요 */
 }
+
+/* ─── 전투 묘사 텍스트 이펙트 ─── */
+
+@keyframes np-pulse {
+  0%, 100% { text-shadow: 0 0 4px rgba(255,215,0,0.4); }
+  50% { text-shadow: 0 0 16px rgba(255,215,0,0.8), 0 0 32px rgba(255,215,0,0.4); }
+}
+
+@keyframes critical-flash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fade-in-text {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.text-np-glow {
+  color: #ffd700;
+  font-weight: 700;
+  font-size: 1.1em;
+  animation: np-pulse 1.5s ease-in-out infinite;
+}
+
+.text-critical {
+  color: #ff4a4a;
+  font-weight: 700;
+  animation: critical-flash 0.3s ease-out;
+}
+
+.text-stealth-fade {
+  animation: fade-in-text 1s ease-in forwards;
+  opacity: 0;
+}
+
+.text-elimination {
+  color: #ff4a4a;
+  text-decoration: line-through;
+  opacity: 0.7;
+}

@@ -16,6 +16,16 @@ import { createInitialFog, revealOnEncounter, revealOnCombat, updateFogFromAICom
 import { decideAISealUse } from "./commandSeal";
 import { checkSpecialAttack } from "./specialAttack";
 import { COMMAND_SEAL_COUNT, FORCED_HUNT_DAY, ESCAPE_STAT_PENALTY } from "./config";
+import { getPersonality, getInitialAffection } from "../data/servantPersonality";
+import {
+  getTier, clampAffection, checkRefusal, getCombatBonus,
+  affectionFromAction, affectionFromBattle,
+  affectionFromQuietNight, getRefusalOverrideIntent,
+} from "./affection";
+import { rollManaSupply } from "./manaSupply";
+import { processServantSkills, getPassiveModifiers, getSkillWinRateBonus } from "./activeSkills";
+// alliance module — placeholder, 추후 활성화
+// import { rollAllianceFormation, checkBetrayal, areAllied, removeFromAlliances } from "./alliance";
 import * as log from "./logGenerator";
 
 // ─── 초기 상태 생성 ───
@@ -27,6 +37,7 @@ const STARTING_POSITIONS: TileId[] = [
 export function createInitialState(
   participants: Servant[],
   playerServantId: number,
+  isCatalystSummon: boolean = false,
 ): TRPGGameState {
   const servantMap: Record<number, Servant> = {};
   for (const s of participants) {
@@ -46,6 +57,9 @@ export function createInitialState(
     stayDuration: 0,
     itemBoostCount: 0,
     escapePenalty: 0,
+    affection: s.id === playerServantId
+      ? getInitialAffection(s.id, s.class, isCatalystSummon)
+      : 50, // AI 서번트는 호감도 미사용, 기본값
   }));
 
   const enemyIds = participants.filter(s => s.id !== playerServantId).map(s => s.id);
@@ -70,6 +84,8 @@ export function createInitialState(
     escapedViaSeal: false,
     wish: null,
     actionCount: 0,
+    alliances: [],
+    lastManaSupplyOutcome: null,
   };
 }
 
@@ -123,6 +139,20 @@ function processCombatOutcome(
 ): TRPGGameState {
   const playerServant = state.servantMap[state.playerServantId];
   const enemyServant = result.winner?.id === state.playerServantId ? result.loser : result.winner;
+
+  // 호감도 변화 (전투 결과)
+  const playerMaster = getMaster({ ...state, masters }, state.playerServantId);
+  if (playerMaster) {
+    const playerWon = result.winner?.id === state.playerServantId;
+    const playerLost = result.loser?.id === state.playerServantId;
+    const wasDisadvantaged = result.winProbabilityA < 0.4;
+    if (playerWon || playerLost) {
+      const affDelta = affectionFromBattle(playerWon, false, wasDisadvantaged);
+      const newAff = clampAffection(playerMaster.affection + affDelta);
+      masters = updateMaster(masters, state.playerServantId, { affection: newAff });
+      newLogs.push(log.logAffectionChange(state.day, playerServant.name, affDelta, playerServant.id));
+    }
+  }
 
   // 플레이어 패배 → 7일차+: 즉시 게임오버, 그 외: 도주 프롬프트
   if (result.loser?.id === state.playerServantId) {
@@ -190,7 +220,7 @@ function processCombatOutcome(
     currentEncounter: null,
     lastCombatResult: result,
     pendingEnemySeal: null,
-    phase: winCheck.finished ? getGameEndPhase(state, winCheck.winnerId) : "combatResult",
+    phase: "combatResult",
     isFinished: winCheck.finished,
     winnerId: winCheck.winnerId,
     log: [...state.log, ...newLogs],
@@ -240,6 +270,10 @@ export function trpgReducer(
       return handleAdvancePhase(state, prefixes);
     case "resolveAI":
       return handleResolveAI(state, prefixes);
+    case "manaSupply":
+      return handleManaSupply(state);
+    case "skipManaSupply":
+      return { ...state, phase: "nightEnd" };
     default:
       return state;
   }
@@ -251,13 +285,38 @@ function handleSelectIntent(state: TRPGGameState, intent: Intent, prefixes: Skil
   if (state.phase !== "intentSelection") return state;
 
   const playerServant = state.servantMap[state.playerServantId];
+  const playerMaster = getMaster(state, state.playerServantId)!;
   const newLogs: LogEntry[] = [];
+  let masters = [...state.masters];
 
-  // 광화 체크
-  const madResult = checkMadEnhancement(playerServant, intent, prefixes);
-  let finalIntent = madResult.overriddenIntent;
-  if (madResult.disobeyed) {
-    newLogs.push(log.logMadDisobey(state.day, playerServant.name, intent, finalIntent, playerServant.id));
+  // 호감도 기반 명령 거부 체크
+  const tier = getTier(playerMaster.affection);
+  let finalIntent = intent;
+  let refused = false;
+
+  if (checkRefusal(tier)) {
+    const personality = getPersonality(playerServant.id, playerServant.class);
+    finalIntent = getRefusalOverrideIntent(personality);
+    refused = true;
+    newLogs.push(log.logCommandRefusal(state.day, playerServant.name, intent, finalIntent, playerServant.id));
+  }
+
+  // 광화 체크 (거부되지 않은 경우에만)
+  if (!refused) {
+    const madResult = checkMadEnhancement(playerServant, intent, prefixes);
+    finalIntent = madResult.overriddenIntent;
+    if (madResult.disobeyed) {
+      newLogs.push(log.logMadDisobey(state.day, playerServant.name, intent, finalIntent, playerServant.id));
+    }
+  }
+
+  // 행동 선호에 따른 호감도 변화
+  const personality = getPersonality(playerServant.id, playerServant.class);
+  const affDelta = affectionFromAction(intent, personality);
+  if (affDelta !== 0) {
+    const newAffection = clampAffection(playerMaster.affection + affDelta);
+    masters = updateMaster(masters, state.playerServantId, { affection: newAffection });
+    newLogs.push(log.logAffectionChange(state.day, playerServant.name, affDelta, playerServant.id));
   }
 
   // 7일차 첫 행동만 강제 집합 안내 (8일차+는 생략)
@@ -267,6 +326,7 @@ function handleSelectIntent(state: TRPGGameState, intent: Intent, prefixes: Skil
 
   return {
     ...state,
+    masters,
     phase: nextPhase,
     playerIntent: finalIntent,
     log: [...state.log, ...newLogs],
@@ -442,6 +502,16 @@ function handleEncounterDecision(state: TRPGGameState, fight: boolean, prefixes:
     };
   }
 
+  // 호감도 전투력 보정
+  const affectionTier = getTier(playerMaster.affection);
+  const affectionBonus = getCombatBonus(affectionTier);
+
+  // 액티브 스킬 보정
+  const playerSkills = processServantSkills(playerServant);
+  const enemySkills = processServantSkills(enemyServant);
+  const playerSkillMods = getPassiveModifiers(playerSkills, playerServant.name, playerServant.id);
+  const enemySkillMods = getPassiveModifiers(enemySkills, enemyServant.name, enemyServant.id);
+
   const combatOpts: CombatOptions = {
     applyVariance: true,
     areaBonus: getAreaCombatBonus(playerMaster.position, playerServant),
@@ -451,6 +521,9 @@ function handleEncounterDecision(state: TRPGGameState, fight: boolean, prefixes:
     specialMultiplierB: specialB.triggered ? specialB.multiplier : undefined,
     scorePenaltyA: playerMaster.escapePenalty,
     scorePenaltyB: enemyMaster.escapePenalty,
+    affectionBonusA: affectionBonus,
+    activeSkillBonusA: getSkillWinRateBonus(playerSkillMods),
+    activeSkillBonusB: getSkillWinRateBonus(enemySkillMods),
   };
 
   const result = resolveCombat(
@@ -463,6 +536,8 @@ function handleEncounterDecision(state: TRPGGameState, fight: boolean, prefixes:
   if (specialA.skillEffect) result.skillEffects.push(specialA.skillEffect);
   if (specialB.skillEffect) result.skillEffects.push(specialB.skillEffect);
   result.skillEffects.push(...classModifiers.skillEffects);
+  result.skillEffects.push(...playerSkillMods.effects);
+  result.skillEffects.push(...enemySkillMods.effects);
 
   // 전투 후 페널티 리셋
   masters2 = resetEscapePenalties(masters2, state.playerServantId, enemyId);
@@ -494,6 +569,7 @@ function handleUseCommandSeal(state: TRPGGameState, sealType: string, prefixes: 
       ...state,
       masters,
       currentEncounter: null,
+      escapedViaSeal: true,
       phase: "playerEscaped",
       log: [...state.log, ...newLogs],
     };
@@ -698,6 +774,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
       masters,
       currentEncounter: null,
       lastCombatResult: null,
+      escapedViaSeal: true,
       phase: "playerEscaped",
       log: [...state.log, ...newLogs],
     };
@@ -739,13 +816,20 @@ function handleAdvancePhase(state: TRPGGameState, _prefixes: SkillPrefixes): TRP
     return { ...state, phase: "movementSelection" };
   }
   if (state.phase === "combatResult") {
+    // 전투 후 승리 조건 체크 → 게임 종료 or 계속
+    if (state.isFinished) {
+      return { ...state, phase: getGameEndPhase(state, state.winnerId), lastCombatResult: null };
+    }
     return { ...state, phase: "aiTurn", lastCombatResult: null };
   }
   if (state.phase === "playerEscaped") {
-    return { ...state, phase: "aiTurn" };
+    return { ...state, escapedViaSeal: false, phase: "aiTurn" };
   }
   if (state.phase === "enemyEscaped") {
     return { ...state, escapedEnemyId: null, escapedViaSeal: false, phase: "aiTurn" };
+  }
+  if (state.phase === "manaSupplyResult") {
+    return { ...state, phase: "nightEnd" };
   }
   if (state.phase === "grailWish") {
     return { ...state, phase: "gameOver" };
@@ -822,6 +906,9 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
     masters = updateMaster(masters, m.servantId, { position: newPos, stayDuration });
   }
 
+  // 동맹/배신 — placeholder (추후 활성화)
+  const alliances = [...state.alliances];
+
   // AI 간 조우 및 전투
   const matched = new Set<number>();
 
@@ -841,6 +928,9 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
     );
 
     for (const enemy of sameTileEnemies) {
+      // 동맹 중인 서번트끼리는 전투 스킵 (placeholder — 현재 동맹 비활성)
+      // if (areAllied(alliances, m.servantId, enemy.servantId)) continue;
+
       const enemyIntent = aiIntents.get(enemy.servantId) ?? "guard";
       if (enemyIntent === "hide") {
         // 은신 발각 체크
@@ -935,6 +1025,7 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
       ...state,
       masters,
       enemyInfo,
+      alliances,
       actionCount: 0,
       phase: getGameEndPhase(state, winCheck.winnerId),
       isFinished: true,
@@ -965,13 +1056,63 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
     newLogs.push(log.logQuietNight(state.day));
   }
 
+  // 소강 라운드 호감도 +1
+  const playerMasterForQuiet = masters.find(m => m.isPlayer);
+  if (playerMasterForQuiet && playerMasterForQuiet.isAlive) {
+    const quietDelta = affectionFromQuietNight();
+    const newAff = clampAffection(playerMasterForQuiet.affection + quietDelta);
+    masters = updateMaster(masters, state.playerServantId, { affection: newAff });
+  }
+
+  // 마력공급 가능 여부 체크 → manaSupplyPrompt 삽입
+  const playerForMana = masters.find(m => m.isPlayer);
+  const manaUnlocked = playerForMana && playerForMana.isAlive && getTier(playerForMana.affection) !== "hostile" && getTier(playerForMana.affection) !== "wary" && getTier(playerForMana.affection) !== "neutral";
+
   return {
     ...state,
     masters,
     enemyInfo,
+    alliances,
     actionCount: 0,
-    phase: "nightEnd",
+    phase: manaUnlocked ? "manaSupplyPrompt" : "nightEnd",
     aiTurnResults: newLogs,
+    log: [...state.log, ...newLogs],
+  };
+}
+
+// ─── 마력공급 ───
+
+function handleManaSupply(state: TRPGGameState): TRPGGameState {
+  if (state.phase !== "manaSupplyPrompt") return state;
+
+  const playerMaster = getMaster(state, state.playerServantId);
+  if (!playerMaster) return { ...state, phase: "nightEnd" };
+
+  const playerServant = state.servantMap[state.playerServantId];
+  const personality = getPersonality(playerServant.id, playerServant.class);
+  const tier = getTier(playerMaster.affection);
+
+  const outcome = rollManaSupply(personality, tier, playerServant.name, playerServant.id);
+
+  let masters = [...state.masters];
+  const newLogs: LogEntry[] = [];
+
+  // 호감도 변화
+  const newAffection = clampAffection(playerMaster.affection + outcome.affectionDelta);
+  masters = updateMaster(masters, state.playerServantId, { affection: newAffection });
+
+  if (outcome.affectionDelta !== 0) {
+    newLogs.push(log.logAffectionChange(state.day, playerServant.name, outcome.affectionDelta, playerServant.id));
+  }
+
+  // 마력공급 결과 로그
+  newLogs.push(log.logManaSupply(state.day, playerServant.name, outcome.result, outcome.narration, playerServant.id));
+
+  return {
+    ...state,
+    masters,
+    phase: "manaSupplyResult",
+    lastManaSupplyOutcome: outcome,
     log: [...state.log, ...newLogs],
   };
 }
