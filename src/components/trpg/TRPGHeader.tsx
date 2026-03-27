@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import type { Servant } from "../../data/types";
@@ -23,6 +24,15 @@ export default function TRPGHeader({ state, playerServant, onClose }: Props) {
   const playerMaster = state.masters.find(m => m.servantId === state.playerServantId);
   const classColor = CLASS_COLORS[playerServant.class];
 
+  // 호감도 바 스포일러 방지: 전투 결과/패배 위기 페이즈 중에는 값 갱신을 지연
+  const [displayAffection, setDisplayAffection] = useState(playerMaster?.affection ?? 0);
+  useEffect(() => {
+    const spoilerPhases = ["combatResult", "defeatEscapePrompt", "playerDefeated"];
+    if (!spoilerPhases.includes(state.phase) && playerMaster) {
+      setDisplayAffection(playerMaster.affection);
+    }
+  }, [playerMaster?.affection, state.phase, playerMaster]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -30,8 +40,8 @@ export default function TRPGHeader({ state, playerServant, onClose }: Props) {
       className="w-full max-w-2xl mb-4"
     >
       <div className="rounded-xl p-4" style={{ background: "#0d0d24", border: `1px solid ${classColor}33` }}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             {/* Face */}
             <div
               className="w-12 h-12 rounded-full overflow-hidden border-2"
@@ -49,7 +59,11 @@ export default function TRPGHeader({ state, playerServant, onClose }: Props) {
                 {playerServant.class}
                 {" "}
                 <span className="text-gray-400">
-                  ({getServantTotalScore(playerServant)}{playerMaster && playerMaster.escapePenalty > 0 && (
+                  ({getServantTotalScore(playerServant)}{playerMaster && playerMaster.manaStatBonus !== 0 && (
+                    <span style={{ color: playerMaster.manaStatBonus > 0 ? "#4ade80" : "#ef4444" }}>
+                      {playerMaster.manaStatBonus > 0 ? ` +${playerMaster.manaStatBonus}` : ` ${playerMaster.manaStatBonus}`}
+                    </span>
+                  )}{playerMaster && playerMaster.escapePenalty > 0 && (
                     <span className="text-magic-red"> -{playerMaster.escapePenalty}</span>
                   )})
                 </span>
@@ -57,7 +71,25 @@ export default function TRPGHeader({ state, playerServant, onClose }: Props) {
             </div>
           </div>
 
-          <div className="text-right flex items-start gap-2">
+          {/* 스킬 목록 — 중앙 */}
+          <div className="flex-1 flex flex-wrap justify-center gap-1 px-2">
+            {[...playerServant.classSkills, ...playerServant.personalSkills].map((skill, i) => (
+              <span
+                key={i}
+                className="text-[12px] px-1.5 py-0.5 rounded"
+                style={{
+                  background: `${classColor}12`,
+                  border: `1px solid ${classColor}30`,
+                  color: "#9ca3af",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {skill.name}
+              </span>
+            ))}
+          </div>
+
+          <div className="text-right flex items-start gap-2 shrink-0">
             <div>
               <p className="text-lg font-bold text-gold" style={{ fontFamily: "var(--font-serif)" }}>
                 {t("header.day", { day: state.day })}
@@ -105,7 +137,7 @@ export default function TRPGHeader({ state, playerServant, onClose }: Props) {
                 {t("commandSeal.remaining", { count: playerMaster.commandSeals })}
               </span>
             </div>
-            <AffectionBar affection={playerMaster.affection} />
+            <AffectionBar affection={displayAffection} />
           </div>
         )}
       </div>

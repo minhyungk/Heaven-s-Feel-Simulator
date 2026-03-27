@@ -15,7 +15,7 @@ const TIER_LABELS: Record<string, Record<AffectionTier, string>> = {
 };
 
 export default function AffectionBar({ affection, compact = false }: Props) {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation("trpg");
   const tier = getTier(affection);
   const color = TIER_COLORS[tier];
   const labels = TIER_LABELS[i18n.language] ?? TIER_LABELS_EN;
@@ -44,8 +44,8 @@ export default function AffectionBar({ affection, compact = false }: Props) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-1">
-        <span className="text-[15px] text-gray-400">마스터와의 관계</span>
-        <span className="text-[10px] font-bold" style={{ color }}>
+        <span className="text-[15px] text-gray-400">{t("affectionNotification.label")}</span>
+        <span className="text-[15px] font-bold" style={{ color }}>
           {label} ({affection})
         </span>
       </div>

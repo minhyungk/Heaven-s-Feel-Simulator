@@ -69,11 +69,13 @@
     "title": "패배 위기!",
     "message": "패배할 것 같다. 도주를 시도하시겠습니까?",
     "tryEscape": "도주하기 ({{chance}}%) — 스탯 페널티 O",
-    "sealEscape": "영주 사용 (확정 도주) — 스탯 페널티 O"
+    "sealEscape": "영주 사용 (확정 도주) — 스탯 페널티 O",
+    "refusedMessage": "{{name}}은(는) 후퇴를 거부하고 싸움을 속행한다! (마스터 신뢰: 낮음)"
   },
   "playerEscaped": {
     "title": "도주 성공!",
-    "message": "도주에 성공했다!"
+    "message": "도주에 성공했다!",
+    "sealMessage": "영주를 사용하여 도주에 성공했다!"
   },
   "forcedBridge": {
     "title": "강제 집합!",
@@ -116,8 +118,8 @@
     "noEscape": "7일차 이후 — 도주할 수 없다!",
     "playerDetected": "은신 중에 {{seeker}}에게 발각당했다!",
     "detected": "{{hider}}(이)가 {{seeker}}에게 발각되었다!",
-    "madDisobey": "{{name}}의 광화가 발동! {{originalIntent}} 대신 {{overriddenIntent}}(으)로 행동한다",
-    "madDisobeyClass": "{{class}}의 광화가 발동! {{originalIntent}} 대신 {{overriddenIntent}}(으)로 행동한다",
+    "madDisobey": "{{name}}의 광화가 발동! 마스터의 명령을 무시하고 {{overriddenIntent}}에 나선다 ({{originalIntent}} 명령 무시)",
+    "madDisobeyClass": "{{class}}의 광화가 발동! 마스터의 명령을 무시하고 {{overriddenIntent}}에 나선다",
     "aiCombatSameTile": "{{classA}}(과)와 {{classB}}(이)가 {{tile}}에서 교전 중!",
     "aiCombatAdjacent": "인근에서 교전음이 들린다... ({{classA}} vs {{classB}})",
     "aiCombatDistant": "먼 곳에서 마력 파동이 감지되었다...",
@@ -139,6 +141,7 @@
     "defeat": "패배...",
     "winnerMessage": "{{name}}(이)가 {{days}}일 만에 성배를 획득했습니다",
     "loserMessage": "당신의 서번트가 쓰러졌습니다",
+    "fallen": "쓰러졌습니다.",
     "backToDashboard": "대시보드로 돌아가기",
     "playAgain": "다시 도전"
   },
@@ -161,10 +164,16 @@
     "antiMagic": "대마력: 세이버/랜서/아쳐가 캐스터 상대 시 승률 보정",
     "territory": "진지작성: 같은 타일에 2턴 이상 체류 시 전투력 보너스"
   },
+  "affectionNotification": {
+    "label": "마스터와의 관계",
+    "delta": "{{tierLabel}}{{delta}}"
+  },
   "spectating": "관전 중...",
   "manaSupply": {
     "title": "마력공급",
     "prompt": "마력을 공급하시겠습니까?",
+    "promptWithName": "{{name}}이(가) 마스터를 신뢰하는 듯 하다... 마력공급을 할까?",
+    "promptWeakness": "{{name}}은(는) 패배로 인해 크게 쇠약해진 듯 하다. 마력 공급으로 상태를 호전시키는 시도를 할까?",
     "supply": "마력 공급하기",
     "skip": "건너뛰기",
     "resultTitle": "마력공급 결과",
@@ -173,8 +182,8 @@
     "normal": "보통",
     "poor": "불만",
     "critical_fail": "극실패",
-    "statChange": "스탯 변화: {{delta}}",
-    "affectionChange": "호감도: {{delta}}",
+    "statChange": "전투력 {{delta}}",
+    "affectionChange": "{{tierLabel}}{{delta}}",
     "continue": "계속하기"
   },
   "affection": {

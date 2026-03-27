@@ -6,8 +6,15 @@ import { CLASS_COLORS, getServantTotalScore } from "../../data/types";
 import { useServantResolver } from "../../contexts/ServantDataContext";
 import { generateBattleNarrative } from "../../engine/narrativeGenerator";
 import type { NarrativeLine } from "../../engine/narrativeFormatter";
-import { getTier, TIER_LABELS_KO } from "../../engine/affection";
+import { TIER_LABELS_KO, TIER_LABELS_EN, TIER_LABELS_JA } from "../../engine/affection";
+import type { AffectionTier } from "../../engine/affection";
+import { fixParticles } from "../../utils/josa";
+import i18n from "../../i18n";
 import TypewriterLog from "../simulation/TypewriterLog";
+
+const TIER_LABELS: Record<string, Record<AffectionTier, string>> = {
+  ko: TIER_LABELS_KO, en: TIER_LABELS_EN, ja: TIER_LABELS_JA,
+};
 
 interface Props {
   result: CombatResultType;
@@ -65,12 +72,13 @@ export default function CombatResult({ result, playerServantId, state, onContinu
         day: state.day,
         intentMatchup,
         isPlayerInvolved: true,
+        playerIsA: true,
       });
 
       // 최종 전투 승리 시 추가 대사
       if (state.isFinished && playerWon && result.loser) {
         lines.push({
-          text: `적 ${resolve(result.loser).name}를 쓰러뜨리고, 제${state.day}차 성배전쟁의 승자가 결정났다.`,
+          text: `적 ${resolve(result.loser).name}를 쓰러뜨리고, 제6차 성배전쟁의 승자가 결정났다.`,
           effect: "np_glow",
           speed: "slow",
           delay: 800,
@@ -86,21 +94,18 @@ export default function CombatResult({ result, playerServantId, state, onContinu
 
   const showResult = narrativeDone || narrativeLines.length === 0;
 
-  // 호감도 변화 메시지 생성
+  // 호감도 변화 메시지 — state.lastAffectionNotification에서 직접 사용
   const affectionMessage = useMemo(() => {
-    const playerMaster = state.masters.find(m => m.isPlayer);
-    if (!playerMaster) return null;
-    const tier = getTier(playerMaster.affection);
-    const tierLabel = TIER_LABELS_KO[tier];
-    const name = resolvedPlayer.name;
-
-    if (isDraw) return null;
-    if (playerWon) {
-      const delta = Math.abs(result.winProbabilityA - 0.5) > 0.15 ? 3 : 5;
-      return { text: `전투를 승리했다! ${name}은(는) 마스터를 더욱 깊이 신뢰하게 된다.`, delta: `${tierLabel}+${delta}`, positive: true };
-    } else {
-      return { text: `${name}은(는) 패배에 불안한 표정을 짓고 있다.`, delta: `${tierLabel}-3`, positive: false };
-    }
+    const notif = state.lastAffectionNotification;
+    if (!notif || isDraw) return null;
+    const labels = TIER_LABELS[i18n.language] ?? TIER_LABELS_EN;
+    const tierLabel = labels[notif.tier];
+    const deltaStr = notif.delta > 0 ? `+${notif.delta}` : `${notif.delta}`;
+    return {
+      text: fixParticles(notif.message),
+      delta: `${tierLabel}${deltaStr}`,
+      positive: notif.delta >= 0,
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 

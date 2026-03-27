@@ -1,5 +1,16 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { fixParticles } from "../utils/josa";
+
+// 한국어 조사 후처리 플러그인 — (이)가, (은)는 등을 자동으로 올바른 조사로 변환
+const koreanParticlePostProcessor = {
+  type: "postProcessor" as const,
+  name: "koreanParticles",
+  process(value: string, _key: string | string[], _options: unknown, translator: { language: string }) {
+    if (translator.language === "ko") return fixParticles(value);
+    return value;
+  },
+};
 
 import koCommon from "./locales/ko/common.json";
 import koIncantation from "./locales/ko/incantation.json";
@@ -23,7 +34,7 @@ function detectLanguage(): string {
   return "ko";
 }
 
-i18n.use(initReactI18next).init({
+i18n.use(koreanParticlePostProcessor).use(initReactI18next).init({
   lng: detectLanguage(),
   fallbackLng: "ko",
   ns: ["common", "incantation", "simulation", "trpg"],
@@ -34,6 +45,7 @@ i18n.use(initReactI18next).init({
     ja: { common: jaCommon, incantation: jaIncantation, simulation: jaSimulation, trpg: jaTrpg },
   },
   interpolation: { escapeValue: false },
+  postProcess: ["koreanParticles"],
 });
 
 export default i18n;

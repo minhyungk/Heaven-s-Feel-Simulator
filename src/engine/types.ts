@@ -1,4 +1,5 @@
 import type { Servant, ServantClass } from "../data/types";
+import type { AffectionTier } from "./affection";
 
 // ─── 기본 타입 (enum 금지, union만 사용) ───
 
@@ -19,6 +20,7 @@ export type TRPGPhase =
   | "counterSealPrompt"
   | "defeatEscapePrompt"
   | "playerEscaped"
+  | "playerDefeated"
   | "enemyEscaped"
   | "combat"
   | "combatResult"
@@ -105,6 +107,8 @@ export interface MasterState {
   itemBoostCount: number;
   /** 도주 페널티 (다음 전투 스탯 감소) */
   escapePenalty: number;
+  /** 마력공급 누적 스탯 보너스 */
+  manaStatBonus: number;
   /** 호감도 (0~100) */
   affection: number;
 }
@@ -146,6 +150,8 @@ export interface TRPGGameState {
     canEscape: boolean;
     /** 은신 발각에 의한 기습 조우 */
     isAmbush?: boolean;
+    /** 조우 의도 매칭 (조우 서사 생성용) */
+    intentMatchup?: "hunt_hunt" | "hunt_guard" | "ambush" | "detected";
   } | null;
   /** 마지막 전투 결과 */
   lastCombatResult: CombatResult | null;
@@ -180,6 +186,14 @@ export interface TRPGGameState {
     affectionDelta: number;
     narration: string;
   } | null;
+  /** 호감도 변화 알림 (패널에 표시, intentSelection 진입 시 초기화) */
+  lastAffectionNotification: {
+    message: string;
+    delta: number;
+    tier: AffectionTier;
+  } | null;
+  /** 마력공급이 약화(escape 패널티) 이유로 발생했는지 여부 */
+  manaSupplyWeaknessReason: boolean;
 }
 
 // ─── TRPG 액션 ───

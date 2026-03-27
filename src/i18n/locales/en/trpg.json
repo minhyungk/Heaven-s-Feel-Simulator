@@ -63,11 +63,13 @@
     "title": "Imminent Defeat!",
     "message": "You are about to lose. Will you attempt to escape?",
     "tryEscape": "Escape ({{chance}}%) — Stat Penalty",
-    "sealEscape": "Use Command Seal (Guaranteed Escape) — Stat Penalty"
+    "sealEscape": "Use Command Seal (Guaranteed Escape) — Stat Penalty",
+    "refusedMessage": "{{name}} refuses to retreat and keeps fighting! (Master Trust: Low)"
   },
   "playerEscaped": {
     "title": "Escape Successful!",
-    "message": "You successfully escaped!"
+    "message": "You successfully escaped!",
+    "sealMessage": "Used a Command Seal to successfully escape!"
   },
   "forcedBridge": {
     "title": "Forced Assembly!",
@@ -123,7 +125,12 @@
     "aiCombatDistant": "Magical disturbance detected in the distance...",
     "elimination": "{{name}} has been eliminated",
     "independentAction": "{{name}} persists through Independent Action for {{days}} days",
-    "gameOver": "Holy Grail War concluded — {{winner}} is victorious"
+    "gameOver": "Holy Grail War concluded — {{winner}} is victorious",
+    "affectionChange": "{{name}}'s affection changed by {{delta}}",
+    "commandRefusal": "{{name}} refused the order! ({{ordered}} → {{actual}})",
+    "manaSupply": "Mana Supply — {{name}}: {{result}} ({{narration}})",
+    "allianceFormed": "{{nameA}} and {{nameB}} formed an alliance",
+    "betrayal": "{{betrayer}} betrayed {{victim}}!"
   },
   "nightEnd": {
     "title": "The night has passed",
@@ -134,6 +141,7 @@
     "defeat": "Defeat...",
     "winnerMessage": "{{name}} obtained the Grail after {{days}} days",
     "loserMessage": "Your Servant has fallen",
+    "fallen": "You have fallen.",
     "backToDashboard": "Back to Dashboard",
     "playAgain": "Try Again"
   },
@@ -155,6 +163,35 @@
     "ambush": "Assassin Ambush: When hunting, ambush chance based on Presence Concealment (+20% if success)",
     "antiMagic": "Magic Resistance: Saber/Lancer/Archer get bonus vs Caster",
     "territory": "Territory Creation: Combat bonus after 2+ turns on same tile"
+  },
+  "affectionNotification": {
+    "label": "Relationship with Master",
+    "delta": "{{tierLabel}}{{delta}}"
+  },
+  "manaSupply": {
+    "title": "Mana Supply",
+    "prompt": "Will you supply mana?",
+    "promptWithName": "{{name}} seems to trust the Master... Supply mana?",
+    "promptWeakness": "{{name}} seems greatly weakened by defeat. Attempt to improve their condition with mana supply?",
+    "supply": "Supply Mana",
+    "skip": "Skip",
+    "resultTitle": "Mana Supply Result",
+    "perfect": "Perfect",
+    "good": "Good",
+    "normal": "Normal",
+    "poor": "Poor",
+    "critical_fail": "Critical Failure",
+    "statChange": "Combat Power {{delta}}",
+    "affectionChange": "{{tierLabel}}{{delta}}",
+    "continue": "Continue"
+  },
+  "affection": {
+    "hostile": "Hostile",
+    "wary": "Wary",
+    "neutral": "Neutral",
+    "trusting": "Trusting",
+    "intimate": "Intimate",
+    "devoted": "Devoted"
   },
   "spectating": "Spectating...",
   "tabs": {
