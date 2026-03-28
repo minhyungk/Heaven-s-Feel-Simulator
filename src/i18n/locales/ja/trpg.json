@@ -130,7 +130,8 @@
     "commandRefusal": "{{name}}が命令を拒否した！（{{ordered}} → {{actual}}）",
     "manaSupply": "魔力供給 — {{name}}: {{result}} ({{narration}})",
     "allianceFormed": "{{nameA}}と{{nameB}}が同盟を結成した",
-    "betrayal": "{{betrayer}}が{{victim}}を裏切った！"
+    "betrayal": "{{betrayer}}が{{victim}}を裏切った！",
+    "nightStatus": "{{message}}"
   },
   "nightEnd": {
     "title": "夜が過ぎた",

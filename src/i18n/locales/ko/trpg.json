@@ -130,7 +130,8 @@
     "commandRefusal": "{{name}}(이)가 명령을 거부했다! ({{ordered}} → {{actual}})",
     "manaSupply": "마력공급 — {{name}}: {{result}} ({{narration}})",
     "allianceFormed": "{{nameA}}(과)와 {{nameB}}(이)가 동맹을 결성했다",
-    "betrayal": "{{betrayer}}(이)가 {{victim}}를 배신했다!"
+    "betrayal": "{{betrayer}}(이)가 {{victim}}를 배신했다!",
+    "nightStatus": "{{message}}"
   },
   "nightEnd": {
     "title": "밤이 지나갔다",

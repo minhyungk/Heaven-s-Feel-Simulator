@@ -1,6 +1,6 @@
 import type { ServantClass } from "./types";
 
-export type PersonalityTag = "cool" | "tsundere" | "cheerful" | "royal" | "berserker" | "saint" | "avenger";
+export type PersonalityTag = "cool" | "tsundere" | "cheerful" | "royal" | "berserker" | "saint" | "avenger" | "assassin";
 
 /** 초기 호감도 (성격별) */
 export const INITIAL_AFFECTION: Record<PersonalityTag, number> = {
@@ -11,6 +11,7 @@ export const INITIAL_AFFECTION: Record<PersonalityTag, number> = {
   royal: 35,
   berserker: 30,
   avenger: 25,
+  assassin: 35,
 };
 
 /** 클래스 기반 기본 성격 매핑 */
@@ -20,7 +21,7 @@ const CLASS_DEFAULT_PERSONALITY: Partial<Record<ServantClass, PersonalityTag>> =
   Lancer: "cheerful",
   Rider: "cheerful",
   Caster: "cool",
-  Assassin: "cool",
+  Assassin: "assassin",
   Berserker: "berserker",
   Ruler: "saint",
   Avenger: "avenger",
@@ -97,16 +98,16 @@ const PERSONALITY_OVERRIDES: Record<number, PersonalityTag> = {
   164: "cool",      // Skadi
 
   // ─── Assassin ───
-  42: "cool",       // Sasaki Kojiro
-  43: "cool",       // Hassan of the Cursed Arm
+  42: "assassin",   // Sasaki Kojiro
+  43: "assassin",   // Hassan of the Cursed Arm
   44: "cheerful",   // Stheno
   45: "cheerful",   // Mata Hari
-  46: "cool",       // Carmilla
+  46: "assassin",   // Carmilla
   47: "tsundere",   // Phantom of the Opera
-  48: "cool",       // Jack the Ripper
-  49: "cool",       // EMIYA (Assassin) / Kiritsugu
+  48: "assassin",   // Jack the Ripper
+  49: "assassin",   // EMIYA (Assassin) / Kiritsugu
   50: "cool",       // Shiki Ryougi
-  154: "cool",      // King Hassan
+  154: "assassin",  // King Hassan
 
   // ─── Berserker ───
   51: "berserker",  // Heracles

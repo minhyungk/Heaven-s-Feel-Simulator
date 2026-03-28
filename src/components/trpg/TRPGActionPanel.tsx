@@ -131,6 +131,7 @@ export default function TRPGActionPanel({
         servantB: enemy,
         combatResult: state.lastCombatResult,
         intentMatchup: state.currentEncounter.intentMatchup ?? "hunt_hunt",
+        skipResult: true,
       }));
     }
     lines.push(...generateDefeatCrisisNarrative(playerServant, enemy));
@@ -413,37 +414,51 @@ export default function TRPGActionPanel({
               </div>
             )}
 
-            {/* 타이틀 + 버튼: 서사 완료 후, 시도 중이 아닐 때만 표시 (Bug 2: 타이틀 스포일러 방지) */}
+            {/* 타이틀 + 버튼: 서사 완료 후, 시도 중이 아닐 때만 표시 */}
             {(crisisDone || defeatCrisisLines.length === 0) && !escapeAttempting && (
               <>
-                <p className="text-xs text-magic-red uppercase tracking-wider mb-3">{t("trpg:defeatEscape.title")}</p>
-                <p className="text-sm text-gray-400 my-4">{t("trpg:defeatEscape.message")}</p>
-                {(() => {
-                  const prefixes = getSkillPrefixes(i18n.language);
-                  const enemyServant = state.servantMap[state.currentEncounter!.enemyId];
-                  const escapeChance = Math.round(calcEscapeChance(playerServant, enemyServant, prefixes) * 100);
-                  const hasSeals = (playerMaster?.commandSeals ?? 0) > 0;
-                  return (
-                    <div className="flex flex-col items-center gap-2">
-                      <motion.button
-                        whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                        onClick={() => handleEscapeAttempt(false)}
-                        className="w-fit px-5 py-2.5 text-sm font-bold rounded-lg border border-gray-600 bg-transparent text-gray-300 cursor-pointer hover:bg-white/5 transition-colors"
-                      >
-                        {t("trpg:defeatEscape.tryEscape", { chance: escapeChance })}
-                      </motion.button>
-                      {hasSeals && (
-                        <motion.button
-                          whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                          onClick={() => handleEscapeAttempt(true)}
-                          className="w-fit px-5 py-2.5 text-sm font-bold rounded-lg border border-magic-blue/60 bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
-                        >
-                          {t("trpg:defeatEscape.sealEscape")}
-                        </motion.button>
-                      )}
-                    </div>
-                  );
-                })()}
+                {state.currentEncounter?.canEscape === false ? (
+                  /* 7일차+ 도주 불가 → 패배 확정 버튼만 표시 */
+                  <motion.button
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    onClick={onAdvancePhase}
+                    className="mt-4 px-8 py-3 text-sm font-bold rounded-lg border border-magic-red/60 bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
+                  >
+                    {t("trpg:gameOver.fallen")}
+                  </motion.button>
+                ) : (
+                  <>
+                    <p className="text-xs text-magic-red uppercase tracking-wider mb-3">{t("trpg:defeatEscape.title")}</p>
+                    <p className="text-sm text-gray-400 my-4">{t("trpg:defeatEscape.message")}</p>
+                    {(() => {
+                      const prefixes = getSkillPrefixes(i18n.language);
+                      const enemyServant = state.servantMap[state.currentEncounter!.enemyId];
+                      const escapeChance = Math.round(calcEscapeChance(playerServant, enemyServant, prefixes) * 100);
+                      const hasSeals = (playerMaster?.commandSeals ?? 0) > 0;
+                      return (
+                        <div className="flex flex-col items-center gap-2">
+                          <motion.button
+                            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                            onClick={() => handleEscapeAttempt(false)}
+                            className="w-fit px-5 py-2.5 text-sm font-bold rounded-lg border border-gray-600 bg-transparent text-gray-300 cursor-pointer hover:bg-white/5 transition-colors"
+                          >
+                            {t("trpg:defeatEscape.tryEscape", { chance: escapeChance })}
+                          </motion.button>
+                          {hasSeals && (
+                            <motion.button
+                              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                              onClick={() => handleEscapeAttempt(true)}
+                              className="w-fit px-5 py-2.5 text-sm font-bold rounded-lg border border-magic-blue/60 bg-transparent text-magic-blue cursor-pointer hover:bg-magic-blue/10 transition-colors"
+                            >
+                              {t("trpg:defeatEscape.sealEscape")}
+                            </motion.button>
+                          )}
+                        </div>
+                      );
+                    })()}
+                  </>
+                )}
               </>
             )}
           </div>
@@ -790,6 +805,27 @@ export default function TRPGActionPanel({
                   transition={{ duration: 3, repeat: Infinity }}
                   style={{ background: "radial-gradient(circle, rgba(255,215,0,0.2), transparent 70%)" }}
                 />
+              )}
+              {isVictory && (
+                <div className="flex justify-center mb-3 relative z-10">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    style={{ width: 96, height: 96 }}
+                  >
+                    <div
+                      className="w-full h-full rounded-full overflow-hidden border-2"
+                      style={{ borderColor: "#ffd700", boxShadow: "0 0 20px rgba(255,215,0,0.4)" }}
+                    >
+                      <img
+                        src={resolvedPlayer.imageUrl}
+                        alt={resolvedPlayer.name}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                  </motion.div>
+                </div>
               )}
               <div className="text-4xl mb-3 relative z-10">{isVictory ? "🏆" : "⚰️"}</div>
               <h2

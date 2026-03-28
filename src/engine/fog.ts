@@ -98,8 +98,12 @@ export function updateFogFromAICombat(
       // 같은 타일: 전체 공개
       updated[id] = revealOnCombat(updated[id], cls, combatPosition);
     } else if (distance === 1) {
-      // 인접: 교전음 + 위치 공개
-      updated[id] = revealOnEncounter(updated[id], cls, combatPosition);
+      // 인접: 교전음 → 클래스만 공개 (스탯/이미지는 직접 조우 전까지 비공개)
+      if (updated[id].fogLevel === "unknown") {
+        updated[id] = { ...updated[id], fogLevel: "classRevealed", knownClass: cls, lastKnownPosition: combatPosition };
+      } else if (updated[id].fogLevel === "classRevealed") {
+        updated[id] = { ...updated[id], knownClass: cls, lastKnownPosition: combatPosition };
+      }
     } else {
       // 2타일+: 마력 파동만 (위치 불명)
       if (updated[id].fogLevel === "unknown") {

@@ -130,7 +130,8 @@
     "commandRefusal": "{{name}} refused the order! ({{ordered}} → {{actual}})",
     "manaSupply": "Mana Supply — {{name}}: {{result}} ({{narration}})",
     "allianceFormed": "{{nameA}} and {{nameB}} formed an alliance",
-    "betrayal": "{{betrayer}} betrayed {{victim}}!"
+    "betrayal": "{{betrayer}} betrayed {{victim}}!",
+    "nightStatus": "{{message}}"
   },
   "nightEnd": {
     "title": "The night has passed",

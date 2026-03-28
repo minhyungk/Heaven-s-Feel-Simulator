@@ -40,7 +40,7 @@ export default function EncounterDecision({ state, playerServant, onDecision, on
   const enemyScore = getServantTotalScore(enemyServant);
   const playerPenalty = playerMaster.escapePenalty;
   const enemyPenalty = enemyMaster?.escapePenalty ?? 0;
-  const effectivePlayerScore = playerScore - playerPenalty;
+  const effectivePlayerScore = playerScore - playerPenalty + (playerMaster.manaStatBonus ?? 0);
   const effectiveEnemyScore = enemyScore - enemyPenalty;
   const winRate = Math.round(calcWinRate(effectivePlayerScore, effectiveEnemyScore) * 100);
 

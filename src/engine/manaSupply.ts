@@ -80,6 +80,25 @@ export function rollManaSupply(
 type NarrationPool = Record<ManaSupplyResult, string[]>;
 
 const DEFAULT_NARRATIONS: Record<PersonalityTag, NarrationPool> = {
+  assassin: {
+    perfect: [
+      "{name}의 기척이 순간 사라졌다가 돌아왔다. 마력이 완전히 충전되었다.",
+      "{name}(이)가 그림자 속에서 조용히 고개를 끄덕였다. 최상의 상태다.",
+    ],
+    good: [
+      "{name}(은)는 아무 말 없이 마력을 받아들였다. 나쁘지 않은 결과다.",
+      "{name}(이)가 소리 없이 자리를 떴다. 만족한 것 같다.",
+    ],
+    normal: [
+      "{name}(이)가 기척도 없이 사라졌다. 충분한 것 같다.",
+    ],
+    poor: [
+      "{name}의 시선이 차갑게 마스터를 스쳤다. '다음엔 더 잘 해.'",
+    ],
+    critical_fail: [
+      "{name}(이)가 칼날을 스치듯 꺼내들었다가 다시 집어넣었다. 경고다.",
+    ],
+  },
   cool: {
     perfect: [
       "{name}의 눈빛이 전과는 확연히 달라졌다.",

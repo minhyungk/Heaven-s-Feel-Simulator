@@ -4,6 +4,8 @@
 
 https://holy-grail-war-simulator.vercel.app/
 
+Ideas of Manual War influenced and contributed by WinVaration
+
 ## How to run
 
 ### Prerequisite
@@ -40,6 +42,7 @@ npm run build
   - 무승부 / 7일차 강제 사냥 시스템
 - **승률 계산** — 스탯 합산 기반 Elo 승률 및 우승 확률 표시
 - **결과 공유** — 전쟁 결과 이미지 저장 및 SNS 공유 (X/Instagram)
+- **수동 전투** — 자세한 이동, 신뢰도, 전투묘사 등 업그레이드 된 성배전쟁
 
 ### Others
 Issue, PR 환영

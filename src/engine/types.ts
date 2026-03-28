@@ -105,9 +105,11 @@ export interface MasterState {
   stayDuration: number;
   /** 도구작성 누적 부스트 */
   itemBoostCount: number;
-  /** 도주 페널티 (다음 전투 스탯 감소) */
+  /** 도주 페널티 (전투 스탯 감소) */
   escapePenalty: number;
-  /** 마력공급 누적 스탯 보너스 */
+  /** 도주 페널티 잔여 밤 수 (2→1→0에서 리셋) */
+  escapePenaltyDaysLeft: number;
+  /** 마력공급 스탯 보너스 (매 공급마다 갱신) */
   manaStatBonus: number;
   /** 호감도 (0~100) */
   affection: number;

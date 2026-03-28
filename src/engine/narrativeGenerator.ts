@@ -29,6 +29,8 @@ export interface NarrativeContext {
   isPlayerInvolved?: boolean;
   /** servantA가 플레이어 서번트인지 (결과 묘사 시 시점 전환) */
   playerIsA?: boolean;
+  /** 결과 라인 생략 (패배 위기 페이즈에서 "X의 승리" 스포일러 방지) */
+  skipResult?: boolean;
 }
 
 // ─── 전투력 차이 분류 ───
@@ -164,7 +166,9 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
     lines.push(...skillLines);
   }
 
-  // 4. 결과
+  // 4. 결과 (패배 위기 페이즈에서는 스포일러 방지를 위해 생략)
+  if (ctx.skipResult) return lines;
+
   if (combatResult.isDraw) {
     const drawPool = RESULT_TEMPLATES.default.draw;
     lines.push(makeLine(

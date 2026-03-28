@@ -58,6 +58,7 @@ export function createInitialState(
     stayDuration: 0,
     itemBoostCount: 0,
     escapePenalty: 0,
+    escapePenaltyDaysLeft: 0,
     manaStatBonus: 0,
     affection: s.id === playerServantId
       ? getInitialAffection(s.id, s.class, isCatalystSummon)
@@ -184,7 +185,7 @@ function processCombatOutcome(
     ));
 
     if (state.day >= FORCED_HUNT_DAY) {
-      // 7일차+ 도주 불가 → 즉시 게임오버
+      // 7일차+ 도주 불가 → 전투 묘사 후 패배 (defeatEscapePrompt + canEscape:false)
       masters = updateMaster(masters, state.playerServantId, { isAlive: false });
       newLogs.push(log.logElimination(state.day, playerServant.name, playerServant.id));
       return {
@@ -192,12 +193,15 @@ function processCombatOutcome(
         ...extraState,
         masters,
         enemyInfo,
-        currentEncounter: null,
+        currentEncounter: state.currentEncounter
+          ? { ...state.currentEncounter, canEscape: false }
+          : null,
         lastCombatResult: result,
         pendingEnemySeal: null,
-        phase: "gameOver",
+        phase: "defeatEscapePrompt",
         isFinished: true,
         winnerId: null,
+        lastAffectionNotification: battleAffNotification,
         log: [...state.log, ...newLogs],
       };
     }
@@ -841,7 +845,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
 
   if (useSeal && playerMaster.commandSeals > 0) {
     // 영주 사용 확정 도주
-    masters = updateMaster(masters, state.playerServantId, { commandSeals: playerMaster.commandSeals - 1, escapePenalty: ESCAPE_STAT_PENALTY });
+    masters = updateMaster(masters, state.playerServantId, { commandSeals: playerMaster.commandSeals - 1, escapePenalty: ESCAPE_STAT_PENALTY, escapePenaltyDaysLeft: 2 });
     newLogs.push(log.logCommandSeal(state.day, "escape"));
     newLogs.push(log.logSealEscape(state.day, playerServant.name, playerServant.id));
     // 영주 도주 호감도 변화
@@ -896,7 +900,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
   newLogs.push(log.logEscape(state.day, playerServant.name, escapeResult.success, playerServant.id));
 
   if (escapeResult.success) {
-    masters = updateMaster(masters, state.playerServantId, { escapePenalty: ESCAPE_STAT_PENALTY });
+    masters = updateMaster(masters, state.playerServantId, { escapePenalty: ESCAPE_STAT_PENALTY, escapePenaltyDaysLeft: 2 });
     // 위기 탈출 호감도 변화
     const defEscDelta = 2;
     const defEscAff = clampAffection(playerMaster.affection + defEscDelta);
@@ -957,6 +961,10 @@ function handleAdvancePhase(state: TRPGGameState, _prefixes: SkillPrefixes): TRP
   }
   if (state.phase === "grailWish") {
     return { ...state, phase: "gameOver" };
+  }
+  if (state.phase === "defeatEscapePrompt" && state.isFinished) {
+    // 7일차+ 도주 불가 패배 → gameOver 직행
+    return { ...state, phase: "gameOver", currentEncounter: null };
   }
   if (state.phase === "playerDefeated") {
     return { ...state, phase: "gameOver" };
@@ -1176,14 +1184,45 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
     enemyInfo = revealAllPositions(enemyInfo, masters);
   }
 
-  // 도주 페널티 회복 (밤이 바뀔 때 리셋)
+  // 도주 페널티 회복 (2밤 경과 후 리셋)
   for (const m of masters) {
     if (m.isAlive && m.escapePenalty > 0) {
-      if (m.isPlayer) {
-        const servant = state.servantMap[m.servantId];
-        newLogs.push(log.logEscapeRecovery(state.day, servant.name, servant.id));
+      const daysLeft = m.escapePenaltyDaysLeft - 1;
+      if (daysLeft <= 0) {
+        // 완전 회복
+        if (m.isPlayer) {
+          const servant = state.servantMap[m.servantId];
+          newLogs.push(log.logEscapeRecovery(state.day, servant.name, servant.id));
+        }
+        masters = updateMaster(masters, m.servantId, { escapePenalty: 0, escapePenaltyDaysLeft: 0 });
+      } else {
+        // 아직 페널티 유지
+        masters = updateMaster(masters, m.servantId, { escapePenaltyDaysLeft: daysLeft });
       }
-      masters = updateMaster(masters, m.servantId, { escapePenalty: 0 });
+    }
+  }
+
+  // 적대 호감도 배신 이벤트 (15% 확률)
+  const playerMasterForBetrayal = masters.find(m => m.isPlayer && m.isAlive);
+  if (playerMasterForBetrayal) {
+    const betrayalTier = getTier(playerMasterForBetrayal.affection);
+    if (betrayalTier === "hostile" && Math.random() < 0.15) {
+      const playerServantForBetrayal = state.servantMap[state.playerServantId];
+      masters = updateMaster(masters, state.playerServantId, { isAlive: false });
+      newLogs.push(log.logBetrayal(state.day, playerServantForBetrayal.name, "마스터", playerServantForBetrayal.id, -1));
+      newLogs.push(log.logElimination(state.day, playerServantForBetrayal.name, playerServantForBetrayal.id));
+      return {
+        ...state,
+        masters,
+        enemyInfo,
+        alliances,
+        actionCount: 0,
+        phase: "playerDefeated",
+        isFinished: true,
+        winnerId: null,
+        aiTurnResults: newLogs,
+        log: [...state.log, ...newLogs],
+      };
     }
   }
 
@@ -1193,18 +1232,69 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
   }
 
   // 소강 라운드 호감도 +1
-  const playerMasterForQuiet = masters.find(m => m.isPlayer);
-  if (playerMasterForQuiet && playerMasterForQuiet.isAlive) {
+  const playerMasterForQuiet = masters.find(m => m.isPlayer && m.isAlive);
+  if (playerMasterForQuiet) {
     const quietDelta = affectionFromQuietNight();
     const newAff = clampAffection(playerMasterForQuiet.affection + quietDelta);
     masters = updateMaster(masters, state.playerServantId, { affection: newAff });
   }
 
+  // 야간 상태 메시지 (호감도 / 페널티 기반)
+  const playerMasterForStatus = masters.find(m => m.isPlayer && m.isAlive);
+  if (playerMasterForStatus) {
+    const playerServantForStatus = state.servantMap[state.playerServantId];
+    const sName = playerServantForStatus.name;
+    const statusTier = getTier(playerMasterForStatus.affection);
+
+    // 페널티 상태 메시지
+    if (playerMasterForStatus.escapePenalty > 0) {
+      const penaltyMsgs = [
+        fixParticles(`${sName}은(는) 패배의 여파로 고통스러워 하고 있다.`),
+        fixParticles(`${sName}은(는) 아직 영기 손상을 입은 상태다.`),
+        fixParticles(`${sName}의 마력 흐름이 불안정하다. 영핵에 금이 간 것 같다.`),
+      ];
+      const penaltyMsg = penaltyMsgs[Math.floor(Math.random() * penaltyMsgs.length)];
+      newLogs.push({ day: state.day, phase: "status", key: "trpg:log.nightStatus", params: { message: penaltyMsg }, servantRefs: { name: playerServantForStatus.id } });
+    }
+
+    // 호감도 상태 메시지 (40% 확률)
+    if (Math.random() < 0.4) {
+      const affectionStatusMsgs: Partial<Record<typeof statusTier, string[]>> = {
+        hostile: [
+          fixParticles(`${sName}은(는) 마스터를 적대하고 있다. 조심해야 할 것 같다.`),
+          fixParticles(`${sName}의 눈빛에서 경계심이 사라지지 않는다.`),
+        ],
+        wary: [
+          fixParticles(`아직 ${sName}은(는) 마스터를 신뢰하지 못한다.`),
+          fixParticles(`${sName}은(는) 마스터와 거리를 유지하고 있다.`),
+        ],
+        neutral: [
+          fixParticles(`${sName}은(는) 마스터와 보통의 관계를 유지하고 있다.`),
+        ],
+        trusting: [
+          fixParticles(`${sName}은(는) 마스터를 신뢰하고 있다.`),
+          fixParticles(`${sName}은(는) 마스터의 옆에서 안정적으로 행동하고 있다.`),
+        ],
+        intimate: [
+          fixParticles(`${sName}은(는) 마스터와 깊은 유대를 쌓고 있다.`),
+        ],
+        devoted: [
+          fixParticles(`${sName}은(는) 마스터를 위해서라면 무엇이든 하겠다고 다짐하고 있다.`),
+        ],
+      };
+      const pool = affectionStatusMsgs[statusTier];
+      if (pool) {
+        const msg = pool[Math.floor(Math.random() * pool.length)];
+        newLogs.push({ day: state.day, phase: "status", key: "trpg:log.nightStatus", params: { message: msg }, servantRefs: { name: playerServantForStatus.id } });
+      }
+    }
+  }
+
   // 마력공급 가능 여부 체크 → 호감도 조건 또는 약화(도주 페널티) 시 manaSupplyPrompt 삽입
-  const playerForMana = masters.find(m => m.isPlayer);
+  const playerForMana = masters.find(m => m.isPlayer && m.isAlive);
   const manaTier = playerForMana ? getTier(playerForMana.affection) : "neutral";
   const isWeakened = (playerForMana?.escapePenalty ?? 0) > 0;
-  const manaUnlocked = playerForMana && playerForMana.isAlive
+  const manaUnlocked = playerForMana
     && (manaTier === "trusting" || manaTier === "intimate" || manaTier === "devoted" || isWeakened);
 
   return {
@@ -1237,11 +1327,8 @@ function handleManaSupply(state: TRPGGameState): TRPGGameState {
   let masters = [...state.masters];
   const newLogs: LogEntry[] = [];
 
-  // 스탯 보너스 누적
-  if (outcome.statDelta !== 0) {
-    const newManaBonus = playerMaster.manaStatBonus + outcome.statDelta;
-    masters = updateMaster(masters, state.playerServantId, { manaStatBonus: newManaBonus });
-  }
+  // 스탯 보너스 (매 공급마다 교체 — 누적 아님)
+  masters = updateMaster(masters, state.playerServantId, { manaStatBonus: outcome.statDelta });
 
   // 호감도 변화
   const newAffection = clampAffection(playerMaster.affection + outcome.affectionDelta);
