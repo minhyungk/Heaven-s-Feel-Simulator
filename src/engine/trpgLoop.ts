@@ -566,7 +566,8 @@ function handleEncounterDecision(state: TRPGGameState, fight: boolean, prefixes:
     return {
       ...stateWithFog,
       masters: masters2,
-      currentEncounter: null,
+      // Keep encounter context for enemyEscaped UI narrative/name resolution.
+      currentEncounter: state.currentEncounter,
       escapedEnemyId: enemyId,
       escapedViaSeal: true,
       phase: "enemyEscaped",
@@ -974,7 +975,7 @@ function handleAdvancePhase(state: TRPGGameState, _prefixes: SkillPrefixes): TRP
     return { ...state, escapedEnemyId: null, escapedViaSeal: false, phase: "aiTurn", lastAffectionNotification: null };
   }
   if (state.phase === "enemyEscaped") {
-    return { ...state, escapedEnemyId: null, escapedViaSeal: false, phase: "aiTurn", lastAffectionNotification: null };
+    return { ...state, currentEncounter: null, escapedEnemyId: null, escapedViaSeal: false, phase: "aiTurn", lastAffectionNotification: null };
   }
   if (state.phase === "manaSupplyResult") {
     return { ...state, phase: "nightEnd", lastAffectionNotification: null };

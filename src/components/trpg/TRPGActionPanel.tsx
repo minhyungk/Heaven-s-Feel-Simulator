@@ -286,8 +286,10 @@ export default function TRPGActionPanel({
 
   // ── 적 도주 서사 라인 (enemyEscaped 페이즈) ──
   const enemyEscapeNarrativeLines = useMemo(() => {
-    if (state.phase !== "enemyEscaped" || !state.escapedEnemyId) return [];
-    const enemy = state.servantMap[state.escapedEnemyId];
+    if (state.phase !== "enemyEscaped") return [];
+    const enemyId = state.currentEncounter?.enemyId ?? state.escapedEnemyId;
+    if (!enemyId) return [];
+    const enemy = state.servantMap[enemyId];
     if (!enemy) return [];
     const lines: NarrativeLine[] = [];
     // 조우 서사
@@ -698,8 +700,11 @@ export default function TRPGActionPanel({
         )}
 
         {/* ── enemyEscaped ── */}
-        {state.phase === "enemyEscaped" && state.escapedEnemyId && (() => {
-          const enemyServant = state.servantMap[state.escapedEnemyId!];
+        {state.phase === "enemyEscaped" && (() => {
+          const enemyId = state.currentEncounter?.enemyId ?? state.escapedEnemyId;
+          if (!enemyId) return null;
+          const enemyServant = state.servantMap[enemyId];
+          if (!enemyServant) return null;
           const resolvedEnemy = resolve(enemyServant);
           const classColor = CLASS_COLORS[enemyServant.class];
           return (
