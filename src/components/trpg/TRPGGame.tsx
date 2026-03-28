@@ -1,15 +1,20 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import type { Servant } from "../../data/types";
 import { useTRPGGame } from "../../hooks/useTRPGGame";
 import { getMovablePositions } from "../../engine/map";
 import { getSkillPrefixes } from "../../i18n/skillKeys";
 import i18n from "../../i18n";
+import { useIsMobile } from "../../hooks/useMediaQuery";
 import TRPGHeader from "./TRPGHeader";
 import TRPGMap from "./TRPGMap";
 import TRPGActionPanel from "./TRPGActionPanel";
 import SurvivorsPanel from "./SurvivorsPanel";
 import TRPGLogPanel from "./TRPGLogPanel";
+import MobileTabLayout, { useTRPGTabs } from "./MobileTabLayout";
+import ServantCard from "../ServantCard";
+import ScreenEffects from "../simulation/ScreenEffects";
+import type { ScreenEffectsHandle } from "../simulation/ScreenEffects";
 
 interface Props {
   participants: Servant[];
@@ -29,8 +34,12 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
     setWish,
     advancePhase,
     resolveAI,
+    manaSupply,
+    skipManaSupply,
+    betrayalDecision,
   } = useTRPGGame(participants, playerServant.id);
 
+  const screenEffectsRef = useRef<ScreenEffectsHandle>(null);
   const playerMaster = state.masters.find(m => m.isPlayer);
   const playerAlive = playerMaster?.isAlive ?? false;
 
@@ -50,6 +59,13 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
     }
   }, [state.phase, state.day, selectMovement]);
 
+  // 전투 시작 시 화면 흔들기
+  useEffect(() => {
+    if (state.phase === "combatResult" && state.lastCombatResult) {
+      screenEffectsRef.current?.shake();
+    }
+  }, [state.phase, state.lastCombatResult]);
+
   // 플레이어 사망 시 즉시 게임 오버이므로 자동 진행 불필요
 
   // #2: 이동 선택 시 도달 가능 타일 계산
@@ -60,18 +76,11 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
     return getMovablePositions(playerMaster.position, playerServant, prefixes);
   }, [state.phase, state.day, playerMaster, playerServant, prefixes]);
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="min-h-screen flex flex-col items-center px-4 pb-12"
-      style={{ paddingTop: "1.5rem" }}
-    >
-      {/* Header */}
-      <TRPGHeader state={state} playerServant={playerServant} onClose={onClose} />
+  const isMobile = useIsMobile();
+  const tabDefs = useTRPGTabs();
 
-      {/* Map with clickable tiles during movement */}
+  const mapAndAction = (
+    <>
       <TRPGMap
         state={state}
         highlightTiles={reachableTiles}
@@ -79,8 +88,6 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
           ? (tileId) => { if (reachableTiles.includes(tileId)) selectMovement(tileId); }
           : undefined}
       />
-
-      {/* Action Panel */}
       <TRPGActionPanel
         state={state}
         playerServant={playerServant}
@@ -92,12 +99,51 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
         onSetWish={setWish}
         onAdvancePhase={advancePhase}
         onClose={onClose}
+        onManaSupply={manaSupply}
+        onSkipManaSupply={skipManaSupply}
+        onBetrayalDecision={betrayalDecision}
       />
-
-      {/* Survivors */}
       <SurvivorsPanel state={state} />
+    </>
+  );
 
-      {/* Log */}
+  if (isMobile) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="min-h-screen flex flex-col items-center px-2"
+        style={{ paddingTop: "0.75rem", paddingBottom: "3.5rem" }}
+      >
+        <ScreenEffects ref={screenEffectsRef} />
+        <TRPGHeader state={state} playerServant={playerServant} onClose={onClose} />
+        <MobileTabLayout
+          tabs={[
+            { ...tabDefs.status, content: <div className="w-full flex flex-col items-center">{mapAndAction}</div> },
+            { ...tabDefs.log, content: <TRPGLogPanel state={state} /> },
+            { ...tabDefs.servant, content: (
+              <div className="w-full max-w-2xl mx-auto px-2 pt-2">
+                <ServantCard servant={playerServant} isPlayer />
+              </div>
+            )},
+          ]}
+        />
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen flex flex-col items-center px-4 pb-12"
+      style={{ paddingTop: "1.5rem" }}
+    >
+      <ScreenEffects ref={screenEffectsRef} />
+      <TRPGHeader state={state} playerServant={playerServant} onClose={onClose} />
+      {mapAndAction}
       <TRPGLogPanel state={state} />
     </motion.div>
   );

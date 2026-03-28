@@ -137,6 +137,14 @@ export interface CombatOptions {
   scorePenaltyA?: number;
   /** 스탯 페널티 (B 측, 도주 등) */
   scorePenaltyB?: number;
+  /** 호감도 보정 (A 측) */
+  affectionBonusA?: number;
+  /** 호감도 보정 (B 측) */
+  affectionBonusB?: number;
+  /** 액티브 스킬 보정 (A 측) */
+  activeSkillBonusA?: number;
+  /** 액티브 스킬 보정 (B 측) */
+  activeSkillBonusB?: number;
 }
 
 // ─── 강화된 전투 판정 ───
@@ -231,6 +239,22 @@ export function resolveCombat(
   if (options.specialMultiplierB && options.specialMultiplierB > 1) {
     const bonus = (options.specialMultiplierB - 1) * 0.15;
     winRateA = Math.max(winRateA - bonus, 0.01);
+  }
+
+  // 호감도 보정
+  if (options.affectionBonusA) {
+    winRateA = Math.min(Math.max(winRateA + options.affectionBonusA, 0.01), 0.99);
+  }
+  if (options.affectionBonusB) {
+    winRateA = Math.min(Math.max(winRateA - options.affectionBonusB, 0.01), 0.99);
+  }
+
+  // 액티브 스킬 보정
+  if (options.activeSkillBonusA) {
+    winRateA = Math.min(Math.max(winRateA + options.activeSkillBonusA, 0.01), 0.99);
+  }
+  if (options.activeSkillBonusB) {
+    winRateA = Math.min(Math.max(winRateA - options.activeSkillBonusB, 0.01), 0.99);
   }
 
   // 전투력 변동 (TRPG 모드)

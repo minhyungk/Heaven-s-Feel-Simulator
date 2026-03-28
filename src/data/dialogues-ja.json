@@ -1,0 +1,4082 @@
+{
+  "2": {
+    "summon": [
+      "問おう。貴方が私のマスターか？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "3": {
+    "summon": [
+      "……召喚に応じ参上した。[r] 貴様が私のマスターというヤツか？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "4": {
+    "summon": [
+      "はじめましてマスター。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "5": {
+    "summon": [
+      "サーヴァント・セイバー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "6": {
+    "summon": [
+      "セイバー、ジークフリート。[r] 召喚に応じ参上した。命令を。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "7": {
+    "summon": [
+      "セイバー……セイバー……？[r] この私がセイバーとは、どういう理由だ？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "8": {
+    "summon": [
+      "我が名はアルテラ。[r] ――フンヌの裔たる軍神の戦士だ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "9": {
+    "summon": [
+      "セイバー。ジル・ド・レェ、参上致しましてございます。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "10": {
+    "summon": [
+      "私はシュヴァリエ・デオン。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "11": {
+    "summon": [
+      "サーヴァント・アーチャー。召喚に応じ参上した。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "12": {
+    "summon": [
+      "ふはははは！　この我を呼ぶとは、運を使い果たしたな雑種！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "13": {
+    "summon": [
+      "ほいほい。呼ばれたからにはそれなりに働きますよっと。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "14": {
+    "summon": [
+      "汝がマスターか？　よろしく頼む。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "15": {
+    "summon": [
+      "私はエウリュアレ。[r] ええそう、「女神さま」よ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "16": {
+    "summon": [
+      "東方の大英雄、アーラシュとは俺のことだ。 よろしくな！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "17": {
+    "summon": [
+      "よう。サーヴァント・ランサー、召喚に応じ参上した。[r]ま、気楽にやろうやマスター！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "18": {
+    "summon": [
+      "アナタが新しいマネージャー？[r] よろしく、大切に育ててね♡"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "19": {
+    "summon": [
+      "武蔵坊弁慶、槍兵として顕現した。よろしくお願いする。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "20": {
+    "summon": [
+      "アルスターのクー・フーリン。[r] ランサーだ、ひとつ、よろしく頼むぜ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "21": {
+    "summon": [
+      "サーヴァント、ランサー。[r] スパルタ王レオニダス、ここに推参！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "22": {
+    "summon": [
+      "――私が、ローマだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "23": {
+    "summon": [
+      "……物好きな人ですね。生贄がお望みでしたら、[r]どうぞ自由に扱ってください。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "24": {
+    "summon": [
+      "ライダー、ゲオルギウス。召喚に応じ、推参しました。[r]さあ、がんばりましょう。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "25": {
+    "summon": [
+      "おやおや、これはこれは奇遇ですな。[r] デュフフフ。黒髭、参上ですぞー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "26": {
+    "summon": [
+      "ブーディカだよ、よろしく。[r] 気軽にブーディカさんと呼んでもいいよ？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "27": {
+    "summon": [
+      "牛若丸、まかりこしました。[r] 武士として誠心誠意、尽くさせていただきます。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "28": {
+    "summon": [
+      "僕はアレキサンダー。[r] アレクサンドロス三世、でもいいよ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "29": {
+    "summon": [
+      "あなたも私が好きなのね？[r] いいわ、それじゃあ――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "30": {
+    "summon": [
+      "私はマルタ。ただのマルタです。[r]きっと、世界を救いましょうね――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "31": {
+    "summon": [
+      "あら。ずいぶんと可愛らしいマスターなのね。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "32": {
+    "summon": [
+      "お招きに与り推参つかまつりました。不肖ジル＝ド＝レェ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "33": {
+    "summon": [
+      "三流サーヴァント、アンデルセンだ。[r] 本棚のすみにでも放り込んでおいてくれ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "34": {
+    "summon": [
+      "キャスター、シェイクスピア！　ここに参上しました！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "35": {
+    "summon": [
+      "ああ、どうやら大当たりのようですよ、マスター？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "36": {
+    "summon": [
+      "僕はアマデウス、ヴォルフガング・アマデウス・モーツァルト！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "37": {
+    "summon": [
+      "サーヴァント、諸葛孔明だ。……何、別人じゃないかと？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "38": {
+    "summon": [
+      "おっと。今回は、キャスターでの現界ときたか――[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "39": {
+    "summon": [
+      "アサシンのサーヴァント、佐々木小次郎。[r]ここに参上つかまつった。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "40": {
+    "summon": [
+      "サーヴァント・アサシン。影より貴殿の呼び声を聞き届けた。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "41": {
+    "summon": [
+      "ふふ。女神を現界させようだなんて、面白くて哀れな人ね。[r]あなた、お名前は？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "42": {
+    "summon": [
+      "サーヴァント、アサシン。名を荊軻という。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "43": {
+    "summon": [
+      "サーヴァント、アサシン。シャルル＝アンリ・サンソン。[r]召喚に応じ、参上しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "44": {
+    "summon": [
+      "我が顔を見る者は 恐怖を知ることになるだろう――お前も。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "45": {
+    "summon": [
+      "サーヴァント、アサシン。[r]マタ・ハリが通り名よ。よろしくね。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "46": {
+    "summon": [
+      "あら。これも運命というやつかしら。[r] サーヴァント、アサシン。カーミラと呼びなさい。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "47": {
+    "summon": [
+      "[image berserker_language_1]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "48": {
+    "summon": [
+      "シュウウウウウゥゥゥ……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "49": {
+    "summon": [
+      "[image berserker_language_1]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "50": {
+    "summon": [
+      "バーサーカー、スパルタクス。[r] さっそくで悪いが、君は圧制者かな？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "51": {
+    "summon": [
+      "おう、よろしくな。悪いがしばらく世話になる。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "52": {
+    "summon": [
+      "サーヴァント、ここに参った。[r]余に血を捧げるマスターは貴様か？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "53": {
+    "summon": [
+      "うおおおお！！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "54": {
+    "summon": [
+      "余の、振る舞い、は、運命、で、ある"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "55": {
+    "summon": [
+      "……………………。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "56": {
+    "summon": [
+      "サーヴァント、清姫。こう見えてバーサーカーですのよ？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "57": {
+    "summon": [
+      "うらああああああああああああ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "58": {
+    "summon": [
+      "我こそはタマモナインの一角、野性の狐、タマモキャット！　[r]ご主人、よろしくな！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "59": {
+    "summon": [
+      "サーヴァント・ルーラー。ジャンヌ・ダルク。[r]お会いできて、本当によかった！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "60": {
+    "summon": [
+      "はーい！　アルテミ……じゃなかった、オリオンでーす！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "61": {
+    "summon": [
+      "トリック・オア・トリート！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "62": {
+    "summon": [
+      "ご用とあらば即参上！　[r]貴方の頼れる巫女狐、キャスター降臨っ！　です！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "63": {
+    "summon": [
+      "アーチャー、ダビデ。うん、僕はやるよ。かなりやる。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "64": {
+    "summon": [
+      "いよ！　オジサンはランサー、真名をヘクトール。[r]聞いたことある？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "65": {
+    "summon": [
+      "アンタが新しい雇い主かい？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "66": {
+    "summon": [
+      "びっくりした？　僕たちは二人でサーヴァントなんだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "67": {
+    "summon": [
+      "サーヴァント、キャスター。メディアです。[r]あの、よろしくお願いします！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "68": {
+    "summon": [
+      "新選組一番隊隊長、沖田総司推参！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "69": {
+    "summon": [
+      "魔人アーチャーこと第六天魔王ノブナガじゃ！！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "70": {
+    "summon": [
+      "影の国よりまかり越した。[r] スカサハだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "71": {
+    "summon": [
+      "フィオナ騎士団が一番槍、"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "72": {
+    "summon": [
+      "やあ、サーヴァント・セイバー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "73": {
+    "summon": [
+      "メリー、煙突から失礼。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "74": {
+    "summon": [
+      "こんにちはすてきなあなた。[r]夢見るように出会いましょう？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "75": {
+    "summon": [
+      "アサシン。ジャック・ザ・リッパー。[r]よろしく、おかあさん"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "76": {
+    "summon": [
+      "セイバー、モードレッド推参だ。[r]父上はいるか？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "77": {
+    "summon": [
+      "私は、ニコラ・テスラ。天才だ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "78": {
+    "summon": [
+      "ランサー、アルトリア。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "79": {
+    "summon": [
+      "召喚により参上いたしました。[r]どうか、 このパラケルススと友達になりましょう――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "80": {
+    "summon": [
+      "我が名は蒸気王。[r] ひとたび死して、空想世界と共に在る者。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "81": {
+    "summon": [
+      "僕の名は、「ジキル」。[r]ハイドとは……違う。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "82": {
+    "summon": [
+      "……ウゥゥゥゥゥ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "84": {
+    "summon": [
+      "サーヴァント、アーチャー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "85": {
+    "summon": [
+      "サーヴァント、ランサー。[r]真名、カルナ。よろしく頼む。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "86": {
+    "summon": [
+      "……コードネームはヒロインＸ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "87": {
+    "summon": [
+      "エリンの守護者。栄光のフィオナ騎士団の長。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "88": {
+    "summon": [
+      "ブリュンヒルデ……。[r] クラスは、ランサーです……。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "89": {
+    "summon": [
+      "サーヴァント、バーサーカー。真名、ベオウルフ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "90": {
+    "summon": [
+      "うむ、装いも新たに再登場だ！[r] 嫁セイバー、あるいはネロ・ブライドと呼ぶがよい！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "91": {
+    "summon": [
+      "セイバーのサーヴァント、両儀式。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "92": {
+    "summon": [
+      "サーヴァント、アサシン。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "93": {
+    "summon": [
+      "サーヴァント、ルーラー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "94": {
+    "summon": [
+      "やっほー！　ボクの名前はアストルフォ！　クラスはライダー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "95": {
+    "summon": [
+      "こんにちはマスター。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "96": {
+    "summon": [
+      "俺を呼んだな！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "97": {
+    "summon": [
+      "私が来たからには、どうか安心なさい。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "98": {
+    "summon": [
+      "クー・フーリン。召喚に応じ参上した。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "99": {
+    "summon": [
+      "私はメイヴ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "100": {
+    "summon": [
+      "―――よくってよ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "101": {
+    "summon": [
+      "サーヴァント、セイバー。[r]偉大なるコサラの王、ラーマだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "102": {
+    "summon": [
+      "サーヴァント、ランサー。真名を李書文と申す。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "103": {
+    "summon": [
+      "サーヴァント、キャスター。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "104": {
+    "summon": [
+      "サーヴァント、キャスター。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "105": {
+    "summon": [
+      "やあ！　僕の名はビリー・ザ・キッド！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "106": {
+    "summon": [
+      "サーヴァント、アヴェンジャー。召喚に応じ参上しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "107": {
+    "summon": [
+      "あいよー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "108": {
+    "summon": [
+      "おおう、よくぞ余を引き寄せた！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "109": {
+    "summon": [
+      "また汚れ仕事か……まぁいい。いつものことさ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "110": {
+    "summon": [
+      "我ら影の群れを従えた以上は勝利も必至。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "111": {
+    "summon": [
+      "私は聖杯より出ずる者。聖杯の端末が如き者。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "112": {
+    "summon": [
+      "アサシン、酒呑童子。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "113": {
+    "summon": [
+      "あたしは玄奘三蔵！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "114": {
+    "summon": [
+      "こんにちは、愛らしい魔術師さん。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "115": {
+    "summon": [
+      "よう大将、また会ったな！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "116": {
+    "summon": [
+      "吾の名は茨木童子。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "117": {
+    "summon": [
+      "サーヴァント、アサシン。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "118": {
+    "summon": [
+      "我が名はオジマンディアス。王の中の王。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "119": {
+    "summon": [
+      "応えよう。私は貴方のサーヴァント、ランサー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "120": {
+    "summon": [
+      "サーヴァント・キャスター。[r] 天空の神ホルスの化身、ニトクリス、召喚に応じました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "121": {
+    "summon": [
+      "サーヴァント、セイバー。ランスロット、参上致しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "122": {
+    "summon": [
+      "円卓の騎士、嘆きのトリスタン。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "123": {
+    "summon": [
+      "円卓の騎士、ガウェイン。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "124": {
+    "summon": [
+      "すべて、すべて、貴方の御心のままに。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "125": {
+    "summon": [
+      "うむ。サーヴァント、アーチャー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "126": {
+    "summon": [
+      "セイバー、ベディヴィエール。[r]此よりは貴方のサーヴァントとなりましょう。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "127": {
+    "summon": [
+      "改めまして、よろしく。[r] サーヴァント・レオナルド・ダ・ヴィンチ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "128": {
+    "summon": [
+      "ぱんぱかぱーん！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "129": {
+    "summon": [
+      "お、おはようございます！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "130": {
+    "summon": [
+      "浜辺は好きよ。大好き！[r] あなたも皆も、きっと楽しみましょうね？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "131": {
+    "summon": [
+      "はい、マスター！　この水着、いかがです？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "132": {
+    "summon": [
+      "やっほー、マスター！　遊びに来たぜー！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "133": {
+    "summon": [
+      "サーヴァント・アサシン。スカサハ、ここに降臨だ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "134": {
+    "summon": [
+      "うふふふふ。[r]ますたぁ、あなたの清姫でございます！　[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "135": {
+    "summon": [
+      "―――マルタ。改めて参りました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "136": {
+    "summon": [
+      "えっと、イリヤって言います。小学五年生です。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "137": {
+    "summon": [
+      "なんだかいろいろとお世話になっちゃったみたいね。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "138": {
+    "summon": [
+      "サーヴァント・セイバー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "139": {
+    "summon": [
+      "ふ、絨毯にくるまっているとでも思ったかしら！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "140": {
+    "summon": [
+      "サーヴァント・ランサー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "141": {
+    "summon": [
+      "メリークリスマス！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "142": {
+    "summon": [
+      "ヤッホー！　あいかわらずのんびりした顔をしているわね！",
+      "女神イシュタル、召喚に応じ参上したわ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "143": {
+    "summon": [
+      "サーヴァント・ランサー、エルキドゥ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "144": {
+    "summon": [
+      "ハーイ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "145": {
+    "summon": [
+      "キャスター、ギルガメッシュ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "146": {
+    "summon": [
+      "ランサーのクラスで現界しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "147": {
+    "summon": [
+      "……ふん。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "148": {
+    "summon": [
+      "ジャガーの戦士、ここに見参！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "150": {
+    "summon": [
+      "こんにちは、カルデアのマスター君。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "153": {
+    "summon": [
+      "新免武蔵守藤原玄信……！？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "154": {
+    "summon": [
+      "怯えるな契約者よ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "155": {
+    "summon": [
+      "ヒロインＸ・オルタ……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "156": {
+    "summon": [
+      "ははははは！",
+      "我が名はジェームズ・モリアーティ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "157": {
+    "summon": [
+      "おまえがマスターか。ひどい面構えだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "158": {
+    "summon": [
+      "[image berserker_language_3]",
+      "[image berserker_language_3]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "159": {
+    "summon": [
+      "さて、召喚されたアサシンだ！",
+      "いよー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "160": {
+    "summon": [
+      "僕はセイバー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "161": {
+    "summon": [
+      "新選組副長、土方歳三だ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "162": {
+    "summon": [
+      "わらわこそが日輪の寵姫、茶々なるぞ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "163": {
+    "summon": [
+      "快楽のアルターエゴ・メルトリリス。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "164": {
+    "summon": [
+      "……愛憎のアルターエゴ、パッションリップ、です……。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "165": {
+    "summon": [
+      "サーヴァントセイバー、"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "166": {
+    "summon": [
+      "世界の壁も何のその、やってきました噂のカルデア！",
+      "世界の壁も何のその、やってきました噂のカルデア！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "167": {
+    "summon": [
+      "アルターエゴ、殺生院キアラ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "169": {
+    "summon": [
+      "喚ばれて、しまいましたか。",
+      "喚ばれて、しまいましたか。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "170": {
+    "summon": [
+      "妾は輝ける正道の都市の主、不夜城のアサシン！",
+      "妾の名は武則天。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "171": {
+    "summon": [
+      "エルドラドのバーサーカー……と呼ばれている。[r]今はそれでいいだろう。",
+      "アマゾネスの女王、ペンテシレイア。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "172": {
+    "summon": [
+      "レジスタンスのライダーだ……",
+      "レジスタンスのライダーだ……",
+      "俺はコロンブス。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "173": {
+    "summon": [
+      "自己紹介が必要かな？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "174": {
+    "summon": [
+      "アンシャンテ……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "175": {
+    "summon": [
+      "突然の水着、驚いたか？　驚いたであろうな？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "176": {
+    "summon": [
+      "さーばんと、せいばー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "177": {
+    "summon": [
+      "私ハ　名モナキ　ファラオ"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "178": {
+    "summon": [
+      "イェーーーイ！　のってるかのう！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "179": {
+    "summon": [
+      "サーヴァント、ライダー。アルトリア・ペンドラゴンだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "180": {
+    "summon": [
+      "エレナ・ブラヴァツキー、鮮やかに霊基を変えてみたわ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "181": {
+    "summon": [
+      "……どうされました、マスター？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "182": {
+    "summon": [
+      "うう、私が悪うございました……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "183": {
+    "summon": [
+      "こんにちは、カルデアのマスターさん。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "184": {
+    "summon": [
+      "―――アーチャー・インフェルノ。",
+      "―――我が名は巴。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "185": {
+    "summon": [
+      "―――アサシン・パライソ、馳せ参じました。",
+      "甲賀上忍、真名を望月千代女。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "186": {
+    "summon": [
+      "驚かれたかな？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "187": {
+    "summon": [
+      "セイバー、柳生但馬守宗矩。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "188": {
+    "summon": [
+      "―――加藤段蔵。ここに起動。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "189": {
+    "summon": [
+      "あー……あ？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "190": {
+    "summon": [
+      "私はアルターエゴ、[r]メイガス・エイジス・エリザベート・チャンネル。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "191": {
+    "summon": [
+      "アルターエゴ、メイガス・エイジス・"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "192": {
+    "summon": [
+      "オケアノスのキャスターだ。[r]",
+      "やあ。もうきみを寂しくはさせない。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "193": {
+    "summon": [
+      "サーヴァント、ランサー、哪吒。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "194": {
+    "summon": [
+      "ハァイ、出ました～。[r]",
+      "ハァイ、出ました～。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "195": {
+    "summon": [
+      "こんにちは！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "196": {
+    "summon": [
+      "サーヴァント・ランサー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "197": {
+    "summon": [
+      "冥界下り、見事だった。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "198": {
+    "summon": [
+      "葛飾北斎。しがない画工サ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "199": {
+    "summon": [
+      "サーヴァント、アサシン。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "200": {
+    "summon": [
+      "こんにちは、年若い魔術師さん。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "201": {
+    "summon": [
+      "サーヴァント、アナスタシア。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "202": {
+    "summon": [
+      "全てを燃やし、何もかも喰らい尽くしてやる……！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "203": {
+    "summon": [
+      "サーヴァント、キャスター。アヴィケブロン、召喚に応じ参上した。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "204": {
+    "summon": [
+      "私は、死だ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "205": {
+    "summon": [
+      "ライダー、雷帝イヴァンである。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "206": {
+    "summon": [
+      "いいサーヴァントを引き当てたぜ、アンタ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "207": {
+    "summon": [
+      "サーヴァント、アーチャー。ケイローン、参上しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "208": {
+    "summon": [
+      "サーヴァント……ジーク。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "209": {
+    "summon": [
+      "我が銘は魔・沖田総司、召喚に応じ現界した。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "210": {
+    "summon": [
+      "わしが土佐の岡田以蔵じゃ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "211": {
+    "summon": [
+      "ライダー、坂本龍馬。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "212": {
+    "summon": [
+      "オレはアーチャー、ナポレオン！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "213": {
+    "summon": [
+      "サーヴァント、セイバー。我が真名をシグルド。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "214": {
+    "summon": [
+      "ワルキューレ―――個体名、オルトリンデです。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "215": {
+    "summon": [
+      "……おや、小さきものか。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "216": {
+    "summon": [
+      "召喚に応じ、参上しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "217": {
+    "summon": [
+      "祭りなのだろう？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "218": {
+    "summon": [
+      "水着に着替えたら、不思議なことに修業時代の[r]私に近付いてしまったようです……。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "219": {
+    "summon": [
+      "正式に加入よ。[r]私の凄さは存分に思い知ったでしょう。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "220": {
+    "summon": [
+      "私を呼びつけるなんて身の程知らずの人間も[r]いたものですねぇ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "221": {
+    "summon": [
+      "遂に来たわね、来てしまったわ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "222": {
+    "summon": [
+      "こんにちは、地球のマスター。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "223": {
+    "summon": [
+      "サーヴァント、セイバー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "224": {
+    "summon": [
+      "真名は、シトナイにしたわ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "225": {
+    "summon": [
+      "ほな、あらためて。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "226": {
+    "summon": [
+      "姓は項、名を籍、あざなを羽。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "227": {
+    "summon": [
+      "サーヴァント、セイバー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "228": {
+    "summon": [
+      "サーヴァント、ランサー。秦良玉と申します。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "229": {
+    "summon": [
+      "久しいな。民にして人たる者よ。",
+      "いやまあ何だ、ああは言ったが其方の道行きも気がかりでな。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "230": {
+    "summon": [
+      "あのね、よくもまぁ抜け抜けと……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "231": {
+    "summon": [
+      "ライダー、ここに現界いたしました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "232": {
+    "summon": [
+      "シャルルマーニュ十二勇士が一人、[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "233": {
+    "summon": [
+      "アナタたちのおかげで、大事なものが取り戻せまシタ～。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "234": {
+    "summon": [
+      "閻魔亭にようこそ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "235": {
+    "summon": [
+      "我が名は李書文。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "236": {
+    "summon": [
+      "美遊です。姓は一応、エーデルフェルトと。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "237": {
+    "summon": [
+      "サーヴァント、キャスター。紫式部と申します。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "238": {
+    "summon": [
+      "マスター……マスター……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "239": {
+    "summon": [
+      "ふぅ……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "241": {
+    "summon": [
+      "へえ、私を召喚したのか。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "242": {
+    "summon": [
+      "召喚に応じてまいりました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "243": {
+    "summon": [
+      "どうしても師匠が心配で、ついてきてしまいました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "244": {
+    "summon": [
+      "……よくぞ我を召喚した……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "245": {
+    "summon": [
+      "私はジャーンシーの王妃（ラーニー）、[r]ラクシュミー・バーイー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "246": {
+    "summon": [
+      "呼んだかね？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "247": {
+    "summon": [
+      "サーヴァント。バーサーカー、アルジュナ……。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "248": {
+    "summon": [
+      "あん？　おめーが俺のマスターか？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "249": {
+    "summon": [
+      "キャスター、アスクレピオスだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "250": {
+    "summon": [
+      "このわしをしてアヴェンジャーとはの……[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "251": {
+    "summon": [
+      "オレが鬼武蔵こと森長可だ！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "252": {
+    "summon": [
+      "我こそは刀八毘沙門天の化身、長尾景虎！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "253": {
+    "summon": [
+      "サーヴァント・ライダー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "254": {
+    "summon": [
+      "セイバー、イアソン。召喚に応じて参上してやった。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "255": {
+    "summon": [
+      "は、はい！　アーチャー、パリス。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "256": {
+    "summon": [
+      "私はガレス。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "257": {
+    "summon": [
+      "フフ、なかなか幸運だね。君は。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "258": {
+    "summon": [
+      "サーヴァント・キャスター。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "259": {
+    "summon": [
+      "召喚に応じ参上しました！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "260": {
+    "summon": [
+      "あたしはサロメ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "261": {
+    "summon": [
+      "やったー！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "262": {
+    "summon": [
+      "み、皆様お騒がせしまーす……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "263": {
+    "summon": [
+      "あら、奇遇ね。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "264": {
+    "summon": [
+      "ヨウ、ますたあ！　お初にお目にかかるかい？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "265": {
+    "summon": [
+      "カジノ・キャメロットのオーナーにして無敗のディーラー、[r]アルトリア・ルーラー、"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "266": {
+    "summon": [
+      "想像以上にみすぼらしい召喚部屋ね……。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "267": {
+    "summon": [
+      "お待たせしましたマスター！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "268": {
+    "summon": [
+      "恐れ、敬いなさい人間。[r]",
+      "サーヴァント、アヴェンジャー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "269": {
+    "summon": [
+      "ユニヴァースからやってきた気楽なアーチャー、[r]カラミティ・ジェーンです！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "270": {
+    "summon": [
+      "わっはっは！　わーっはっはっは！[r]来たよ来たよついに来たとも！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "271": {
+    "summon": [
+      "皆々様、ごきげんよう。お加減はよろしくて？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "272": {
+    "summon": [
+      "お、何だ。俺を召喚したのか？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "273": {
+    "summon": [
+      "サーヴァント、召喚に応じ参上したっす。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "274": {
+    "summon": [
+      "わたくしはエウロペです。ごきげんよう。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "275": {
+    "summon": [
+      "おはよ～！　あたし、フォーリナーのユゥユゥ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "276": {
+    "summon": [
+      "召喚に応じ、参上致しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "277": {
+    "summon": [
+      "―――真名オデュッセウス、現界した。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "278": {
+    "summon": [
+      "ディオスクロイ、現界した。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "279": {
+    "summon": [
+      "カイニスだ。",
+      "真名カイニス、神霊だ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "280": {
+    "summon": [
+      "―――私を、呼ぶ者は誰か。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "281": {
+    "summon": [
+      "あい、あすく、ゆー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "282": {
+    "summon": [
+      "[image berserker_language_1]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "283": {
+    "summon": [
+      "宇津見エリセ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "284": {
+    "summon": [
+      "こんにちは！　キャスター、アルトリアと申します！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "285": {
+    "summon": [
+      "こんにちは、マスター。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "286": {
+    "summon": [
+      "海だー！！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "287": {
+    "summon": [
+      "ブリュンヒルデです。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "288": {
+    "summon": [
+      "……はぁ。今回は意外と大変な目に遭ったわ……。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "289": {
+    "summon": [
+      "ごきげんよう、マスター。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "290": {
+    "summon": [
+      "巴御前、夏の霊基にて参上いたしました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "291": {
+    "summon": [
+      "サーヴァント、紫式部。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "292": {
+    "summon": [
+      "私は邪馬台国の女王、卑弥呼。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "293": {
+    "summon": [
+      "新選組三番隊隊長、斎藤一だ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "294": {
+    "summon": [
+      "織田家当主、織田信長が弟、織田信勝、[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "295": {
+    "summon": [
+      "サーヴァント・フォーリナー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "296": {
+    "summon": [
+      "……いまさら、改まって名乗るのはどうかと思うけど……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "297": {
+    "summon": [
+      "お初にお目に掛かります！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "298": {
+    "summon": [
+      "……セイバー、渡辺綱。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "299": {
+    "summon": [
+      "―――伊吹童子である。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "300": {
+    "summon": [
+      "わえはヴリトラじゃ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "301": {
+    "summon": [
+      "少しはマシになったかもしれんが、まだまだだ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "302": {
+    "summon": [
+      "セイバー、千子村正。召喚に応じ参上した。[r]",
+      "セイバー、千子村正。召喚に応じ参上した。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "303": {
+    "summon": [
+      "―――平景清。推参。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "304": {
+    "summon": [
+      "鬼一法眼、アサシンクラスにて現界である！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "305": {
+    "summon": [
+      "サーヴァント・ルーラー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "306": {
+    "summon": [
+      "はじめまして。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "307": {
+    "summon": [
+      "ごめんくださいまし。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "308": {
+    "summon": [
+      "謎のアイドルＸ・オルタ……[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "309": {
+    "summon": [
+      "……私を召喚したのですね。[r]",
+      "……私を召喚したのですね。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "310": {
+    "summon": [
+      "妖精騎士ガウェイン、これより貴様の幕下に入る。[r]",
+      "サーヴァント、セイバー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "311": {
+    "summon": [
+      "サーヴァント、アーチャー。[r]",
+      "赤いカカトのバーヴァン・シー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "312": {
+    "summon": [
+      "サーヴァント、ランサー。[r]",
+      "僕……いや、私はメリュジーヌ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "313": {
+    "summon": [
+      "円卓第二席、騎士パーシヴァル。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "314": {
+    "summon": [
+      "このたびは召喚のほど、ありがとうございます♡[r]",
+      "サーヴァント、アサシン。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "315": {
+    "summon": [
+      "ここがカルデアってところ？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "316": {
+    "summon": [
+      "やあ。ここがカルデア？[r]",
+      "……なんだこれ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "317": {
+    "summon": [
+      "―――久しぶりだなマスター、魔セイバー、無穹の彼方より帰還した。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "318": {
+    "summon": [
+      "アロハ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "319": {
+    "summon": [
+      "はーーい！　召喚されましたー！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "320": {
+    "summon": [
+      "改めて、よろしく！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "321": {
+    "summon": [
+      "ふふふ……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "322": {
+    "summon": [
+      "―――神霊カイニス、ライダー霊基っと。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "323": {
+    "summon": [
+      "あれ、ちゃんマスじゃん。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "324": {
+    "summon": [
+      "本音がだだ漏れー、もれもれモレーでーす♪"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "325": {
+    "summon": [
+      "私はパルミラの女王ゼノビア。アーチャーだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "326": {
+    "summon": [
+      "さあ、伝説の始まりよ～♪"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "327": {
+    "summon": [
+      "キャスター、出雲阿国、ここにまかり越してございます。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "328": {
+    "summon": [
+      "ようやく、ようやく見つけました……。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "329": {
+    "summon": [
+      "ランサー、坂本龍馬。召喚に応じ参上した。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "330": {
+    "summon": [
+      "じゃあ改めて……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "331": {
+    "summon": [
+      "此度はライダーの霊基にて現界しました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "332": {
+    "summon": [
+      "オレはライダー、ドブルイニャ・ニキチッチだ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "334": {
+    "summon": [
+      "はい、NFFコールセンターです♡[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "335": {
+    "summon": [
+      "召喚に応じて参上した。我が名はヘファイスティオン……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "336": {
+    "summon": [
+      "はじめまして。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "337": {
+    "summon": [
+      "こんにちは、わたしは徴側。この子は妹の徴弐。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "338": {
+    "summon": [
+      "わっはー！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "339": {
+    "summon": [
+      "アンシャンテ！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "340": {
+    "summon": [
+      "初めまして、大旦那様。[r]我が主・大黒天の代理で参りました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "341": {
+    "summon": [
+      "あん？　あんたがウチのマスター？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "342": {
+    "summon": [
+      "サーヴァント、ライダー……"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "343": {
+    "summon": [
+      "おっととと！　悪い悪い、緊急召喚みたいな感じでな！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "344": {
+    "summon": [
+      "サーヴァント、セイバー！　ローランだ！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "345": {
+    "summon": [
+      "サーヴァント、クリームヒルト。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "346": {
+    "summon": [
+      "召喚に応じ参上、ルーラークラス、[r]ジェームズ・モリアーティだ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "347": {
+    "summon": [
+      "おお……これが……これが召喚！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "348": {
+    "summon": [
+      "ほ、ほ、ほ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "349": {
+    "summon": [
+      "ライダー、曲亭馬琴！　お初にお目にかかる！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "350": {
+    "summon": [
+      "サーヴァント・アーチャー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "351": {
+    "summon": [
+      "サーヴァント……というのか？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "352": {
+    "summon": [
+      "サーヴァント、キャスター改めアルターエゴ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "353": {
+    "summon": [
+      "やあ。私はレディ・アヴァロン。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "354": {
+    "summon": [
+      "ガレスです！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "355": {
+    "summon": [
+      "ハーイ、みんな元気ね！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "356": {
+    "summon": [
+      "アサシン……宇津見エリセ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "357": {
+    "summon": [
+      "スカサハ＝スカディである。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "358": {
+    "summon": [
+      "くっふっふー！[r]ぱーふぇくとにないすばでーな水着妾の登場じゃ！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "359": {
+    "summon": [
+      "ワルキューレ―――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "360": {
+    "summon": [
+      "ワルキューレ―――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "361": {
+    "summon": [
+      "ワルキューレ―――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "362": {
+    "summon": [
+      "利休、御前に罷り越してございます。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "363": {
+    "summon": [
+      "新選組総長、山南敬助、召喚に応じ推参致しました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "364": {
+    "summon": [
+      "我が名は邪馬台国二代女王、壱与。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "365": {
+    "summon": [
+      "サーヴァント、呼延灼。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "366": {
+    "summon": [
+      "某は武成王、黄飛虎と申す者。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "367": {
+    "summon": [
+      "えっと……いいの、かな？"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "369": {
+    "summon": [
+      "あけましておめでとう。[r]",
+      "サーヴァント、アルターエゴ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "370": {
+    "summon": [
+      "ニトクリスである。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "371": {
+    "summon": [
+      "よう！　アンタがマスター？[r]",
+      "マジかよ。一度死んだ程度じゃあ懲りてないってコトか！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "372": {
+    "summon": [
+      "……私を呼んだのはアナタ、ですね。[r]",
+      "召喚に応じ建築……いえ、参上しました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "373": {
+    "summon": [
+      "はじめまして、汎人類史のお友達！[r]",
+      "ワオ、私もついに喚ばれちゃったーー！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "374": {
+    "summon": [
+      "召喚の[#理:ことわり]に従い、参上いたしました。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "375": {
+    "summon": [
+      "やあやあ、僕が超弩級アーチャーこと、[r]長州が生んだ奇跡の英傑、高杉晋作だ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "376": {
+    "summon": [
+      "わたしはお母さん……[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "378": {
+    "summon": [
+      "召喚に応じ参上いたしました、ロクスタです！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "379": {
+    "summon": [
+      "じゃ、改めて。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "380": {
+    "summon": [
+      "果心居士と申します。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "381": {
+    "summon": [
+      "おう、ビーマだ、よろしくな。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "382": {
+    "summon": [
+      "我が名はドゥリーヨダナ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "383": {
+    "summon": [
+      "私は神光融合型殲滅女神、ドゥルガー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "384": {
+    "summon": [
+      "サーヴァント、セイバー。メドゥーサよ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "385": {
+    "summon": [
+      "こんにちは。貴方が私の召喚者、ですね？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "386": {
+    "summon": [
+      "こんにちは！　難事件発生と聞いてやってきました、[r]アルトリア・キャスターです！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "387": {
+    "summon": [
+      "夏・本・番！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "388": {
+    "summon": [
+      "アヴェンジャークロエ、参上！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "389": {
+    "summon": [
+      "（うわ、なにこれ。思い出した途端、意識しちゃってる、私）[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "390": {
+    "summon": [
+      "ついに時間が私たちに追いついたね。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "391": {
+    "summon": [
+      "サーヴァント、アーチャー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "392": {
+    "summon": [
+      "へえ。あんまりにも呼び声がしつこいからイヤイヤきたけど、[r]おまえ、すっごい嬉しそうじゃん。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "393": {
+    "summon": [
+      "ワンジナだよ！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "394": {
+    "summon": [
+      "おお、[#吾:あ]を召喚したか！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "395": {
+    "summon": [
+      "おっと、拙僧が呼ばれたか……。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "396": {
+    "summon": [
+      "召喚に応じ参上した。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "397": {
+    "summon": [
+      "ライダー、武田……、晴信だ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "398": {
+    "summon": [
+      "儂が永倉新八だ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "399": {
+    "summon": [
+      "アーチャー、雑賀孫一。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "400": {
+    "summon": [
+      "我こそは毘沙門天の化身にして、越後の軍神、上杉謙信！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "401": {
+    "summon": [
+      "休んでいて、と言ったのに。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "402": {
+    "summon": [
+      "サーヴァント、セイバー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "403": {
+    "summon": [
+      "源頼光―――",
+      "源頼光―――"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "404": {
+    "summon": [
+      "私は由井正雪。",
+      "……そうとも、私だ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "405": {
+    "summon": [
+      "サーヴァント、英霊。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "406": {
+    "summon": [
+      "こんにちは、あたしはアンドロメダ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "407": {
+    "summon": [
+      "わたしはマリー。",
+      "あら、あなたなのね。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "408": {
+    "summon": [
+      "アサシン、耀星のハサンだ。",
+      "アサシン、耀星のハサンだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "409": {
+    "summon": [
+      "我こそは復讐者！",
+      "……やれやれ、おまえには驚かされる。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "410": {
+    "summon": [
+      "お初にお目に掛かります。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "413": {
+    "summon": [
+      "眩しいトンネルを抜けると、[r]そこは見知らぬ研究施設だった……。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "414": {
+    "summon": [
+      "仮眠から目覚めると、そこは一面の帰りたい空間だった……。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "415": {
+    "summon": [
+      "……わたしまで喚ばれるなんて。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "416": {
+    "summon": [
+      "召喚、ありがとうございます！　阿曇磯良です！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "418": {
+    "summon": [
+      "こんにちは。召喚してくださってありがとうございます。",
+      "こんにちは。召喚してくださってありがとうございます。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "419": {
+    "summon": [
+      "暑い……ので自分から水着になったぞ、合理的だぞ！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "420": {
+    "summon": [
+      "サーヴァント、アヴェンジャー、ぐっ様求む、あ、違う。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "421": {
+    "summon": [
+      "人類最後の楽園、未来のドバイにようこそ♡",
+      "……ムーンキャンサー、ＢＢドバイ。[r]召喚されたので着任しました。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "422": {
+    "summon": [
+      "私のトラマカスキなら当然です、ね。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "423": {
+    "summon": [
+      "ＸＸ・オルタ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "424": {
+    "summon": [
+      "サーヴァント、ムーンキャンサー。[r]岸波白野、召喚に応じて参上した。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "425": {
+    "summon": [
+      "え、私の方を選んだんだ。",
+      "え、私の方を選んだんだ。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "426": {
+    "summon": [
+      "こんにちは、カルデアの方。ご機嫌いかがですか？",
+      "天真爛漫、純真貞淑！[r]全時空の素敵なマスターさん、お待たせしました！"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "427": {
+    "summon": [
+      "サーヴァント、アーチャー。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "428": {
+    "summon": [
+      "ゴッホは……少しだけ、成長できた気がします。"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "429": {
+    "summon": [
+      "モイ！　“ロウヒ”だぁーよ！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "430": {
+    "summon": [
+      "メリー・クリスマス！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "431": {
+    "summon": [
+      "ハァ～イ！　白き月姫ファンタズムーンだよ～！！[r]おっまたせ～！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "432": {
+    "summon": [
+      "問おう！　汝が俺のマスターか？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "433": {
+    "summon": [
+      "御社への志望動機は、自由な社風に惹かれたからと、[r]安心で安定した生活を送りたいから、です！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "434": {
+    "summon": [
+      "信濃の高梨が娘、黒姫と申します。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "435": {
+    "summon": [
+      "―――ええ、と。はじめまして。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "437": {
+    "summon": [
+      "召喚……召喚？[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "438": {
+    "summon": [
+      "ふあぁぁ……ああ、眠い……[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "439": {
+    "summon": [
+      "ランサー、現界した。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "440": {
+    "summon": [
+      "やっほー。[r]",
+      "やっほー、アテシだよー！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "441": {
+    "summon": [
+      "その願いは叶わない……[r]",
+      "召喚に応じて参上したわ。[r]プリテンダー、テュフォン・エフェメロスよ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "442": {
+    "summon": [
+      "[#神:オレ]は神々の王、インドラである。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "445": {
+    "summon": [
+      "うわあああ、ねんがんのサマーウェアですぅ～～！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "446": {
+    "summon": [
+      "ああ、もう。夏が来てしまったのね。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "447": {
+    "summon": [
+      "改めて。呼延灼、新たな装いでやってまいりました！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "448": {
+    "summon": [
+      "……はあ。喚ぶなよ、空気読めよな。[r]どう見てもひとり旅だって分かるだろ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "449": {
+    "summon": [
+      "なんだか良く分かりませんが、巫女を拝命いたしました、[r]美遊です。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "450": {
+    "summon": [
+      "ワタシは、渚のお姉さん。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "451": {
+    "summon": [
+      "わぁ。マッさんじゃないですか。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "452": {
+    "summon": [
+      "ライダー、ネモ。喚び声に応え、参戦する。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "453": {
+    "summon": [
+      "わたしはセイバー河上げん……、[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "454": {
+    "summon": [
+      "新選組八番隊隊長、藤堂平助。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "455": {
+    "summon": [
+      "うす、そういうわけで、改めてよろしくお願いします、[r]カルデアの大将。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "456": {
+    "summon": [
+      "俺がセイバー、近藤勇。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "457": {
+    "summon": [
+      "召喚に応じ参上したわ。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "458": {
+    "summon": [
+      "という訳で改めて召喚されました。終わりのエリザです。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "459": {
+    "summon": [
+      "役立たずの臆病者、キャスター・ソロモン王、[r]自らに課した制約に基づきここに顕現せり。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "461": {
+    "summon": [
+      "サーヴァント、セイバー。ロード・ログレス。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "462": {
+    "summon": [
+      "やあ。儂の名前は……ふふ、何だったかな。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "463": {
+    "summon": [
+      "どーもー。[r]隣の蛇女房だけどさ、肉じゃが作りすぎちゃって……[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "464": {
+    "summon": [
+      "あらためまして、フローラです！[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "465": {
+    "summon": [
+      "私はデメテル。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  },
+  "466": {
+    "summon": [
+      "セイバー、ジャック・ド・モレー。[r]"
+    ],
+    "battleStart": [],
+    "npChant": [],
+    "defeat": [],
+    "victory": []
+  }
+}

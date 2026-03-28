@@ -1,8 +1,20 @@
-import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import type { CombatResult as CombatResultType, TRPGGameState } from "../../engine/types";
 import { CLASS_COLORS, getServantTotalScore } from "../../data/types";
 import { useServantResolver } from "../../contexts/ServantDataContext";
+import { generateBattleNarrative } from "../../engine/narrativeGenerator";
+import type { NarrativeLine } from "../../engine/narrativeFormatter";
+import { TIER_LABELS_KO, TIER_LABELS_EN, TIER_LABELS_JA } from "../../engine/affection";
+import type { AffectionTier } from "../../engine/affection";
+import { fixParticles } from "../../utils/josa";
+import i18n from "../../i18n";
+import TypewriterLog from "../simulation/TypewriterLog";
+
+const TIER_LABELS: Record<string, Record<AffectionTier, string>> = {
+  ko: TIER_LABELS_KO, en: TIER_LABELS_EN, ja: TIER_LABELS_JA,
+};
 
 interface Props {
   result: CombatResultType;
@@ -10,24 +22,24 @@ interface Props {
   state: TRPGGameState;
   onContinue: () => void;
   hideButton?: boolean;
+  /** 패배 위기 등에서 결과 텍스트를 덮어쓸 때 */
+  overrideResultText?: string;
 }
 
-export default function CombatResult({ result, playerServantId, state, onContinue, hideButton }: Props) {
+export default function CombatResult({ result, playerServantId, state, onContinue, hideButton, overrideResultText }: Props) {
   const { t } = useTranslation("trpg");
   const resolve = useServantResolver();
+  const [narrativeDone, setNarrativeDone] = useState(false);
 
   const playerWon = result.winner?.id === playerServantId;
   const isDraw = result.isDraw;
 
-  // Determine combatants for portraits
   const playerServant = state.servantMap[playerServantId];
-  // 무승부 시 winner/loser 둘 다 null → currentEncounter 또는 descriptionParams에서 적 찾기
   let enemyServant = result.winner?.id === playerServantId ? result.loser : result.winner;
   if (!enemyServant && state.currentEncounter) {
     enemyServant = state.servantMap[state.currentEncounter.enemyId] ?? null;
   }
   if (!enemyServant && result.descriptionParams) {
-    // drawResult의 params에서 a/b 이름으로 적 찾기
     const names = [result.descriptionParams.a, result.descriptionParams.b];
     for (const id of Object.keys(state.servantMap)) {
       const s = state.servantMap[Number(id)];
@@ -43,13 +55,66 @@ export default function CombatResult({ result, playerServantId, state, onContinu
   const playerColor = CLASS_COLORS[playerServant.class];
   const enemyColor = enemyServant ? CLASS_COLORS[enemyServant.class] : "#666";
 
+  // 전투 서사 생성
+  const narrativeLines: NarrativeLine[] = useMemo(() => {
+    if (!enemyServant) return [];
+    try {
+      let intentMatchup: "hunt_hunt" | "hunt_guard" | "ambush" | "detected" = "hunt_hunt";
+      if (state.currentEncounter?.isAmbush) {
+        intentMatchup = "ambush";
+      } else if (state.playerIntent === "guard") {
+        intentMatchup = "hunt_guard";
+      }
+      const lines = generateBattleNarrative({
+        servantA: playerServant,
+        servantB: enemyServant,
+        combatResult: result,
+        day: state.day,
+        intentMatchup,
+        isPlayerInvolved: true,
+        playerIsA: true,
+      });
+
+      // 최종 전투 승리 시 추가 대사
+      if (state.isFinished && playerWon && result.loser) {
+        lines.push({
+          text: `적 ${resolve(result.loser).name}를 쓰러뜨리고, 제6차 성배전쟁의 승자가 결정났다.`,
+          effect: "np_glow",
+          speed: "slow",
+          delay: 800,
+        });
+      }
+
+      return lines;
+    } catch {
+      return [];
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
+
+  const showResult = narrativeDone || narrativeLines.length === 0;
+
+  // 호감도 변화 메시지 — state.lastAffectionNotification에서 직접 사용
+  const affectionMessage = useMemo(() => {
+    const notif = state.lastAffectionNotification;
+    if (!notif || isDraw) return null;
+    const labels = TIER_LABELS[i18n.language] ?? TIER_LABELS_EN;
+    const tierLabel = labels[notif.tier];
+    const deltaStr = notif.delta > 0 ? `+${notif.delta}` : `${notif.delta}`;
+    return {
+      text: fixParticles(notif.message),
+      delta: `${tierLabel}${deltaStr}`,
+      positive: notif.delta >= 0,
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
+
   return (
     <div className="text-center">
       <p className="text-xs text-gray-500 uppercase tracking-wider mb-3">{t("combat.title")}</p>
 
-      {/* Face-off portraits (#4 + #13) */}
+      {/* Face-off portraits */}
       <div className="flex items-center justify-center gap-4 mb-4">
-        {/* Player portrait */}
         <motion.div
           initial={{ x: -60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -73,7 +138,6 @@ export default function CombatResult({ result, playerServantId, state, onContinu
           <p className="text-[9px] text-gray-600">{playerServant.class} ({getServantTotalScore(playerServant)})</p>
         </motion.div>
 
-        {/* VS */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -84,7 +148,6 @@ export default function CombatResult({ result, playerServantId, state, onContinu
           VS
         </motion.div>
 
-        {/* Enemy portrait */}
         <motion.div
           initial={{ x: 60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -109,67 +172,76 @@ export default function CombatResult({ result, playerServantId, state, onContinu
         </motion.div>
       </div>
 
-      {/* Result with animation */}
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.3 }}
-        className="mb-4"
-      >
-        {isDraw ? (
-          <p className="text-lg font-bold text-gray-400">{t("combat.draw")}</p>
-        ) : (
-          <p
-            className="text-lg font-bold"
-            style={{ color: playerWon ? "#4ade80" : "#f87171" }}
-          >
-            {playerWon
-              ? t("combat.victory", { name: resolve(result.winner!).name })
-              : t("combat.defeat")}
-          </p>
-        )}
-      </motion.div>
-
-      {/* Impact effect on loser */}
-      {!isDraw && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.6, 0] }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(circle at ${playerWon ? "70%" : "30%"} 50%, rgba(255,74,74,0.15), transparent 60%)`,
-          }}
+      {/* 전투 서사 — 한 글자씩 타이프라이터 */}
+      {narrativeLines.length > 0 && (
+        <TypewriterLog
+          lines={narrativeLines}
+          onComplete={() => setNarrativeDone(true)}
         />
       )}
 
-      {/* Win rate */}
-      <p className="text-xs text-gray-600 mb-3">
-        {t("combat.winRate", { rate: Math.round(result.winProbabilityA * 100) })}
-      </p>
+      {/* 결과 — 서사 완료 후 표시 */}
+      <AnimatePresence>
+        {showResult && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="mb-3 mt-4">
+              {overrideResultText ? (
+                <p className="text-lg font-bold" style={{ color: "#f87171" }}>{overrideResultText}</p>
+              ) : isDraw ? (
+                <p className="text-lg font-bold text-gray-400">{t("combat.draw")}</p>
+              ) : (
+                <p
+                  className="text-lg font-bold"
+                  style={{ color: playerWon ? "#4ade80" : "#f87171" }}
+                >
+                  {playerWon
+                    ? t("combat.victory", { name: resolve(result.winner!).name })
+                    : t("combat.defeat")}
+                </p>
+              )}
+            </div>
 
-      {/* Skill effects */}
-      {result.skillEffects.length > 0 && (
-        <div className="mb-4 space-y-1">
-          {result.skillEffects.map((effect, i) => (
-            <p key={i} className="text-xs text-magic-blue">
-              {t(effect.key.startsWith("trpg:") ? effect.key : `simulation:${effect.key}`, effect.params)}
+            <p className="text-xs text-gray-600 mb-2">
+              {t("combat.winRate", { rate: Math.round(result.winProbabilityA * 100) })}
             </p>
-          ))}
-        </div>
-      )}
 
-      {!hideButton && (
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onContinue}
-          className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
-          style={{ fontFamily: "var(--font-serif)" }}
-        >
-          {t("nightEnd.continue")}
-        </motion.button>
-      )}
+            {/* 호감도 변화 */}
+            {affectionMessage && !overrideResultText && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="mb-3 p-2 rounded-lg text-xs"
+                style={{ background: "rgba(255,255,255,0.03)" }}
+              >
+                <p className="text-gray-400">{affectionMessage.text}</p>
+                <p
+                  className="text-[10px] font-bold mt-0.5"
+                  style={{ color: affectionMessage.positive ? "#4ade80" : "#f87171" }}
+                >
+                  ({affectionMessage.delta})
+                </p>
+              </motion.div>
+            )}
+
+            {!hideButton && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={onContinue}
+                className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {t("nightEnd.continue")}
+              </motion.button>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

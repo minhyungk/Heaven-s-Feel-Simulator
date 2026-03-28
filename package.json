@@ -12,6 +12,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.99.2",
     "@tailwindcss/vite": "^4.2.1",
+    "@toss/hangul": "^1.7.1",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.36.0",
     "html2canvas-pro": "^2.0.2",

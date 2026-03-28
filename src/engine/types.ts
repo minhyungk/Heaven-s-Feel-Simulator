@@ -1,4 +1,5 @@
 import type { Servant, ServantClass } from "../data/types";
+import type { AffectionTier } from "./affection";
 
 // ─── 기본 타입 (enum 금지, union만 사용) ───
 
@@ -19,12 +20,16 @@ export type TRPGPhase =
   | "counterSealPrompt"
   | "defeatEscapePrompt"
   | "playerEscaped"
+  | "playerDefeated"
   | "enemyEscaped"
   | "combat"
   | "combatResult"
   | "forcedBridgeNotice"
   | "aiTurn"
+  | "manaSupplyPrompt"
+  | "manaSupplyResult"
   | "nightEnd"
+  | "betrayalPrompt"
   | "grailWish"
   | "gameOver";
 
@@ -101,8 +106,14 @@ export interface MasterState {
   stayDuration: number;
   /** 도구작성 누적 부스트 */
   itemBoostCount: number;
-  /** 도주 페널티 (다음 전투 스탯 감소) */
+  /** 도주 페널티 (전투 스탯 감소) */
   escapePenalty: number;
+  /** 도주 페널티 잔여 밤 수 (2→1→0에서 리셋) */
+  escapePenaltyDaysLeft: number;
+  /** 마력공급 스탯 보너스 (매 공급마다 갱신) */
+  manaStatBonus: number;
+  /** 호감도 (0~100) */
+  affection: number;
 }
 
 export interface EnemyInfo {
@@ -142,6 +153,8 @@ export interface TRPGGameState {
     canEscape: boolean;
     /** 은신 발각에 의한 기습 조우 */
     isAmbush?: boolean;
+    /** 조우 의도 매칭 (조우 서사 생성용) */
+    intentMatchup?: "hunt_hunt" | "hunt_guard" | "ambush" | "detected";
   } | null;
   /** 마지막 전투 결과 */
   lastCombatResult: CombatResult | null;
@@ -167,6 +180,29 @@ export interface TRPGGameState {
   wish: string | null;
   /** 현재 밤의 행동 횟수 (0-based, 최대 2회) */
   actionCount: number;
+  /** 동맹 목록 */
+  alliances: { servantIds: [number, number]; formedOnDay: number; betrayalChance: number }[];
+  /** 마지막 마력공급 결과 */
+  lastManaSupplyOutcome: {
+    result: string;
+    statDelta: number;
+    affectionDelta: number;
+    narration: string;
+  } | null;
+  /** 호감도 변화 알림 (패널에 표시, intentSelection 진입 시 초기화) */
+  lastAffectionNotification: {
+    message: string;
+    delta: number;
+    tier: AffectionTier;
+  } | null;
+  /** 마력공급이 약화(escape 패널티) 이유로 발생했는지 여부 */
+  manaSupplyWeaknessReason: boolean;
+  /** 후유키 대교 강제 소환 메시지 표시 여부 (1회만) */
+  forcedBridgeShown: boolean;
+  /** 소환 대사 표시 여부 (게임 시작 시 1회만) */
+  summonDialogueShown: boolean;
+  /** 명령 거부 메시지 (이번 턴에 거부 발생 시) */
+  lastRefusalMessage: string | null;
 }
 
 // ─── TRPG 액션 ───
@@ -180,7 +216,10 @@ export type TRPGAction =
   | { type: "defeatEscapeDecision"; useSeal: boolean }
   | { type: "setWish"; wish: string }
   | { type: "advancePhase" }
-  | { type: "resolveAI" };
+  | { type: "resolveAI" }
+  | { type: "manaSupply" }
+  | { type: "skipManaSupply" }
+  | { type: "betrayalDecision"; useSeal: boolean };
 
 // ─── 기존 warEngine 호환 타입 ───
 

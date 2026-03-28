@@ -124,7 +124,7 @@ export default function StartScreen({ onStart, onCatalyst, onDesignated, onStart
           whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(74, 158, 255, 0.2)" }}
           whileTap={{ scale: 0.95 }}
           onClick={onDesignated}
-          className="px-8 py-3 text-lg font-bold rounded-lg border border-magic-blue bg-transparent text-magic-blue cursor-pointer transition-all hover:bg-magic-blue/10"
+          className="px-8 py-3 text-lg font-bold rounded-lg border border-magic-red bg-transparent text-magic-red cursor-pointer transition-all hover:bg-magic-red/10"
           style={{ fontFamily: "var(--font-serif)" }}
         >
           {t("start.designatedSummon")}
@@ -136,7 +136,7 @@ export default function StartScreen({ onStart, onCatalyst, onDesignated, onStart
           whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 74, 74, 0.3)" }}
           whileTap={{ scale: 0.95 }}
           onClick={onStartTRPG}
-          className="px-8 py-3 text-lg font-bold rounded-lg border border-magic-red bg-transparent text-magic-red cursor-pointer transition-all hover:bg-magic-red/10"
+          className="px-12 2xl:px-16 py-4 2xl:py-5 text-lg 2xl:text-2xl font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer transition-all hover:bg-gold/10"
           style={{ fontFamily: "var(--font-serif)" }}
         >
           {t("trpg:startTRPG")}
@@ -148,7 +148,7 @@ export default function StartScreen({ onStart, onCatalyst, onDesignated, onStart
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onRankings}
-          className="px-12 py-3 text-lg font-bold rounded-lg border border-gray-600 bg-transparent text-gray-400 cursor-pointer transition-all hover:border-gray-400 hover:text-gray-200"
+          className="px-12 py-3 text-lg font-bold rounded-lg border border-gray-300 bg-transparent text-gray-300 cursor-pointer transition-all hover:border-gray-400 hover:text-gray-200"
           style={{ fontFamily: "var(--font-serif)" }}
         >
           {t("start.rankings")}

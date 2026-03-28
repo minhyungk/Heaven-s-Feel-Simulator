@@ -23,25 +23,24 @@ export default function EncounterDecision({ state, playerServant, onDecision, on
   const encounter = state.currentEncounter!;
   const enemyServant = state.servantMap[encounter.enemyId];
   const resolvedEnemy = resolve(enemyServant);
-  const enemyInfo = state.enemyInfo[encounter.enemyId];
   const playerMaster = state.masters.find(m => m.isPlayer)!;
   const classColor = CLASS_COLORS[enemyServant.class];
 
   const escapeChance = Math.round(calcEscapeChance(playerServant, enemyServant, prefixes) * 100);
   const enemyMaster = state.masters.find(m => m.servantId === encounter.enemyId);
 
-  // What does the player know about this enemy?
-  const showName = enemyInfo?.fogLevel === "fullyRevealed" || enemyInfo?.fogLevel === "statsRevealed";
-  const showClass = enemyInfo?.knownClass != null;
-  const showStats = enemyInfo?.fogLevel === "statsRevealed" || enemyInfo?.fogLevel === "fullyRevealed";
-  const displayName = showName ? resolvedEnemy.name : showClass ? `${enemyInfo.knownClass} (???)` : "???";
+  // 조우 중이므로 적 정보를 강제로 표시 (안개 갱신은 결정 후에 이루어지지만 조우 화면에서는 보여야 함)
+  const showName = true;
+  const showClass = true;
+  const showStats = true;
+  const displayName = resolvedEnemy.name;
 
   // Stat totals with penalties
   const playerScore = getServantTotalScore(playerServant);
   const enemyScore = getServantTotalScore(enemyServant);
   const playerPenalty = playerMaster.escapePenalty;
   const enemyPenalty = enemyMaster?.escapePenalty ?? 0;
-  const effectivePlayerScore = playerScore - playerPenalty;
+  const effectivePlayerScore = playerScore - playerPenalty + (playerMaster.manaStatBonus ?? 0);
   const effectiveEnemyScore = enemyScore - enemyPenalty;
   const winRate = Math.round(calcWinRate(effectivePlayerScore, effectiveEnemyScore) * 100);
 
@@ -96,8 +95,8 @@ export default function EncounterDecision({ state, playerServant, onDecision, on
             ["mana", "MANA"], ["luck", "LUCK"], ["np", "NP"],
           ] as const).map(([key, label]) => (
             <div key={key} className="text-center">
-              <span className="text-gray-600">{label}</span>
-              <p className="text-gray-400 font-bold">{enemyServant.stats[key]}</p>
+              <span className="text-gray-500 text-[12px]">{label}</span>
+              <p className="text-gray-400 text-[10px] font-bold">{enemyServant.stats[key]}</p>
             </div>
           ))}
         </div>
@@ -176,27 +175,27 @@ export default function EncounterDecision({ state, playerServant, onDecision, on
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => onUseSeal("boost")}
-              className="px-4 py-2 text-[10px] font-bold rounded-lg border border-magic-red/40 bg-transparent text-magic-red/70 cursor-pointer hover:bg-magic-red/5 transition-colors"
+              className="px-3 py-2 text-[10px] font-bold rounded-lg border border-magic-red/40 bg-transparent text-magic-red/70 cursor-pointer hover:bg-magic-red/5 transition-colors whitespace-pre-line leading-tight"
             >
-              {t("encounter.sealBoost")}
+              {t("encounter.sealBoost").replace(" (", "\n(")}
             </motion.button>
             {state.day < 7 && (
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => onUseSeal("escape")}
-                className="px-4 py-2 text-[10px] font-bold rounded-lg border border-magic-blue/40 bg-transparent text-magic-blue/70 cursor-pointer hover:bg-magic-blue/5 transition-colors"
+                className="px-3 py-2 text-[10px] font-bold rounded-lg border border-magic-blue/40 bg-transparent text-magic-blue/70 cursor-pointer hover:bg-magic-blue/5 transition-colors whitespace-pre-line leading-tight"
               >
-                {t("encounter.sealEscape")}
+                {t("encounter.sealEscape").replace(" (", "\n(")}
               </motion.button>
             )}
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => onUseSeal("npFullPower")}
-              className="px-4 py-2 text-[10px] font-bold rounded-lg border border-gold/40 bg-transparent text-gold/70 cursor-pointer hover:bg-gold/5 transition-colors"
+              className="px-3 py-2 text-[10px] font-bold rounded-lg border border-gold/40 bg-transparent text-gold/70 cursor-pointer hover:bg-gold/5 transition-colors whitespace-pre-line leading-tight"
             >
-              {t("encounter.sealNP")}
+              {t("encounter.sealNP").replace(" (", "\n(")}
             </motion.button>
           </div>
         )}

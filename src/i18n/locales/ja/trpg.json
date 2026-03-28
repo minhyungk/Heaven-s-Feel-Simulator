@@ -63,15 +63,18 @@
     "title": "敗北の危機！",
     "message": "敗北しそうだ。逃走を試みますか？",
     "tryEscape": "逃走する（{{chance}}%）— ステータスペナルティ有",
-    "sealEscape": "令呪使用（確定逃走）— ステータスペナルティ有"
+    "sealEscape": "令呪使用（確定逃走）— ステータスペナルティ有",
+    "refusedMessage": "{{name}}は退却を拒否し、戦闘を続行する！（マスター信頼：低）"
   },
   "playerEscaped": {
     "title": "逃走成功！",
-    "message": "逃走に成功した！"
+    "message": "逃走に成功した！",
+    "sealMessage": "令呪を使用して逃走に成功した！"
   },
   "forcedBridge": {
     "title": "強制集合！",
-    "message": "7日目以降、全サーヴァントが冬木大橋に強制召集されます。逃走は不可能です。"
+    "message": "7日目以降、全サーヴァントが冬木大橋に強制召集されます。逃走は不可能です。",
+    "gather": "聖杯の力が冬木大橋に集中する…全ての英霊が最後の決戦場へと召喚される。"
   },
   "action": {
     "indicator": "行動 {{current}}/{{max}}"
@@ -123,7 +126,13 @@
     "aiCombatDistant": "遠くで魔力の波動が感知された...",
     "elimination": "{{name}}が脱落した",
     "independentAction": "{{name}}が単独行動で{{days}}日間残存する",
-    "gameOver": "聖杯戦争終結 — {{winner}}が勝利した"
+    "gameOver": "聖杯戦争終結 — {{winner}}が勝利した",
+    "affectionChange": "{{name}}の好感度が{{delta}}変化した",
+    "commandRefusal": "{{name}}が命令を拒否した！（{{ordered}} → {{actual}}）",
+    "manaSupply": "魔力供給 — {{name}}: {{result}} ({{narration}})",
+    "allianceFormed": "{{nameA}}と{{nameB}}が同盟を結成した",
+    "betrayal": "{{betrayer}}が{{victim}}を裏切った！",
+    "nightStatus": "{{message}}"
   },
   "nightEnd": {
     "title": "夜が過ぎた",
@@ -134,6 +143,7 @@
     "defeat": "敗北...",
     "winnerMessage": "{{name}}が{{days}}日で聖杯を獲得しました",
     "loserMessage": "あなたのサーヴァントが倒れました",
+    "fallen": "倒れました。",
     "backToDashboard": "ダッシュボードへ戻る",
     "playAgain": "再挑戦"
   },
@@ -156,5 +166,39 @@
     "antiMagic": "対魔力: セイバー/ランサー/アーチャーがキャスター相手に補正",
     "territory": "陣地作成: 同タイルに2ターン以上で戦闘力ボーナス"
   },
-  "spectating": "観戦中..."
+  "affectionNotification": {
+    "label": "マスターとの関係",
+    "delta": "{{tierLabel}}{{delta}}"
+  },
+  "manaSupply": {
+    "title": "魔力供給",
+    "prompt": "魔力を供給しますか？",
+    "promptWithName": "{{name}}がマスターを信頼しているようだ... 魔力供給をしようか？",
+    "promptWeakness": "{{name}}は敗北により大きく消耗しているようだ。魔力供給で状態を回復させる試みをしようか？",
+    "supply": "魔力を供給する",
+    "skip": "スキップ",
+    "resultTitle": "魔力供給結果",
+    "perfect": "大満足",
+    "good": "満足",
+    "normal": "普通",
+    "poor": "不満",
+    "critical_fail": "大失敗",
+    "statChange": "戦闘力 {{delta}}",
+    "affectionChange": "{{tierLabel}}{{delta}}",
+    "continue": "続ける"
+  },
+  "affection": {
+    "hostile": "敵対",
+    "wary": "警戒",
+    "neutral": "中立",
+    "trusting": "信頼",
+    "intimate": "親密",
+    "devoted": "献身"
+  },
+  "spectating": "観戦中...",
+  "tabs": {
+    "status": "戦況",
+    "log": "ログ",
+    "servant": "マイサーヴァント"
+  }
 }
