@@ -18,6 +18,7 @@ import {
 } from "../data/narrativeTemplates";
 import { fixParticles } from "../utils/josa";
 import { getAffinityDialogue } from "../data/affinityDialogues";
+import { pickDialogue } from "../data/servantDialogues";
 
 // ─── 컨텍스트 ───
 
@@ -140,6 +141,28 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
     500,
   ));
 
+  // 1.5 배틀 개시 대사 — 인연대사가 있으면 인연대사 우선, 없으면 Atlas Academy 대사
+  const affinity = getAffinityDialogue(servantA.id, servantB.id);
+  if (affinity?.clash) {
+    const clashA = affinity.clash[servantA.id];
+    if (clashA && clashA.length > 0) {
+      lines.push(makeLine(`${servantA.name}: "${pick(clashA)}"`, "servant_dialogue", "normal", 500));
+    }
+    const clashB = affinity.clash[servantB.id];
+    if (clashB && clashB.length > 0) {
+      lines.push(makeLine(`${servantB.name}: "${pick(clashB)}"`, "servant_dialogue", "normal", 500));
+    }
+  } else {
+    const battleStartA = pickDialogue(servantA.id, "battleStart");
+    if (battleStartA) {
+      lines.push(makeLine(`${servantA.name}: "${battleStartA}"`, "servant_dialogue", "normal", 500));
+    }
+    const battleStartB = pickDialogue(servantB.id, "battleStart");
+    if (battleStartB) {
+      lines.push(makeLine(`${servantB.name}: "${battleStartB}"`, "servant_dialogue", "normal", 500));
+    }
+  }
+
   // 2. 교전
   const clashPool = CLASH_TEMPLATES.default[powerGap] ?? CLASH_TEMPLATES.default.even;
   lines.push(makeLine(
@@ -148,29 +171,6 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
     "normal",
     400,
   ));
-
-  // 2.5. 인연 전투 대사 삽입 (clash)
-  const affinity = getAffinityDialogue(servantA.id, servantB.id);
-  if (affinity?.clash) {
-    const clashA = affinity.clash[servantA.id];
-    if (clashA && clashA.length > 0) {
-      lines.push(makeLine(
-        `${servantA.name}: "${pick(clashA)}"`,
-        "np_glow",
-        "normal",
-        500,
-      ));
-    }
-    const clashB = affinity.clash[servantB.id];
-    if (clashB && clashB.length > 0) {
-      lines.push(makeLine(
-        `${servantB.name}: "${pick(clashB)}"`,
-        "np_glow",
-        "normal",
-        500,
-      ));
-    }
-  }
 
   // 3. 서번트 스킬 자동 발동 묘사 (70% 확률로 한 쪽 발동)
   // servantA(플레이어) — 65% 확률
@@ -227,6 +227,28 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
       "normal",
       600,
     ));
+
+    // 승리/패배 대사 (Atlas Academy 크롤링 데이터)
+    if (combatResult.winner && combatResult.loser) {
+      const victoryLine = pickDialogue(combatResult.winner.id, "victory");
+      if (victoryLine) {
+        lines.push(makeLine(
+          `${combatResult.winner.name}: "${victoryLine}"`,
+          "servant_dialogue",
+          "normal",
+          600,
+        ));
+      }
+      const defeatLine = pickDialogue(combatResult.loser.id, "defeat");
+      if (defeatLine) {
+        lines.push(makeLine(
+          `${combatResult.loser.name}: "${defeatLine}"`,
+          "servant_dialogue",
+          "normal",
+          500,
+        ));
+      }
+    }
   }
 
   return lines;
@@ -400,7 +422,7 @@ export function generateEncounterNarrative(
     if (playerLines && playerLines.length > 0) {
       lines.push(makeLine(
         `${playerServant.name}: "${pick(playerLines)}"`,
-        "normal",
+        "servant_dialogue",
         "normal",
         600,
       ));
@@ -410,7 +432,7 @@ export function generateEncounterNarrative(
     if (enemyLines && enemyLines.length > 0) {
       lines.push(makeLine(
         `${enemyServant.name}: "${pick(enemyLines)}"`,
-        "normal",
+        "servant_dialogue",
         "normal",
         600,
       ));
@@ -443,32 +465,41 @@ function formatSkillNarrative(
     const casterName = params.name ?? servantA.name;
     const lines: NarrativeLine[] = [];
 
-    // 예고 라인
+    // 예고 라인 — 영주로 보구 사용
     lines.push(makeLine(
-      fixParticles(`${casterName}의 보구가 발동한다—!`),
+      fixParticles(`${casterName}이(가) 영주로써 보구 '${npName}'를 사용한다!`),
       "np_glow",
       "slow",
       600,
     ));
 
-    // NP명 (진명 해방)
-    if (npName) {
+    // 보구 영창 대사 (Atlas Academy 크롤링 데이터)
+    const npChant = pickDialogue(caster.id, "npChant");
+    if (npChant) {
       lines.push(makeLine(
-        `——『${npName}』`,
-        "np_glow",
+        `${casterName}: "${npChant}"`,
+        "servant_dialogue",
         "slow",
-        1200,
-      ));
-    }
-
-    // Ruby (빠르게, 클라이막스)
-    if (npRuby && npRuby !== npName) {
-      lines.push(makeLine(
-        `${npRuby}!!`,
-        "np_glow",
-        "fast",
         800,
       ));
+    } else {
+      // 영창 데이터 없으면 기존 NP명 + Ruby 연출
+      if (npName) {
+        lines.push(makeLine(
+          `——『${npName}』`,
+          "np_glow",
+          "slow",
+          1200,
+        ));
+      }
+      if (npRuby && npRuby !== npName) {
+        lines.push(makeLine(
+          `${npRuby}!!`,
+          "np_glow",
+          "fast",
+          800,
+        ));
+      }
     }
 
     return lines;

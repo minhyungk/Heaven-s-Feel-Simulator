@@ -8,7 +8,7 @@ export type AffectionTier = "hostile" | "wary" | "neutral" | "trusting" | "intim
 export function getTier(value: number): AffectionTier {
   if (value < 20) return "hostile";
   if (value < 40) return "wary";
-  if (value < 60) return "neutral";
+  if (value < 65) return "neutral";
   if (value < 80) return "trusting";
   if (value < 90) return "intimate";
   return "devoted";
@@ -67,8 +67,8 @@ const ACTION_PREFERENCES: Record<PersonalityTag, ActionPreference> = {
   berserker: { liked: ["hunt"], disliked: ["hide"] },
   avenger: { liked: ["hunt"], disliked: ["hide"] },
   // 수비적: guard 선호
-  cool: { liked: ["guard"], disliked: [] },
-  saint: { liked: ["guard"], disliked: [] },
+  cool: { liked: ["guard"], disliked: ["hide"] },
+  saint: { liked: ["guard"], disliked: ["hunt"] },
   // 은밀: hide/guard 선호
   assassin: { liked: ["hide"], disliked: ["hunt"] },
   tsundere: { liked: ["hide", "guard"], disliked: ["hunt"] },
@@ -78,28 +78,64 @@ const ACTION_PREFERENCES: Record<PersonalityTag, ActionPreference> = {
   royal: { liked: ["hunt"], disliked: ["hide"] },
 };
 
+/** 성격별 하락 배율 — 까다로운 성격일수록 불만이 큼 */
+const PENALTY_MULTIPLIER: Record<PersonalityTag, number> = {
+  cheerful: 1.0,
+  saint: 1.0,
+  cool: 1.2,
+  tsundere: 1.3,
+  assassin: 1.2,
+  royal: 1.5,
+  berserker: 1.3,
+  avenger: 1.5,
+};
+
+/** 성격별 상승 배율 — 까다로운 성격일수록 기쁨도 적음 */
+const GAIN_MULTIPLIER: Record<PersonalityTag, number> = {
+  cheerful: 1.2,
+  saint: 1.1,
+  cool: 1.0,
+  tsundere: 1.2,
+  assassin: 1.2,
+  royal: 0.8,
+  berserker: 0.7,
+  avenger: 0.6,
+};
+
 export function affectionFromAction(intent: Intent, personality: PersonalityTag): number {
   const pref = ACTION_PREFERENCES[personality];
-  if (pref.liked.includes(intent)) return 2 + Math.floor(Math.random() * 2); // +2~3
-  if (pref.disliked.includes(intent)) return -(2 + Math.floor(Math.random() * 2)); // -2~3
+  if (pref.liked.includes(intent)) {
+    const base = 2 + Math.floor(Math.random() * 2); // +2~3
+    return Math.round(base * GAIN_MULTIPLIER[personality]);
+  }
+  if (pref.disliked.includes(intent)) {
+    const base = 3 + Math.floor(Math.random() * 3); // -3~5
+    return -Math.round(base * PENALTY_MULTIPLIER[personality]);
+  }
   return 0;
 }
 
 // ─── Battle Result ───
 
-export function affectionFromBattle(won: boolean, escaped: boolean, wasDisadvantaged: boolean): number {
+export function affectionFromBattle(won: boolean, escaped: boolean, wasDisadvantaged: boolean, personality?: PersonalityTag): number {
+  const gain = GAIN_MULTIPLIER[personality ?? "cool"];
+  const penalty = PENALTY_MULTIPLIER[personality ?? "cool"];
+
   if (won) {
-    return wasDisadvantaged
+    const base = wasDisadvantaged
       ? 5 + Math.floor(Math.random() * 4)  // +5~8
       : 3 + Math.floor(Math.random() * 3); // +3~5
+    return Math.round(base * gain);
   }
-  if (escaped) return -1;
-  return -(3 + Math.floor(Math.random() * 3)); // -3~5
+  if (escaped) return -Math.round(2 * penalty); // -2~4
+  const base = 5 + Math.floor(Math.random() * 4); // -5~8
+  return -Math.round(base * penalty);
 }
 
 // ─── Command Seal Usage ───
 
-export function affectionFromSeal(sealType: string, resultedInWin: boolean): number {
+export function affectionFromSeal(sealType: string, resultedInWin: boolean, personality?: PersonalityTag): number {
+  const penalty = PENALTY_MULTIPLIER[personality ?? "cool"];
   switch (sealType) {
     case "boost":
       return resultedInWin ? 3 : 0;
@@ -108,9 +144,9 @@ export function affectionFromSeal(sealType: string, resultedInWin: boolean): num
     case "npFullPower":
       return resultedInWin ? 3 : 0;
     case "forceCommand":
-      return -(8 + Math.floor(Math.random() * 3)); // -8~10
+      return -Math.round((8 + Math.floor(Math.random() * 3)) * penalty); // -8~10 × 배율
     case "madControl":
-      return -3;
+      return -Math.round(3 * penalty);
     default:
       return 0;
   }

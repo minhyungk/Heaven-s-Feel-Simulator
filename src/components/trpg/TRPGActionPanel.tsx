@@ -25,6 +25,10 @@ import {
   generateCounterSealNarrative,
 } from "../../engine/narrativeGenerator";
 import type { NarrativeLine, NarrativeEffect } from "../../engine/narrativeFormatter";
+import { pickDialogue } from "../../data/servantDialogues";
+import { getVocab } from "../../data/classVocabulary";
+import { CLASH_TEMPLATES } from "../../data/narrativeTemplates";
+import { fixParticles } from "../../utils/josa";
 
 interface Props {
   state: TRPGGameState;
@@ -39,6 +43,7 @@ interface Props {
   onClose: () => void;
   onManaSupply?: () => void;
   onSkipManaSupply?: () => void;
+  onBetrayalDecision?: (useSeal: boolean) => void;
 }
 
 const TIER_LABELS: Record<string, Record<AffectionTier, string>> = {
@@ -61,10 +66,12 @@ function phaseToEffect(phase: string): NarrativeEffect {
 /** 호감도 알림 → NarrativeLine 변환 */
 function affectionToLine(notif: { message: string; delta: number; tier: AffectionTier }): NarrativeLine {
   const tierLabel = getTierLabel(notif.tier);
-  const deltaStr = notif.delta > 0 ? `+${notif.delta}` : `${notif.delta}`;
+  const suffix = notif.delta === 0
+    ? "(호감도 변화 없음)"
+    : `(${tierLabel} ${notif.delta > 0 ? `+${notif.delta}` : notif.delta})`;
   return {
-    text: `${notif.message} (${tierLabel}${deltaStr})`,
-    effect: notif.delta >= 0 ? "normal" : "critical",
+    text: `${notif.message} ${suffix}`,
+    effect: notif.delta > 0 ? "normal" : notif.delta < 0 ? "critical" : "draw",
     speed: "normal",
     delay: 300,
   };
@@ -75,7 +82,7 @@ export default function TRPGActionPanel({
   onSelectIntent, onEncounterDecision,
   onUseCommandSeal, onCounterSealDecision, onDefeatEscapeDecision,
   onSetWish, onAdvancePhase, onClose,
-  onManaSupply, onSkipManaSupply,
+  onManaSupply, onSkipManaSupply, onBetrayalDecision,
 }: Props) {
   const { t } = useTranslation(["trpg", "simulation"]);
   const resolve = useServantResolver();
@@ -111,6 +118,9 @@ export default function TRPGActionPanel({
   // 적 도주 서사 완료
   const [enemyEscapeDone, setEnemyEscapeDone] = useState(false);
 
+  // 소환 대사 표시 완료
+  const [summonDialogueDone, setSummonDialogueDone] = useState(false);
+
   // phase 변경 시 임시 상태 초기화
   useEffect(() => {
     setCrisisDone(false);
@@ -124,6 +134,7 @@ export default function TRPGActionPanel({
     setDefeatedDone(false);
     setBridgeNarrativeDone(false);
     setEnemyEscapeDone(false);
+    setSummonDialogueDone(false);
   }, [state.phase]);
 
   // ── 패배 위기 서사 라인 (전투 묘사 + 패배 위기) ──
@@ -197,8 +208,22 @@ export default function TRPGActionPanel({
 
   // ── 행동 선택 후 호감도 변화 라인 (movementSelection) ──
   const movementAffectionLines = useMemo(() => {
-    if (state.phase !== "movementSelection" || !state.lastAffectionNotification) return [];
-    return [affectionToLine(state.lastAffectionNotification)];
+    if (state.phase !== "movementSelection") return [];
+    const lines: NarrativeLine[] = [];
+    // 명령 거부 메시지
+    if (state.lastRefusalMessage) {
+      lines.push({
+        text: state.lastRefusalMessage,
+        effect: "critical" as NarrativeEffect,
+        speed: "normal" as const,
+        delay: 400,
+      });
+    }
+    // 호감도 변화 메시지
+    if (state.lastAffectionNotification) {
+      lines.push(affectionToLine(state.lastAffectionNotification));
+    }
+    return lines;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase]);
 
@@ -272,6 +297,35 @@ export default function TRPGActionPanel({
       state.currentEncounter?.intentMatchup ?? "hunt_hunt",
       pm?.position ?? "bridge",
     ));
+    // 배틀 개시 대사
+    const bsA = pickDialogue(playerServant.id, "battleStart");
+    if (bsA) lines.push({ text: `${playerServant.name}: "${bsA}"`, effect: "servant_dialogue" as NarrativeEffect, speed: "normal" as const, delay: 400 });
+    const bsB = pickDialogue(enemy.id, "battleStart");
+    if (bsB) lines.push({ text: `${enemy.name}: "${bsB}"`, effect: "servant_dialogue" as NarrativeEffect, speed: "normal" as const, delay: 400 });
+    // 랜덤 전투 묘사 (1~3줄)
+    const vocabA = getVocab(playerServant.class);
+    const vocabB = getVocab(enemy.class);
+    const clashCount = 1 + Math.floor(Math.random() * 3);
+    const clashPools = ["even", "advantage", "disadvantage"] as const;
+    for (let i = 0; i < clashCount; i++) {
+      const gap = clashPools[Math.floor(Math.random() * clashPools.length)];
+      const pool = CLASH_TEMPLATES.default[gap] ?? CLASH_TEMPLATES.default.even;
+      if (pool.length > 0) {
+        const template = pool[Math.floor(Math.random() * pool.length)];
+        const vars = {
+          A: playerServant.name, B: enemy.name,
+          "무기": vocabA.weapon, "동사": vocabA.verb,
+          "무기B": vocabB.weapon,
+          "보구명": playerServant.noblePhantasm?.name ?? "",
+          "보구명B": enemy.noblePhantasm?.name ?? "",
+        };
+        let text = template;
+        for (const [key, value] of Object.entries(vars)) {
+          text = text.replace(new RegExp(`\\{${key}\\}`, "g"), value);
+        }
+        lines.push({ text: fixParticles(text), effect: "normal" as NarrativeEffect, speed: "normal" as const, delay: 350 });
+      }
+    }
     // 적 도주 메시지
     const resolvedEnemy = resolve(enemy);
     if (state.escapedViaSeal) {
@@ -296,17 +350,47 @@ export default function TRPGActionPanel({
   // ── 패배 서사 라인 (playerDefeated 페이즈) ──
   const playerDefeatedLines = useMemo(() => {
     if (state.phase !== "playerDefeated") return [];
+    const lines: NarrativeLine[] = [];
+
     const enemyId = state.escapedEnemyId;
     const enemy = enemyId ? state.servantMap[enemyId] : null;
-    if (!enemy) return [];
-    const lines: NarrativeLine[] = [];
+
+    // 배신에 의한 패배 (적이 없는 경우)
+    if (!enemy) {
+      const sName = playerServant.name;
+      const betrayalMsgs = [
+        fixParticles(`${sName}에게 배신당하고 말았다. 피로 물들여진 당신을 두고 ${sName}은(는) 어딘가로 사라졌다.`),
+        fixParticles(`${sName}의 칼날이 마스터를 관통한다. 계약은 파기되었다. ${sName}은(는) 한 마디의 말도 없이 등을 돌렸다.`),
+        fixParticles(`${sName}은(는) 마스터의 영주마저 뜯어낸 채 전장을 떠났다. 차가운 밤바람만이 쓰러진 당신 위를 지나간다.`),
+      ];
+      const msg = betrayalMsgs[Math.floor(Math.random() * betrayalMsgs.length)];
+      lines.push({
+        text: msg,
+        effect: "critical" as NarrativeEffect,
+        speed: "slow" as const,
+        delay: 800,
+      });
+      return lines;
+    }
+
+    // 전투 패배에 의한 패배
     // 도주 시도 → 실패 서사
     lines.push(...generateEscapeNarrative(playerServant, enemy, "try"));
     lines.push(...generateEscapeNarrative(playerServant, enemy, "fail"));
+    // 전투 불능 대사
+    const defeatLine = pickDialogue(playerServant.id, "defeat");
+    if (defeatLine) {
+      lines.push({
+        text: `${playerServant.name}: "${defeatLine}"`,
+        effect: "servant_dialogue" as NarrativeEffect,
+        speed: "slow" as const,
+        delay: 600,
+      });
+    }
     // 영핵 파괴 / 탈락 서사
     lines.push({
       text: `${playerServant.name}의 영핵이 파괴되었다. 퇴거가 진행된다...`,
-      effect: "elimination" as NarrativeEffect,
+      effect: "critical" as NarrativeEffect,
       speed: "slow" as const,
       delay: 600,
     });
@@ -336,6 +420,21 @@ export default function TRPGActionPanel({
     }, 1200);
   };
 
+  // ── 소환 대사 (게임 시작 시 1회) ──
+  const hasSummonDialogue = state.phase === "intentSelection" && state.day === 1 && state.actionCount === 0 && !state.summonDialogueShown;
+  const summonDialogueLines = useMemo(() => {
+    if (!hasSummonDialogue) return [];
+    const summonText = pickDialogue(playerServant.id, "summon");
+    if (!summonText) return [];
+    return [{
+      text: `${playerServant.name}: "${summonText}"`,
+      effect: "servant_dialogue" as NarrativeEffect,
+      speed: "slow" as const,
+      delay: 400,
+    }];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasSummonDialogue]);
+
   const playerMaster = state.masters.find(m => m.isPlayer);
 
   return (
@@ -354,10 +453,21 @@ export default function TRPGActionPanel({
         {/* ── intentSelection ── */}
         {state.phase === "intentSelection" && (
           <div>
-            <p className="text-[10px] text-gray-600 text-center mb-1">
-              {t("trpg:action.indicator", { current: state.actionCount + 1, max: 2 })}
-            </p>
-            <IntentSelection onSelect={onSelectIntent} />
+            {/* 소환 대사 (게임 시작 시 1회, 완료 후에도 유지) */}
+            {summonDialogueLines.length > 0 && (
+              <div className="mb-3">
+                <TypewriterLog lines={summonDialogueLines} onComplete={() => setSummonDialogueDone(true)} />
+              </div>
+            )}
+            {/* 소환 대사 완료 후 또는 대사 없으면 바로 행동 선택 표시 */}
+            {(summonDialogueDone || summonDialogueLines.length === 0) && (
+              <>
+                <p className="text-[10px] text-gray-600 text-center mb-1">
+                  {t("trpg:action.indicator", { current: state.actionCount + 1, max: 2 })}
+                </p>
+                <IntentSelection onSelect={onSelectIntent} />
+              </>
+            )}
           </div>
         )}
 
@@ -835,6 +945,73 @@ export default function TRPGActionPanel({
             )}
           </div>
         )}
+
+        {/* ── betrayalPrompt — 서번트 배신 ── */}
+        {state.phase === "betrayalPrompt" && (() => {
+          const pMaster = state.masters.find(m => m.isPlayer);
+          const hasSeals = (pMaster?.commandSeals ?? 0) > 0;
+          const betrayalLines: NarrativeLine[] = [
+            {
+              text: fixParticles(`${playerServant.name}의 살기가 마스터를 향하고 있다.`),
+              effect: "critical" as NarrativeEffect,
+              speed: "slow" as const,
+              delay: 600,
+            },
+            {
+              text: fixParticles(`${playerServant.name}은(는) 더 이상 마스터의 명령에 따를 생각이 없는 것 같다.`),
+              effect: "critical" as NarrativeEffect,
+              speed: "slow" as const,
+              delay: 800,
+            },
+          ];
+          const defeatDialogue = pickDialogue(playerServant.id, "defeat");
+          if (defeatDialogue) {
+            betrayalLines.push({
+              text: `${playerServant.name}: "${defeatDialogue}"`,
+              effect: "servant_dialogue" as NarrativeEffect,
+              speed: "slow" as const,
+              delay: 500,
+            });
+          }
+
+          return (
+            <div className="text-center">
+              <TypewriterLog
+                lines={betrayalLines}
+                onComplete={() => setCrisisDone(true)}
+              />
+              {crisisDone && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-4 space-y-3"
+                >
+                  <p className="text-sm text-magic-red font-bold mb-2">
+                    서번트가 배신을 시도하고 있다!
+                  </p>
+                  {hasSeals && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                      onClick={() => onBetrayalDecision?.(true)}
+                      className="w-full px-6 py-3 text-sm font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
+                      style={{ fontFamily: "var(--font-serif)" }}
+                    >
+                      영주로 서번트를 제어한다 (영주 1획)
+                    </motion.button>
+                  )}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    onClick={() => onBetrayalDecision?.(false)}
+                    className="w-full px-6 py-3 text-sm font-bold rounded-lg border-2 border-magic-red/50 bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
+                    {hasSeals ? "그대로 당한다..." : "영주가 없다..."}
+                  </motion.button>
+                </motion.div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* ── grailWish ── */}
         {state.phase === "grailWish" && (

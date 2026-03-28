@@ -66,6 +66,10 @@ export function useTRPGGame(participants: Servant[], playerServantId: number) {
     dispatch({ type: "skipManaSupply" });
   }, []);
 
+  const betrayalDecision = useCallback((useSeal: boolean) => {
+    dispatch({ type: "betrayalDecision", useSeal });
+  }, []);
+
   return {
     state,
     selectIntent,
@@ -79,5 +83,6 @@ export function useTRPGGame(participants: Servant[], playerServantId: number) {
     resolveAI,
     manaSupply,
     skipManaSupply,
+    betrayalDecision,
   };
 }

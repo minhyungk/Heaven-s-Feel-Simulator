@@ -29,6 +29,7 @@ export type TRPGPhase =
   | "manaSupplyPrompt"
   | "manaSupplyResult"
   | "nightEnd"
+  | "betrayalPrompt"
   | "grailWish"
   | "gameOver";
 
@@ -198,6 +199,10 @@ export interface TRPGGameState {
   manaSupplyWeaknessReason: boolean;
   /** 후유키 대교 강제 소환 메시지 표시 여부 (1회만) */
   forcedBridgeShown: boolean;
+  /** 소환 대사 표시 여부 (게임 시작 시 1회만) */
+  summonDialogueShown: boolean;
+  /** 명령 거부 메시지 (이번 턴에 거부 발생 시) */
+  lastRefusalMessage: string | null;
 }
 
 // ─── TRPG 액션 ───
@@ -213,7 +218,8 @@ export type TRPGAction =
   | { type: "advancePhase" }
   | { type: "resolveAI" }
   | { type: "manaSupply" }
-  | { type: "skipManaSupply" };
+  | { type: "skipManaSupply" }
+  | { type: "betrayalDecision"; useSeal: boolean };
 
 // ─── 기존 warEngine 호환 타입 ───
 

@@ -4,7 +4,7 @@ import type { NarrativeContext } from "./narrativeGenerator";
 
 // ─── 타입 ───
 
-export type NarrativeEffect = "normal" | "np_glow" | "critical" | "stealth_fade" | "elimination" | "draw";
+export type NarrativeEffect = "normal" | "np_glow" | "critical" | "stealth_fade" | "elimination" | "draw" | "servant_dialogue";
 export type NarrativeSpeed = "fast" | "normal" | "slow";
 
 export interface NarrativeLine {

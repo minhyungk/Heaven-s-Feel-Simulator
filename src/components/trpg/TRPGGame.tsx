@@ -36,6 +36,7 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
     resolveAI,
     manaSupply,
     skipManaSupply,
+    betrayalDecision,
   } = useTRPGGame(participants, playerServant.id);
 
   const screenEffectsRef = useRef<ScreenEffectsHandle>(null);
@@ -100,6 +101,7 @@ export default function TRPGGame({ participants, playerServant, onClose }: Props
         onClose={onClose}
         onManaSupply={manaSupply}
         onSkipManaSupply={skipManaSupply}
+        onBetrayalDecision={betrayalDecision}
       />
       <SurvivorsPanel state={state} />
     </>

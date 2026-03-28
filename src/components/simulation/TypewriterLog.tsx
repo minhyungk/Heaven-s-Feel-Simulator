@@ -16,6 +16,7 @@ const EFFECT_CLASSES: Record<NarrativeEffect, string> = {
   stealth_fade: "text-stealth-fade",
   elimination: "text-elimination",
   draw: "text-gray-500 italic",
+  servant_dialogue: "text-servant-dialogue",
 };
 
 export default function TypewriterLog({ lines, onComplete }: Props) {

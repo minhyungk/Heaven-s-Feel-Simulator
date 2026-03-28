@@ -71,22 +71,31 @@ export default function TRPGHeader({ state, playerServant, onClose }: Props) {
             </div>
           </div>
 
-          {/* 스킬 목록 — 중앙 */}
-          <div className="flex-1 flex flex-wrap justify-center gap-1 px-2">
-            {[...playerServant.classSkills, ...playerServant.personalSkills].map((skill, i) => (
-              <span
-                key={i}
-                className="text-[12px] px-1.5 py-0.5 rounded"
-                style={{
-                  background: `${classColor}12`,
-                  border: `1px solid ${classColor}30`,
-                  color: "#9ca3af",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {skill.name}
-              </span>
-            ))}
+          {/* 스킬 목록 — 중앙, 2행 분할 */}
+          <div className="flex-1 flex flex-col items-center gap-1 px-2">
+            {(() => {
+              const allSkills = [...playerServant.classSkills, ...playerServant.personalSkills];
+              const mid = Math.ceil(allSkills.length / 2);
+              const rows = [allSkills.slice(0, mid), allSkills.slice(mid)];
+              return rows.map((row, ri) => (
+                <div key={ri} className="flex flex-wrap justify-center gap-1">
+                  {row.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="text-[13px] px-1.5 py-0.5 rounded"
+                      style={{
+                        background: `${classColor}12`,
+                        border: `2px solid ${classColor}30`,
+                        color: "#9ca3af",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {skill.name}
+                    </span>
+                  ))}
+                </div>
+              ));
+            })()}
           </div>
 
           <div className="text-right flex items-start gap-2 shrink-0">

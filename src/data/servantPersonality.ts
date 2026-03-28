@@ -48,9 +48,9 @@ const PERSONALITY_OVERRIDES: Record<number, PersonalityTag> = {
   213: "royal",     // Dioscuri
   223: "cool",      // Lancelot (Saber)
   254: "cool",      // Muramasa
+  432: "royal",     //리처드 1세
 
   // ─── Archer ───
-  11: "royal",      // Gilgamesh
   12: "royal",      // Gilgamesh
   13: "cool",       // Robin Hood
   14: "tsundere",   // Atalante

@@ -171,3 +171,10 @@ ruby rp {
   text-decoration: line-through;
   opacity: 0.7;
 }
+
+.text-servant-dialogue {
+  color: #a8d8ff;
+  font-style: italic;
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(168, 216, 255, 0.3);
+}
