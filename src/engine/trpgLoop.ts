@@ -92,6 +92,7 @@ export function createInitialState(
     lastManaSupplyOutcome: null,
     lastAffectionNotification: null,
     manaSupplyWeaknessReason: false,
+    forcedBridgeShown: false,
   };
 }
 
@@ -356,8 +357,8 @@ function handleSelectIntent(state: TRPGGameState, intent: Intent, prefixes: Skil
     affNotification = { message: affDelta > 0 ? positiveMsg : negativeMsg, delta: affDelta, tier: newTier };
   }
 
-  // 7일차+ 첫 행동마다 강제 집합 안내
-  const nextPhase = (state.day >= FORCED_HUNT_DAY && state.actionCount === 0)
+  // 7일차+ 강제 집합 안내 (최초 1회만)
+  const nextPhase = (state.day >= FORCED_HUNT_DAY && !state.forcedBridgeShown)
     ? "forcedBridgeNotice" as const
     : "movementSelection" as const;
 
@@ -517,7 +518,7 @@ function handleEncounterDecision(state: TRPGGameState, fight: boolean, prefixes:
   }
 
   // AI 영주 사용 판단 (#10)
-  const enemySeal = decideAISealUse(enemyMaster, enemyServant, playerServant, prefixes);
+  const enemySeal = decideAISealUse(enemyMaster, enemyServant, playerServant, prefixes, state.day);
   if (enemySeal && enemySeal !== "escape") {
     // 적 AI가 영주를 사용하려 한다 → 카운터 프롬프트
     return {
@@ -941,7 +942,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
 
 function handleAdvancePhase(state: TRPGGameState, _prefixes: SkillPrefixes): TRPGGameState {
   if (state.phase === "forcedBridgeNotice") {
-    return { ...state, phase: "movementSelection" };
+    return { ...state, phase: "movementSelection", forcedBridgeShown: true };
   }
   if (state.phase === "combatResult") {
     // 전투 후 승리 조건 체크 → 게임 종료 or 계속
@@ -1094,8 +1095,8 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
       const mB = masters.find(x => x.servantId === enemy.servantId)!;
 
       // AI 영주 사용 판단
-      const sealA = decideAISealUse(mA, sA, sB, prefixes);
-      const sealB = decideAISealUse(mB, sB, sA, prefixes);
+      const sealA = decideAISealUse(mA, sA, sB, prefixes, state.day);
+      const sealB = decideAISealUse(mB, sB, sA, prefixes, state.day);
 
       if (sealA === "escape") {
         masters = updateMaster(masters, m.servantId, { commandSeals: mA.commandSeals - 1 });

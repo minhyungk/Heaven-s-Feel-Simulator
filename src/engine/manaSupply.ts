@@ -46,11 +46,9 @@ export function rollManaSupply(
   servantName: string,
   servantId: number,
 ): ManaSupplyOutcome {
-  const table = PROBABILITY_TABLES[tier];
-  if (!table) {
-    // fallback: 해금 안 됐는데 호출됨
-    return { result: "normal", statDelta: 0, affectionDelta: 0, narration: "" };
-  }
+  // 확률표가 없는 경우 (약화 상태로 해금됨 등) neutral 테이블 사용
+  const FALLBACK_TABLE: ProbabilityTable = { perfect: 0.05, good: 0.20, normal: 0.45, poor: 0.20, critical_fail: 0.10 };
+  const table = PROBABILITY_TABLES[tier] ?? FALLBACK_TABLE;
 
   // 확률 롤
   const roll = Math.random();

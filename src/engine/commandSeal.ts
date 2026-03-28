@@ -2,7 +2,7 @@ import type { Servant } from "../data/types";
 import { getServantTotalScore, calcWinRate } from "../data/types";
 import type { CommandSealType, MasterState, SkillPrefixes } from "./types";
 import { findClassSkillRank } from "./combat";
-import { AI_SEAL_LOSE_THRESHOLD } from "./config";
+import { AI_SEAL_LOSE_THRESHOLD, FORCED_HUNT_DAY } from "./config";
 
 export function canUseSeal(master: MasterState): boolean {
   return master.commandSeals > 0;
@@ -45,6 +45,7 @@ export function decideAISealUse(
   servant: Servant,
   enemy: Servant,
   _prefixes: SkillPrefixes,
+  day?: number,
 ): CommandSealType | null {
   if (master.commandSeals <= 0) return null;
 
@@ -54,8 +55,8 @@ export function decideAISealUse(
 
   // 패배 확률이 높으면 부스트 or 도주
   if (winRate < (1 - AI_SEAL_LOSE_THRESHOLD)) {
-    // 매우 불리하면 도주
-    if (winRate < 0.15) return "escape";
+    // 7일차+ 도주 불가
+    if (winRate < 0.15 && (day == null || day < FORCED_HUNT_DAY)) return "escape";
     return "boost";
   }
 

@@ -73,7 +73,8 @@
   },
   "forcedBridge": {
     "title": "Forced Assembly!",
-    "message": "From Day 7 onwards, all Servants are forcibly summoned to Fuyuki Bridge. Escape is impossible."
+    "message": "From Day 7 onwards, all Servants are forcibly summoned to Fuyuki Bridge. Escape is impossible.",
+    "gather": "The Holy Grail's power concentrates on Fuyuki Bridge... All Heroic Spirits are summoned to the final battlefield."
   },
   "action": {
     "indicator": "Action {{current}}/{{max}}"

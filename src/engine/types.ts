@@ -196,6 +196,8 @@ export interface TRPGGameState {
   } | null;
   /** 마력공급이 약화(escape 패널티) 이유로 발생했는지 여부 */
   manaSupplyWeaknessReason: boolean;
+  /** 후유키 대교 강제 소환 메시지 표시 여부 (1회만) */
+  forcedBridgeShown: boolean;
 }
 
 // ─── TRPG 액션 ───

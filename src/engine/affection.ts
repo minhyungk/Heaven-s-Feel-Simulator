@@ -70,6 +70,7 @@ const ACTION_PREFERENCES: Record<PersonalityTag, ActionPreference> = {
   cool: { liked: ["guard"], disliked: [] },
   saint: { liked: ["guard"], disliked: [] },
   // 은밀: hide/guard 선호
+  assassin: { liked: ["hide"], disliked: ["hunt"] },
   tsundere: { liked: ["hide", "guard"], disliked: ["hunt"] },
   // 자유: 뭐든 수용
   cheerful: { liked: ["hunt", "guard", "hide"], disliked: [] },

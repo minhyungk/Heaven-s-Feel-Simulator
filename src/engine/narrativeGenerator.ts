@@ -17,6 +17,7 @@ import {
   pickTemplate,
 } from "../data/narrativeTemplates";
 import { fixParticles } from "../utils/josa";
+import { getAffinityDialogue } from "../data/affinityDialogues";
 
 // ─── 컨텍스트 ───
 
@@ -147,6 +148,29 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
     "normal",
     400,
   ));
+
+  // 2.5. 인연 전투 대사 삽입 (clash)
+  const affinity = getAffinityDialogue(servantA.id, servantB.id);
+  if (affinity?.clash) {
+    const clashA = affinity.clash[servantA.id];
+    if (clashA && clashA.length > 0) {
+      lines.push(makeLine(
+        `${servantA.name}: "${pick(clashA)}"`,
+        "np_glow",
+        "normal",
+        500,
+      ));
+    }
+    const clashB = affinity.clash[servantB.id];
+    if (clashB && clashB.length > 0) {
+      lines.push(makeLine(
+        `${servantB.name}: "${pick(clashB)}"`,
+        "np_glow",
+        "normal",
+        500,
+      ));
+    }
+  }
 
   // 3. 서번트 스킬 자동 발동 묘사 (70% 확률로 한 쪽 발동)
   // servantA(플레이어) — 65% 확률
@@ -368,6 +392,35 @@ export function generateEncounterNarrative(
     ));
   }
 
+  // 인연 대사 삽입 (조우)
+  const affinity = getAffinityDialogue(playerServant.id, enemyServant.id);
+  if (affinity) {
+    // 플레이어 서번트 대사
+    const playerLines = affinity.encounter[playerServant.id];
+    if (playerLines && playerLines.length > 0) {
+      lines.push(makeLine(
+        `${playerServant.name}: "${pick(playerLines)}"`,
+        "normal",
+        "normal",
+        600,
+      ));
+    }
+    // 적 서번트 대사
+    const enemyLines = affinity.encounter[enemyServant.id];
+    if (enemyLines && enemyLines.length > 0) {
+      lines.push(makeLine(
+        `${enemyServant.name}: "${pick(enemyLines)}"`,
+        "normal",
+        "normal",
+        600,
+      ));
+    }
+    // 특수 묘사
+    if (affinity.specialLog) {
+      lines.push(makeLine(affinity.specialLog, "np_glow", "slow", 800));
+    }
+  }
+
   return lines;
 }
 
@@ -473,7 +526,7 @@ function formatSkillNarrative(
   // 대마력
   if (key.includes("antiMagic")) {
     const pool = SKILL_TEMPLATES.default.anti_magic;
-    return [makeLine(fillTemplate(pick(pool), params), "normal", "normal", 300)];
+    return [makeLine(fillTemplate(pick(pool), { ...params, A: params.name ?? "" }), "normal", "normal", 300)];
   }
 
   // 은신 발각 페널티

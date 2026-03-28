@@ -9,7 +9,7 @@ import { findClassSkillRank } from "../../engine/combat";
 import { getSkillPrefixes } from "../../i18n/skillKeys";
 import { useServantResolver } from "../../contexts/ServantDataContext";
 import i18n from "../../i18n";
-import { getTier, TIER_LABELS_KO, TIER_LABELS_EN, TIER_LABELS_JA } from "../../engine/affection";
+import { TIER_LABELS_KO, TIER_LABELS_EN, TIER_LABELS_JA } from "../../engine/affection";
 import type { AffectionTier } from "../../engine/affection";
 import IntentSelection from "./IntentSelection";
 import EncounterDecision from "./EncounterDecision";
@@ -105,6 +105,12 @@ export default function TRPGActionPanel({
   // 패배 서사 완료
   const [defeatedDone, setDefeatedDone] = useState(false);
 
+  // 후유키 대교 소환 서사 완료
+  const [bridgeNarrativeDone, setBridgeNarrativeDone] = useState(false);
+
+  // 적 도주 서사 완료
+  const [enemyEscapeDone, setEnemyEscapeDone] = useState(false);
+
   // phase 변경 시 임시 상태 초기화
   useEffect(() => {
     setCrisisDone(false);
@@ -116,6 +122,8 @@ export default function TRPGActionPanel({
     setCounterSealDone(false);
     setEscapeDone(false);
     setDefeatedDone(false);
+    setBridgeNarrativeDone(false);
+    setEnemyEscapeDone(false);
   }, [state.phase]);
 
   // ── 패배 위기 서사 라인 (전투 묘사 + 패배 위기) ──
@@ -130,6 +138,7 @@ export default function TRPGActionPanel({
         servantA: playerServant,
         servantB: enemy,
         combatResult: state.lastCombatResult,
+        day: state.day,
         intentMatchup: state.currentEncounter.intentMatchup ?? "hunt_hunt",
         skipResult: true,
       }));
@@ -250,6 +259,40 @@ export default function TRPGActionPanel({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.phase]);
 
+  // ── 적 도주 서사 라인 (enemyEscaped 페이즈) ──
+  const enemyEscapeNarrativeLines = useMemo(() => {
+    if (state.phase !== "enemyEscaped" || !state.escapedEnemyId) return [];
+    const enemy = state.servantMap[state.escapedEnemyId];
+    if (!enemy) return [];
+    const lines: NarrativeLine[] = [];
+    // 조우 서사
+    const pm = state.masters.find(m => m.isPlayer);
+    lines.push(...generateEncounterNarrative(
+      playerServant, enemy,
+      state.currentEncounter?.intentMatchup ?? "hunt_hunt",
+      pm?.position ?? "bridge",
+    ));
+    // 적 도주 메시지
+    const resolvedEnemy = resolve(enemy);
+    if (state.escapedViaSeal) {
+      lines.push({
+        text: `${resolvedEnemy.name}의 마스터가 영주를 사용했다! 강제 전이 — ${resolvedEnemy.name}이(가) 전장에서 이탈한다!`,
+        effect: "np_glow" as NarrativeEffect,
+        speed: "normal" as const,
+        delay: 600,
+      });
+    } else {
+      lines.push({
+        text: `${resolvedEnemy.name}이(가) 전장에서 이탈했다.`,
+        effect: "stealth_fade" as NarrativeEffect,
+        speed: "normal" as const,
+        delay: 400,
+      });
+    }
+    return lines;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.phase]);
+
   // ── 패배 서사 라인 (playerDefeated 페이즈) ──
   const playerDefeatedLines = useMemo(() => {
     if (state.phase !== "playerDefeated") return [];
@@ -347,15 +390,31 @@ export default function TRPGActionPanel({
         {state.phase === "forcedBridgeNotice" && (
           <div className="text-center">
             <p className="text-xs text-magic-red uppercase tracking-wider mb-3">{t("trpg:forcedBridge.title")}</p>
-            <p className="text-sm text-gray-400 mb-4">{t("trpg:forcedBridge.message")}</p>
-            <motion.button
-              whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-              onClick={onAdvancePhase}
-              className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-magic-red bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
-              style={{ fontFamily: "var(--font-serif)" }}
-            >
-              {t("trpg:nightEnd.continue")}
-            </motion.button>
+            <div className="mb-4">
+              <TypewriterLog
+                lines={[
+                  { text: t("trpg:forcedBridge.message"), effect: "normal" as NarrativeEffect, speed: "normal" as const, delay: 400 },
+                  { text: t("trpg:forcedBridge.gather"), effect: "critical" as NarrativeEffect, speed: "slow" as const, delay: 600 },
+                ]}
+                onComplete={() => setBridgeNarrativeDone(true)}
+              />
+            </div>
+            {bridgeNarrativeDone && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                  onClick={onAdvancePhase}
+                  className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-magic-red bg-transparent text-magic-red cursor-pointer hover:bg-magic-red/10 transition-colors"
+                  style={{ fontFamily: "var(--font-serif)" }}
+                >
+                  {t("trpg:nightEnd.continue")}
+                </motion.button>
+              </motion.div>
+            )}
           </div>
         )}
 
@@ -536,32 +595,52 @@ export default function TRPGActionPanel({
           return (
             <div className="text-center">
               <p className="text-xs text-magic-blue uppercase tracking-wider mb-3">{t("trpg:enemyEscaped.title")}</p>
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-14 h-14 rounded-full overflow-hidden border-2" style={{ borderColor: classColor }}>
-                  {resolvedEnemy.imageUrl ? (
-                    <img src={resolvedEnemy.imageUrl} alt={resolvedEnemy.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-sm" style={{ background: `${classColor}20` }}>⚔</div>
-                  )}
+
+              {/* 전투 서사 타이프라이터 */}
+              {enemyEscapeNarrativeLines.length > 0 && (
+                <div className="mb-3">
+                  <TypewriterLog
+                    lines={enemyEscapeNarrativeLines}
+                    onComplete={() => setEnemyEscapeDone(true)}
+                  />
                 </div>
-                <div className="text-left">
-                  <p className="text-sm font-bold" style={{ color: classColor }}>{resolvedEnemy.name}</p>
-                  <p className="text-xs text-gray-500">{enemyServant.class}</p>
-                </div>
-              </div>
-              <p className="text-sm text-gray-400 mb-4">
-                {state.escapedViaSeal
-                  ? t("trpg:enemyEscaped.sealMessage", { name: resolvedEnemy.name })
-                  : t("trpg:enemyEscaped.message", { name: resolvedEnemy.name })}
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                onClick={onAdvancePhase}
-                className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                {t("trpg:nightEnd.continue")}
-              </motion.button>
+              )}
+
+              {/* 서사 완료 후 프로필 + 버튼 */}
+              {(enemyEscapeDone || enemyEscapeNarrativeLines.length === 0) && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2" style={{ borderColor: classColor }}>
+                      {resolvedEnemy.imageUrl ? (
+                        <img src={resolvedEnemy.imageUrl} alt={resolvedEnemy.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-sm" style={{ background: `${classColor}20` }}>⚔</div>
+                      )}
+                    </div>
+                    <div className="text-left">
+                      <p className="text-sm font-bold" style={{ color: classColor }}>{resolvedEnemy.name}</p>
+                      <p className="text-xs text-gray-500">{enemyServant.class}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-400 mb-4">
+                    {state.escapedViaSeal
+                      ? t("trpg:enemyEscaped.sealMessage", { name: resolvedEnemy.name })
+                      : t("trpg:enemyEscaped.message", { name: resolvedEnemy.name })}
+                  </p>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    onClick={onAdvancePhase}
+                    className="px-8 py-3 text-sm font-bold rounded-lg border-2 border-gold bg-transparent text-gold cursor-pointer hover:bg-gold/10 transition-colors"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                  >
+                    {t("trpg:nightEnd.continue")}
+                  </motion.button>
+                </motion.div>
+              )}
             </div>
           );
         })()}
