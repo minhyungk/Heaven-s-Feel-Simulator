@@ -29,11 +29,19 @@ export function logSpecialAttack(day: number, attackerName: string, npName: stri
 }
 
 // ─── 영주 사용 ───
-export function logCommandSeal(day: number, sealType: string, className?: string): LogEntry {
+export function logCommandSeal(
+  day: number, sealType: string, className?: string,
+  opts?: { sealNumber?: number; opponentName?: string; opponentId?: number },
+): LogEntry {
   if (className) {
     return makeLog(day, "commandSeal", "trpg:log.commandSealWithClass", { type: sealType, class: className });
   }
-  return makeLog(day, "commandSeal", "trpg:log.commandSeal", { type: sealType });
+  const params: Record<string, string> = { type: sealType };
+  const refs: Record<string, number> = {};
+  if (opts?.sealNumber) params.sealNumber = String(opts.sealNumber);
+  if (opts?.opponentName) params.opponentName = opts.opponentName;
+  if (opts?.opponentId) refs.opponent = opts.opponentId;
+  return makeLog(day, "commandSeal", "trpg:log.commandSeal", params, Object.keys(refs).length > 0 ? refs : undefined);
 }
 
 // ─── 소강 ───
@@ -57,8 +65,16 @@ export function logEscape(day: number, name: string, success: boolean, servantId
 }
 
 // ─── 영주 도주 ───
-export function logSealEscape(day: number, name: string, servantId: number): LogEntry {
-  return makeLog(day, "escape", "trpg:log.sealEscape", { name }, { name: servantId });
+export function logSealEscape(
+  day: number, name: string, servantId: number,
+  opts?: { sealNumber?: number; opponentName?: string; opponentId?: number },
+): LogEntry {
+  const params: Record<string, string> = { name };
+  const refs: Record<string, number> = { name: servantId };
+  if (opts?.sealNumber) params.sealNumber = String(opts.sealNumber);
+  if (opts?.opponentName) params.opponentName = opts.opponentName;
+  if (opts?.opponentId) refs.opponent = opts.opponentId;
+  return makeLog(day, "escape", "trpg:log.sealEscape", params, refs);
 }
 
 // ─── 보구 전개 ───

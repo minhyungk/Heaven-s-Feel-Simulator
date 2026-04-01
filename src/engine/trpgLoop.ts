@@ -26,7 +26,12 @@ import { rollManaSupply } from "./manaSupply";
 import { processServantSkills, getPassiveModifiers, getSkillWinRateBonus } from "./activeSkills";
 // alliance module — placeholder, 추후 활성화
 // import { rollAllianceFormation, checkBetrayal, areAllied, removeFromAlliances } from "./alliance";
-import { fixParticles } from "../utils/josa";
+import i18n from "../i18n";
+
+/** i18n.t with automatic Korean particle processing */
+function tt(key: string, params?: Record<string, string | number>): string {
+  return i18n.t(key, params as Record<string, string>);
+}
 import * as log from "./logGenerator";
 
 // ─── 초기 상태 생성 ───
@@ -165,12 +170,12 @@ function processCombatOutcome(
       const newTier = getTier(newAff);
       if (playerWon) {
         battleAffNotification = {
-          message: fixParticles(`전투를 승리했다! ${playerServant.name}은(는) 마스터를 더욱 깊이 신뢰하게 된다.`),
+          message: tt("trpg:loop.battleWinTrust", { name: playerServant.name }),
           delta: affDelta, tier: newTier,
         };
       } else {
         battleAffNotification = {
-          message: fixParticles(`${playerServant.name}은(는) 패배에 불안한 표정을 짓고 있다.`),
+          message: tt("trpg:loop.battleLossAnxiety", { name: playerServant.name }),
           delta: affDelta, tier: newTier,
         };
       }
@@ -293,7 +298,7 @@ export function trpgReducer(
     case "defeatEscapeDecision":
       return handleDefeatEscapeDecision(state, action.useSeal, prefixes);
     case "setWish":
-      return { ...state, wish: action.wish, phase: "gameOver" };
+      return { ...state, wish: action.wish, phase: "memoir" };
     case "advancePhase":
       return handleAdvancePhase(state, prefixes);
     case "resolveAI":
@@ -304,6 +309,13 @@ export function trpgReducer(
       return { ...state, phase: "nightEnd" };
     case "betrayalDecision":
       return handleBetrayalDecision(state, action.useSeal);
+    case "syncServantLanguage": {
+      const newMap: Record<number, Servant> = {};
+      for (const [id, s] of Object.entries(state.servantMap)) {
+        newMap[Number(id)] = action.resolvedMap[Number(id)] ?? s;
+      }
+      return { ...state, servantMap: newMap };
+    }
     default:
       return state;
   }
@@ -330,8 +342,8 @@ function handleSelectIntent(state: TRPGGameState, intent: Intent, prefixes: Skil
     finalIntent = getRefusalOverrideIntent(personality);
     refused = true;
     newLogs.push(log.logCommandRefusal(state.day, playerServant.name, intent, finalIntent, playerServant.id));
-    const intentKoRef: Record<string, string> = { hunt: "사냥", guard: "경계", hide: "은신" };
-    refusalMessage = fixParticles(`${playerServant.name}은(는) 명령을 거부했다! (${intentKoRef[intent] ?? intent} → ${intentKoRef[finalIntent] ?? finalIntent})`);
+    const intentLabel = (i: string) => tt(`trpg:loop.intent.${i}`);
+    refusalMessage = tt("trpg:loop.commandRefusal", { name: playerServant.name, from: intentLabel(intent), to: intentLabel(finalIntent) });
   }
 
   // 광화 체크 (거부되지 않은 경우에만)
@@ -340,12 +352,12 @@ function handleSelectIntent(state: TRPGGameState, intent: Intent, prefixes: Skil
     finalIntent = madResult.overriddenIntent;
     // 의도가 실제로 변경된 경우에만 기록 (hunt→hunt 등 변화 없는 경우 제외)
     if (madResult.disobeyed && finalIntent !== intent) {
-      const intentKo: Record<string, string> = { hunt: "사냥", guard: "경계", hide: "은신" };
+      const intentLbl = (i: string) => tt(`trpg:loop.intent.${i}`);
       newLogs.push(log.logMadDisobey(
         state.day,
         playerServant.name,
-        intentKo[intent] ?? intent,
-        intentKo[finalIntent] ?? finalIntent,
+        intentLbl(intent),
+        intentLbl(finalIntent),
         playerServant.id,
       ));
     }
@@ -360,13 +372,13 @@ function handleSelectIntent(state: TRPGGameState, intent: Intent, prefixes: Skil
     masters = updateMaster(masters, state.playerServantId, { affection: newAffection });
     newLogs.push(log.logAffectionChange(state.day, playerServant.name, affDelta, playerServant.id));
     const newTier = getTier(newAffection);
-    const positiveMsg = fixParticles(`${playerServant.name}은(는) 마스터의 방침을 마음에 들어하는 듯 하다.`);
-    const negativeMsg = fixParticles(`${playerServant.name}은(는) 이번 마스터의 선택이 마음에 들지 않는 눈치다.`);
+    const positiveMsg = tt("trpg:loop.actionPositive", { name: playerServant.name });
+    const negativeMsg = tt("trpg:loop.actionNegative", { name: playerServant.name });
     affNotification = { message: affDelta > 0 ? positiveMsg : negativeMsg, delta: affDelta, tier: newTier };
   } else {
     const currentTier = getTier(playerMaster.affection);
     affNotification = {
-      message: fixParticles(`${playerServant.name}은(는) 별말 없이 마스터의 명령을 따랐다.`),
+      message: tt("trpg:loop.actionNeutral", { name: playerServant.name }),
       delta: 0,
       tier: currentTier,
     };
@@ -523,7 +535,7 @@ function handleEncounterDecision(state: TRPGGameState, fight: boolean, prefixes:
           escapedEnemyId: enemyId,
           phase: "playerEscaped",
           lastAffectionNotification: {
-            message: fixParticles(`${playerServant.name}은(는) 마스터의 판단에 안도한 듯 하다.`),
+            message: tt("trpg:loop.escapeRelief", { name: playerServant.name }),
             delta: escDelta,
             tier: escTier,
           },
@@ -639,7 +651,14 @@ function handleUseCommandSeal(state: TRPGGameState, sealType: string, prefixes: 
     state = { ...state, enemyInfo: updatedEnemyInfo } as TRPGGameState;
   }
 
-  const newLogs = [log.logCommandSeal(state.day, sealType)];
+  const sealNumber = COMMAND_SEAL_COUNT - playerMaster.commandSeals + 1;
+  const encEnemy = state.currentEncounter ? state.servantMap[state.currentEncounter.enemyId] : null;
+  const sealOpts = {
+    sealNumber,
+    opponentName: encEnemy?.name,
+    opponentId: encEnemy?.id,
+  };
+  const newLogs = [log.logCommandSeal(state.day, sealType, undefined, sealOpts)];
   let masters = updateMaster(state.masters, state.playerServantId, {
     commandSeals: playerMaster.commandSeals - 1,
   });
@@ -649,7 +668,7 @@ function handleUseCommandSeal(state: TRPGGameState, sealType: string, prefixes: 
     if (state.day >= FORCED_HUNT_DAY) return state;
     // 강제 도주
     const sealEscServant = state.servantMap[state.playerServantId];
-    newLogs.push(log.logSealEscape(state.day, sealEscServant.name, state.playerServantId));
+    newLogs.push(log.logSealEscape(state.day, sealEscServant.name, state.playerServantId, sealOpts));
     // 영주 도주 호감도 변화
     const sealEscPers = getPersonality(sealEscServant.id, sealEscServant.class);
     const sealEscDelta = affectionFromSeal("escape", false, sealEscPers);
@@ -665,7 +684,7 @@ function handleUseCommandSeal(state: TRPGGameState, sealType: string, prefixes: 
       escapedViaSeal: true,
       phase: "playerEscaped",
       lastAffectionNotification: {
-        message: fixParticles(`${sealEscServant.name}은(는) 마스터의 판단에 안도한 듯 하다.`),
+        message: tt("trpg:loop.escapeRelief", { name: sealEscServant.name }),
         delta: sealEscDelta,
         tier: sealEscTier,
       },
@@ -814,8 +833,13 @@ function handleCounterSealDecision(state: TRPGGameState, useSeal: import("./type
 
   // 플레이어 영주 소비
   if (useSeal) {
+    const counterSealNumber = COMMAND_SEAL_COUNT - playerMaster.commandSeals + 1;
     masters = updateMaster(masters, state.playerServantId, { commandSeals: playerMaster.commandSeals - 1 });
-    newLogs.push(log.logCommandSeal(state.day, useSeal));
+    newLogs.push(log.logCommandSeal(state.day, useSeal, undefined, {
+      sealNumber: counterSealNumber,
+      opponentName: enemyServant.name,
+      opponentId: enemyId,
+    }));
   }
 
   const result = resolveCombat(
@@ -865,9 +889,15 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
 
   if (useSeal && playerMaster.commandSeals > 0) {
     // 영주 사용 확정 도주
+    const defSealNumber = COMMAND_SEAL_COUNT - playerMaster.commandSeals + 1;
+    const defSealOpts = {
+      sealNumber: defSealNumber,
+      opponentName: enemyServant.name,
+      opponentId: enemyId,
+    };
     masters = updateMaster(masters, state.playerServantId, { commandSeals: playerMaster.commandSeals - 1, escapePenalty: ESCAPE_STAT_PENALTY, escapePenaltyDaysLeft: 2 });
-    newLogs.push(log.logCommandSeal(state.day, "escape"));
-    newLogs.push(log.logSealEscape(state.day, playerServant.name, playerServant.id));
+    newLogs.push(log.logCommandSeal(state.day, "escape", undefined, defSealOpts));
+    newLogs.push(log.logSealEscape(state.day, playerServant.name, playerServant.id, defSealOpts));
     // 영주 도주 호감도 변화
     const defSealPers = getPersonality(playerServant.id, playerServant.class);
     const defSealDelta = affectionFromSeal("escape", false, defSealPers);
@@ -884,7 +914,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
       escapedViaSeal: true,
       phase: "playerEscaped",
       lastAffectionNotification: {
-        message: fixParticles(`위기를 넘겼다. ${playerServant.name}은(는) 마스터의 판단에 안도한 듯 하다.`),
+        message: tt("trpg:loop.crisisEscapeRelief", { name: playerServant.name }),
         delta: defSealDelta,
         tier: defSealTier,
       },
@@ -908,7 +938,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
       isFinished: true,
       winnerId: null,
       lastAffectionNotification: {
-        message: fixParticles(`${playerServant.name}은(는) 후퇴를 거부하고 싸움을 속행한다! (마스터 신뢰: 낮음)`),
+        message: tt("trpg:loop.escapeRefused", { name: playerServant.name }),
         delta: 0,
         tier,
       },
@@ -936,7 +966,7 @@ function handleDefeatEscapeDecision(state: TRPGGameState, useSeal: boolean, pref
       escapedEnemyId: enemyId,
       phase: "playerEscaped",
       lastAffectionNotification: {
-        message: fixParticles(`위기를 넘겼다. ${playerServant.name}은(는) 마스터의 판단에 안도한 듯 하다.`),
+        message: tt("trpg:loop.crisisEscapeRelief", { name: playerServant.name }),
         delta: defEscDelta,
         tier: defEscTier,
       },
@@ -981,14 +1011,17 @@ function handleAdvancePhase(state: TRPGGameState, _prefixes: SkillPrefixes): TRP
     return { ...state, phase: "nightEnd", lastAffectionNotification: null };
   }
   if (state.phase === "grailWish") {
+    return { ...state, phase: "memoir" };
+  }
+  if (state.phase === "memoir") {
     return { ...state, phase: "gameOver" };
   }
   if (state.phase === "defeatEscapePrompt" && state.isFinished) {
-    // 7일차+ 도주 불가 패배 → gameOver 직행
-    return { ...state, phase: "gameOver", currentEncounter: null };
+    // 7일차+ 도주 불가 패배 → memoir 경유
+    return { ...state, phase: "memoir", currentEncounter: null };
   }
   if (state.phase === "playerDefeated") {
-    return { ...state, phase: "gameOver" };
+    return { ...state, phase: "memoir" };
   }
   if (state.phase === "nightEnd") {
     const winCheck = checkWinCondition(state);
@@ -1045,12 +1078,12 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
     const madResult = checkMadEnhancement(servant, intent, prefixes);
     if (madResult.disobeyed && madResult.overriddenIntent !== intent) {
       intent = madResult.overriddenIntent;
-      const intentKoAI: Record<string, string> = { hunt: "사냥", guard: "경계", hide: "은신" };
+      const intentLblAI = (i: string) => tt(`trpg:loop.intent.${i}`);
       newLogs.push(log.logMadDisobey(
         state.day,
         servant.name,
-        intentKoAI[madResult.originalIntent] ?? madResult.originalIntent,
-        intentKoAI[intent] ?? intent,
+        intentLblAI(madResult.originalIntent),
+        intentLblAI(intent),
         servant.id,
         servant.class,
       ));
@@ -1230,7 +1263,7 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
     const betrayalChance = betrayalTier === "hostile" ? 0.40 : betrayalTier === "wary" ? 0.20 : 0;
     if (betrayalChance > 0 && Math.random() < betrayalChance) {
       const playerServantForBetrayal = state.servantMap[state.playerServantId];
-      newLogs.push(log.logBetrayal(state.day, playerServantForBetrayal.name, "마스터", playerServantForBetrayal.id, -1));
+      newLogs.push(log.logBetrayal(state.day, playerServantForBetrayal.name, tt("trpg:loop.master"), playerServantForBetrayal.id, -1));
       // 즉사 대신 배신 프롬프트로 전환 — 영주로 제어 가능
       return {
         ...state,
@@ -1267,43 +1300,26 @@ function handleResolveAI(state: TRPGGameState, prefixes: SkillPrefixes): TRPGGam
 
     // 페널티 상태 메시지
     if (playerMasterForStatus.escapePenalty > 0) {
-      const penaltyMsgs = [
-        fixParticles(`${sName}은(는) 패배의 여파로 고통스러워 하고 있다.`),
-        fixParticles(`${sName}은(는) 아직 영기 손상을 입은 상태다.`),
-        fixParticles(`${sName}의 마력 흐름이 불안정하다. 영핵에 금이 간 것 같다.`),
-      ];
-      const penaltyMsg = penaltyMsgs[Math.floor(Math.random() * penaltyMsgs.length)];
+      const penaltyKeys = ["penaltyStatus1", "penaltyStatus2", "penaltyStatus3"];
+      const penaltyKey = penaltyKeys[Math.floor(Math.random() * penaltyKeys.length)];
+      const penaltyMsg = tt(`trpg:loop.${penaltyKey}`, { name: sName });
       newLogs.push({ day: state.day, phase: "status", key: "trpg:log.nightStatus", params: { message: penaltyMsg }, servantRefs: { name: playerServantForStatus.id } });
     }
 
     // 호감도 상태 메시지 (40% 확률)
     if (Math.random() < 0.4) {
-      const affectionStatusMsgs: Partial<Record<typeof statusTier, string[]>> = {
-        hostile: [
-          fixParticles(`${sName}은(는) 마스터를 적대하고 있다. 조심해야 할 것 같다.`),
-          fixParticles(`${sName}의 눈빛에서 경계심이 사라지지 않는다.`),
-        ],
-        wary: [
-          fixParticles(`아직 ${sName}은(는) 마스터를 신뢰하지 못한다.`),
-          fixParticles(`${sName}은(는) 마스터와 거리를 유지하고 있다.`),
-        ],
-        neutral: [
-          fixParticles(`${sName}은(는) 마스터와 보통의 관계를 유지하고 있다.`),
-        ],
-        trusting: [
-          fixParticles(`${sName}은(는) 마스터를 신뢰하고 있다.`),
-          fixParticles(`${sName}은(는) 마스터의 옆에서 안정적으로 행동하고 있다.`),
-        ],
-        intimate: [
-          fixParticles(`${sName}은(는) 마스터와 깊은 유대를 쌓고 있다.`),
-        ],
-        devoted: [
-          fixParticles(`${sName}은(는) 마스터를 위해서라면 무엇이든 하겠다고 다짐하고 있다.`),
-        ],
+      const affKeys: Partial<Record<typeof statusTier, string[]>> = {
+        hostile: ["affStatus.hostile1", "affStatus.hostile2"],
+        wary: ["affStatus.wary1", "affStatus.wary2"],
+        neutral: ["affStatus.neutral1"],
+        trusting: ["affStatus.trusting1", "affStatus.trusting2"],
+        intimate: ["affStatus.intimate1"],
+        devoted: ["affStatus.devoted1"],
       };
-      const pool = affectionStatusMsgs[statusTier];
+      const pool = affKeys[statusTier];
       if (pool) {
-        const msg = pool[Math.floor(Math.random() * pool.length)];
+        const key = pool[Math.floor(Math.random() * pool.length)];
+        const msg = tt(`trpg:loop.${key}`, { name: sName });
         newLogs.push({ day: state.day, phase: "status", key: "trpg:log.nightStatus", params: { message: msg }, servantRefs: { name: playerServantForStatus.id } });
       }
     }
@@ -1363,8 +1379,8 @@ function handleManaSupply(state: TRPGGameState): TRPGGameState {
   const newTierAfterMana = getTier(newAffection);
   const manaAffNotification = outcome.affectionDelta !== 0 ? {
     message: outcome.affectionDelta > 0
-      ? fixParticles(`${playerServant.name}은(는) 마력공급에 만족한 듯 하다.`)
-      : fixParticles(`${playerServant.name}은(는) 이번 마력공급이 마음에 들지 않은 눈치다.`),
+      ? tt("trpg:loop.manaPositive", { name: playerServant.name })
+      : tt("trpg:loop.manaNegative", { name: playerServant.name }),
     delta: outcome.affectionDelta,
     tier: newTierAfterMana,
   } : null;
@@ -1396,7 +1412,9 @@ function handleBetrayalDecision(state: TRPGGameState, useSeal: boolean): TRPGGam
     masters = updateMaster(masters, state.playerServantId, {
       commandSeals: playerMaster.commandSeals - 1,
     });
-    newLogs.push(log.logCommandSeal(state.day, "forceCommand"));
+    newLogs.push(log.logCommandSeal(state.day, "forceCommand", undefined, {
+      sealNumber: COMMAND_SEAL_COUNT - playerMaster.commandSeals + 1,
+    }));
 
     // 영주 강제 제어 호감도 하락
     const pers = getPersonality(playerServant.id, playerServant.class);
@@ -1411,7 +1429,7 @@ function handleBetrayalDecision(state: TRPGGameState, useSeal: boolean): TRPGGam
       masters,
       phase: "nightEnd",
       lastAffectionNotification: {
-        message: fixParticles(`영주의 힘으로 ${playerServant.name}을(를) 강제로 제어했다. 그러나 ${playerServant.name}의 눈빛이 더욱 차가워졌다.`),
+        message: tt("trpg:loop.sealForceControl", { name: playerServant.name }),
         delta: sealDelta,
         tier: newTier,
       },

@@ -1,6 +1,8 @@
 import type { RoundResult, BattleEvent } from "./types";
 import { generateBattleNarrative } from "./narrativeGenerator";
 import type { NarrativeContext } from "./narrativeGenerator";
+import i18n from "../i18n";
+import { fixParticles } from "../utils/josa";
 
 // ─── 타입 ───
 
@@ -35,13 +37,13 @@ export function formatRoundNarrative(round: RoundResult): NarrativeLine[] {
   // 소강 라운드
   if (round.isQuiet) {
     lines.push({
-      text: `── ${round.day}일차 밤 ──`,
+      text: `── ${i18n.t("trpg:narrative.nightHeader", { day: round.day })} ──`,
       effect: "normal",
       speed: "normal",
       delay: 300,
     });
     lines.push({
-      text: "후유키 시에 고요한 밤이 찾아왔다.",
+      text: i18n.t("trpg:narrative.quietNight"),
       effect: "stealth_fade",
       speed: "normal",
       delay: 500,
@@ -51,7 +53,7 @@ export function formatRoundNarrative(round: RoundResult): NarrativeLine[] {
 
   // 밤 시작
   lines.push({
-    text: `── ${round.day}일차 밤 ──`,
+    text: `── ${i18n.t("trpg:narrative.nightHeader", { day: round.day })} ──`,
     effect: "normal",
     speed: "normal",
     delay: 300,
@@ -71,8 +73,9 @@ export function formatRoundNarrative(round: RoundResult): NarrativeLine[] {
 
   // 탈락자
   for (const eliminated of round.eliminated) {
+    const eliminatedText = i18n.t("trpg:narrative.eliminated", { name: eliminated.name });
     lines.push({
-      text: `${eliminated.name}(이)가 소멸했다.`,
+      text: i18n.language === "ko" ? fixParticles(eliminatedText) : eliminatedText,
       effect: "elimination",
       speed: "normal",
       delay: 800,

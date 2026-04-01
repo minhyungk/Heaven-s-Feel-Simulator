@@ -1,7 +1,6 @@
 /**
- * 전투 묘사 템플릿 시스템
+ * 전투 묘사 템플릿 — 한국어
  *
- * 구조: default (성격/클래스/상황 기반) → overrides (서번트 ID별)
  * {A} = 공격자, {B} = 방어자, {무기} = 클래스 무기, {동사} = 클래스 동사
  * {보구명} = NP 이름, {스킬명} = 스킬 이름, {특성} = 특공 대상 trait
  */
@@ -201,7 +200,6 @@ export const RESULT_TEMPLATES = {
       "{B}(이)가 쓰러진다. {A}도 상처를 입었지만, 승리자는 {A}다.",
       "한 치의 양보도 없는 싸움이었다. 가까스로 {A}(이)가 승리를 가져갔다.",
     ],
-    /** 플레이어 서번트가 접전 끝에 패배했을 때 */
     close_loss: [
       "아슬아슬했다 — 하지만 {A}은(는) {B}에게 패배했다. {B}도 무사하지는 않은 것 같다.",
       "한 끗 차이로 승부가 갈렸다. {A}은(는) 쓰러졌지만, {B}도 상당한 상처를 입은 듯하다.",
@@ -228,7 +226,6 @@ export const RESULT_TEMPLATES = {
 
 // ─── 패배 위기 ───
 
-/** 패배 위기 다단계 서사 — phase1: 전투 개시, phase2: 열세, phase3: 위기 */
 export const DEFEAT_CRISIS_TEMPLATES = {
   phase1: [
     "{B}(이)가 {A}을(를) 압박한다.",
@@ -265,21 +262,18 @@ export const ESCAPE_ATTEMPT_TEMPLATES = {
     "후퇴 명령이 내려졌다. {A}이(가) 거리를 벌리며 이탈을 시도한다.",
     "지금은 물러서야 한다. {A}이(가) 후퇴로를 찾는다.",
   ],
-  /** 도주 확률 높을 때 (60%+) */
   success_easy: [
     "{A}은(는) 여유롭게 적의 추격을 뿌리치고 후퇴에 성공했다.",
     "{A}의 빠른 기동력으로 손쉽게 이탈에 성공했다.",
     "{B}의 추격을 가볍게 따돌렸다. {A}은(는) 이미 멀리 사라졌다.",
     "이 정도의 추격은 문제가 없다. {A}이(가) 유유히 이탈했다.",
   ],
-  /** 도주 확률 보통 (40~60%) */
   success_normal: [
     "적 서번트의 눈을 피해서 힘겹게 도주해냈다.",
     "{A}은(는) 적의 추격을 뿌리치고 후퇴에 성공했다.",
     "추격을 따돌렸다. {A}은(는) 가까스로 전선에서 벗어났다.",
     "치열한 쫓고 쫓기는 끝에 — {A}이(가) 이탈에 성공했다.",
   ],
-  /** 도주 확률 낮을 때 (~40%) */
   success_hard: [
     "기적적이다 — {A}은(는) {B}의 맹추격을 간발의 차이로 피해냈다!",
     "죽을 각오로 달려서 겨우 살아남았다. {A}은(는) 거의 탈진 상태다.",
@@ -290,7 +284,6 @@ export const ESCAPE_ATTEMPT_TEMPLATES = {
     "성공했다. {A}은(는) 적의 추격을 뿌리치고 후퇴에 성공했다.",
     "{A}의 빠른 판단이 적중했다. 적의 손아귀에서 벗어났다.",
   ],
-  /** 영주 사용 강제 도주 */
   success_seal: [
     "영주의 힘으로 {A}을(를) 강제 전이시켰다! 안전하게 이탈에 성공했다.",
     "마스터가 영주를 사용했다! {A}(이)가 마력의 빛과 함께 사라진다.",
@@ -380,7 +373,6 @@ export const AREA_EXPLORATION_GUARD: Record<string, string[]> = {
   park: ["강변 공원의 개활지에서 사방을 경계한다."],
 };
 
-/** 진지작성 랭크별 묘사 */
 export const TERRITORY_CREATION_NARRATION: Record<string, string[]> = {
   low: [
     "{A}(이)가 진지작성({rank})으로 다소 조잡한 진지를 작성했다. 없는 것 보단 낫겠지.",
@@ -396,35 +388,27 @@ export const TERRITORY_CREATION_NARRATION: Record<string, string[]> = {
   ],
 };
 
-/** 진지작성 서번트 오버라이드 */
-export const TERRITORY_CREATION_OVERRIDES: Record<number, string> = {
-  // 쿠온지 아리스 (ID는 실제 데이터에서 확인 필요)
-};
+export const TERRITORY_CREATION_OVERRIDES: Record<number, string> = {};
 
-/** 조우 시 의도별 상세 묘사 — {tile}=지역명, {A}=아군, {B}=적 */
 export const ENCOUNTER_DETAIL_TEMPLATES: Record<string, Record<string, string[]>> = {
-  // 아군 hunt, 적 hunt
   hunt_hunt: {
     default: [
       "인영을 발견했다.",
       "적의 마력 반응을 감지했다!",
     ],
   },
-  // 아군 hunt, 적 guard
   hunt_guard: {
     default: [
       "경계 중이던 {B}을(를) 조우했다!",
       "{B}(이)가 이쪽을 경계하고 있었다!",
     ],
   },
-  // 아군 guard, 적 hunt
   guard_hunt: {
     default: [
       "적 {B}(이)가 우리를 발견하고 전투 태세로 접근한다!",
       "{B}(이)가 이쪽을 향해 다가오고 있다!",
     ],
   },
-  // 아군 hide, 적 hunt — 발각
   detected: {
     default: [
       "적 {B}에게 발각되어 버렸다!",
@@ -434,7 +418,6 @@ export const ENCOUNTER_DETAIL_TEMPLATES: Record<string, Record<string, string[]>
       "엄폐물이 적어 적에게 곧 발견될 것 같다. 적 {B}에게 발각되어 버렸다!",
     ],
   },
-  // 기습
   ambush: {
     default: [
       "기척도 없이 — 기습이다!",
@@ -442,7 +425,6 @@ export const ENCOUNTER_DETAIL_TEMPLATES: Record<string, Record<string, string[]>
   },
 };
 
-/** 적 영주 사용 시 전투 중 서사 — phase1: 전투 진행, phase2: 적 영주 사용 알림 */
 export const COUNTER_SEAL_COMBAT_TEMPLATES = {
   phase1: [
     "{A}(이)가 {B}을(를) 몰아붙인다.",
@@ -453,8 +435,6 @@ export const COUNTER_SEAL_COMBAT_TEMPLATES = {
     "적 마스터가 영주를 사용하려 한다!",
   ],
 };
-
-// ─── TRPG 유저 개입 ───
 
 export const INTERVENTION_TEMPLATES = {
   disadvantage: [
@@ -471,16 +451,8 @@ export const INTERVENTION_TEMPLATES = {
   ],
 };
 
-// ─── 유틸리티: 오버라이드 우선 조회 ───
+// ─── fallback strings ───
 
-export function pickTemplate(
-  pool: string[],
-  overrides: Record<number, string[]>,
-  servantId: number,
-): string {
-  const overridePool = overrides[servantId];
-  if (overridePool?.length) {
-    return overridePool[Math.floor(Math.random() * overridePool.length)];
-  }
-  return pool[Math.floor(Math.random() * pool.length)];
-}
+export const FALLBACK_HIDE = "숨어서 기척을 지우고 있다.";
+export const FALLBACK_GUARD = "주위를 경계하고 있다.";
+export const FALLBACK_EXPLORE = "주위를 탐색하고 있다.";

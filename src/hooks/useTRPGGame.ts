@@ -1,8 +1,9 @@
-import { useReducer, useCallback, useMemo } from "react";
+import { useReducer, useCallback, useMemo, useEffect } from "react";
 import type { Servant } from "../data/types";
 import type { TRPGAction, TRPGGameState } from "../engine/types";
 import { createInitialState, trpgReducer } from "../engine/trpgLoop";
 import { getSkillPrefixes } from "../i18n/skillKeys";
+import { useServantData } from "../contexts/ServantDataContext";
 import i18n from "../i18n";
 
 function createReducerWithPrefixes() {
@@ -21,6 +22,20 @@ export function useTRPGGame(participants: Servant[], playerServantId: number) {
 
   const reducer = useMemo(() => createReducerWithPrefixes(), []);
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Sync servantMap names when language changes
+  const { byId } = useServantData();
+  useEffect(() => {
+    const resolvedMap: Record<number, Servant> = {};
+    for (const id of Object.keys(state.servantMap)) {
+      const nid = Number(id);
+      const resolved = byId.get(nid);
+      if (resolved) resolvedMap[nid] = resolved;
+    }
+    dispatch({ type: "syncServantLanguage", resolvedMap });
+  // Only re-sync when byId changes (language switch), not on every state change
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [byId]);
 
   const selectIntent = useCallback((intent: "hunt" | "guard" | "hide") => {
     dispatch({ type: "selectIntent", intent });

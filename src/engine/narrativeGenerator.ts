@@ -6,16 +6,7 @@ import type { TileId, Intent } from "./types";
 import { findClassSkillRank } from "./combat";
 import { getSkillPrefixes } from "../i18n/skillKeys";
 import i18n from "../i18n";
-import {
-  ENCOUNTER_TEMPLATES, CLASH_TEMPLATES, SKILL_TEMPLATES,
-  SPECIAL_ATTACK_TEMPLATES, RESULT_TEMPLATES,
-  DEFEAT_CRISIS_TEMPLATES, ESCAPE_ATTEMPT_TEMPLATES,
-  COUNTER_SEAL_COMBAT_TEMPLATES,
-  AREA_EXPLORATION_TEMPLATES, AREA_EXPLORATION_HIDE, AREA_EXPLORATION_GUARD,
-  TERRITORY_CREATION_NARRATION, TERRITORY_CREATION_OVERRIDES,
-  ENCOUNTER_DETAIL_TEMPLATES,
-  pickTemplate,
-} from "../data/narrativeTemplates";
+import { getTemplates, pickTemplate } from "../data/narrativeTemplates";
 import { fixParticles } from "../utils/josa";
 import { getAffinityDialogue } from "../data/affinityDialogues";
 import { pickDialogue } from "../data/servantDialogues";
@@ -55,6 +46,7 @@ type SkillCategory =
 
 function classifySkillByName(skillName: string): SkillCategory {
   const n = skillName;
+  // Korean
   if (/전투속행|속행|생존|불굴/.test(n)) return "survival";
   if (/매혹|카리스마|황제특권|황금률/.test(n)) return "charm";
   if (/진지작성|공방/.test(n)) return "territory";
@@ -65,7 +57,28 @@ function classifySkillByName(skillName: string): SkillCategory {
   if (/대마력|마술저항/.test(n)) return "anti_magic";
   if (/심안|직감|예지|통찰|감지|투시/.test(n)) return "def_boost";
   if (/완력|괴력|근력|용력|무용|강화|권능|뇌명|방출/.test(n)) return "atk_boost";
-  // 기본값: 공격 계열
+  // English
+  if (/Battle Continuation|Disengage|Guts|Protection|Survival|Invincib/i.test(n)) return "survival";
+  if (/Charisma|Golden Rule|Emperor/i.test(n)) return "charm";
+  if (/Territory Creation/i.test(n)) return "territory";
+  if (/Presence Concealment|Shapeshift/i.test(n)) return "presence_concealment";
+  if (/Independent Action|Independent Manifestation/i.test(n)) return "independent_action";
+  if (/Divinity/i.test(n)) return "divinity";
+  if (/Mad Enhancement/i.test(n)) return "mad_enhancement";
+  if (/Magic Resistance/i.test(n)) return "anti_magic";
+  if (/Mind.s Eye|Instinct|Intuition|Clairvoyance|Foresight|Insight|Detection/i.test(n)) return "def_boost";
+  if (/Monstrous Strength|Mana Burst|Bravery|Prana Burst/i.test(n)) return "atk_boost";
+  // Japanese
+  if (/戦闘続行|仕切り直し|生存|不屈/.test(n)) return "survival";
+  if (/魅惑|カリスマ|皇帝特権|黄金律/.test(n)) return "charm";
+  if (/陣地作成/.test(n)) return "territory";
+  if (/気配遮断|変化|存在感/.test(n)) return "presence_concealment";
+  if (/単独行動|単独顕現/.test(n)) return "independent_action";
+  if (/神性|神格|神秘|神霊/.test(n)) return "divinity";
+  if (/狂化/.test(n)) return "mad_enhancement";
+  if (/対魔力|魔術耐性/.test(n)) return "anti_magic";
+  if (/心眼|直感|予知|洞察|感知|透視/.test(n)) return "def_boost";
+  if (/怪力|筋力|勇猛|強化|権能|雷鳴|魔力放出/.test(n)) return "atk_boost";
   return "atk_boost";
 }
 
@@ -75,13 +88,14 @@ function generateSkillActivationLine(
   vocab: ReturnType<typeof getVocab>,
   isOpponent: boolean,
 ): NarrativeLine | null {
+  const T = getTemplates();
   const skills = servant.personalSkills;
   if (!skills || skills.length === 0) return null;
 
   // 랜덤 스킬 선택
   const skill = skills[Math.floor(Math.random() * skills.length)];
   const category = classifySkillByName(skill.name);
-  const pool = SKILL_TEMPLATES.default[category] as string[] | undefined;
+  const pool = T.SKILL_TEMPLATES.default[category] as string[] | undefined;
   if (!pool || pool.length === 0) return null;
 
   const template = pool[Math.floor(Math.random() * pool.length)];
@@ -104,17 +118,18 @@ function generateSkillActivationLine(
 
 // ─── 템플릿 변수 치환 + 조사 자동화 ───
 
-function fillTemplate(template: string, vars: Record<string, string>): string {
+export function fillTemplate(template: string, vars: Record<string, string>): string {
   let result = template;
   for (const [key, value] of Object.entries(vars)) {
     result = result.replace(new RegExp(`\\{${key}\\}`, "g"), value);
   }
-  return fixParticles(result);
+  return i18n.language === "ko" ? fixParticles(result) : result;
 }
 
 // ─── 메인 생성기 ───
 
 export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] {
+  const T = getTemplates();
   const { servantA, servantB, combatResult, intentMatchup } = ctx;
   const lines: NarrativeLine[] = [];
   const vocabA = getVocab(servantA.class);
@@ -133,16 +148,16 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
 
   // 1. 조우
   const matchup = intentMatchup ?? "hunt_hunt";
-  const encounterPool = ENCOUNTER_TEMPLATES.default[matchup] ?? ENCOUNTER_TEMPLATES.default.hunt_hunt;
+  const encounterPool = T.ENCOUNTER_TEMPLATES.default[matchup] ?? T.ENCOUNTER_TEMPLATES.default.hunt_hunt;
   lines.push(makeLine(
-    fillTemplate(pickTemplate(encounterPool, ENCOUNTER_TEMPLATES.overrides, servantA.id), vars),
+    fillTemplate(pickTemplate(encounterPool, T.ENCOUNTER_TEMPLATES.overrides, servantA.id), vars),
     matchup === "ambush" ? "stealth_fade" : "normal",
     "normal",
     500,
   ));
 
   // 1.5 배틀 개시 대사 — 인연대사가 있으면 인연대사 우선, 없으면 Atlas Academy 대사
-  const affinity = getAffinityDialogue(servantA.id, servantB.id);
+  const affinity = getAffinityDialogue(servantA.id, servantB.id, i18n.language);
   if (affinity?.clash) {
     const clashA = affinity.clash[servantA.id];
     if (clashA && clashA.length > 0) {
@@ -153,18 +168,18 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
       lines.push(makeLine(`${servantB.name}: "${pick(clashB)}"`, "servant_dialogue", "normal", 500));
     }
   } else {
-    const battleStartA = pickDialogue(servantA.id, "battleStart");
+    const battleStartA = pickDialogue(servantA.id, "battleStart", i18n.language);
     if (battleStartA) {
       lines.push(makeLine(`${servantA.name}: "${battleStartA}"`, "servant_dialogue", "normal", 500));
     }
-    const battleStartB = pickDialogue(servantB.id, "battleStart");
+    const battleStartB = pickDialogue(servantB.id, "battleStart", i18n.language);
     if (battleStartB) {
       lines.push(makeLine(`${servantB.name}: "${battleStartB}"`, "servant_dialogue", "normal", 500));
     }
   }
 
   // 2. 교전
-  const clashPool = CLASH_TEMPLATES.default[powerGap] ?? CLASH_TEMPLATES.default.even;
+  const clashPool = T.CLASH_TEMPLATES.default[powerGap] ?? T.CLASH_TEMPLATES.default.even;
   lines.push(makeLine(
     fillTemplate(pick(clashPool), vars),
     "normal",
@@ -194,7 +209,7 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
   if (ctx.skipResult) return lines;
 
   if (combatResult.isDraw) {
-    const drawPool = RESULT_TEMPLATES.default.draw;
+    const drawPool = T.RESULT_TEMPLATES.default.draw;
     lines.push(makeLine(
       fillTemplate(pick(drawPool), vars),
       "draw",
@@ -207,11 +222,11 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
     const playerLost = ctx.playerIsA !== false && combatResult.loser.id === servantA.id;
     let resultPool: string[];
     if (isClose && playerLost) {
-      resultPool = RESULT_TEMPLATES.default.close_loss;
+      resultPool = T.RESULT_TEMPLATES.default.close_loss;
     } else if (isClose) {
-      resultPool = RESULT_TEMPLATES.default.close;
+      resultPool = T.RESULT_TEMPLATES.default.close;
     } else {
-      resultPool = RESULT_TEMPLATES.default.decisive;
+      resultPool = T.RESULT_TEMPLATES.default.decisive;
     }
     let resultVars: Record<string, string>;
     if (isClose && playerLost) {
@@ -230,7 +245,7 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
 
     // 승리/패배 대사 (Atlas Academy 크롤링 데이터)
     if (combatResult.winner && combatResult.loser) {
-      const victoryLine = pickDialogue(combatResult.winner.id, "victory");
+      const victoryLine = pickDialogue(combatResult.winner.id, "victory", i18n.language);
       if (victoryLine) {
         lines.push(makeLine(
           `${combatResult.winner.name}: "${victoryLine}"`,
@@ -239,7 +254,7 @@ export function generateBattleNarrative(ctx: NarrativeContext): NarrativeLine[] 
           600,
         ));
       }
-      const defeatLine = pickDialogue(combatResult.loser.id, "defeat");
+      const defeatLine = pickDialogue(combatResult.loser.id, "defeat", i18n.language);
       if (defeatLine) {
         lines.push(makeLine(
           `${combatResult.loser.name}: "${defeatLine}"`,
@@ -260,11 +275,12 @@ export function generateDefeatCrisisNarrative(
   playerServant: Servant,
   enemyServant: Servant,
 ): NarrativeLine[] {
+  const T = getTemplates();
   const vars = { A: playerServant.name, B: enemyServant.name };
   return [
-    makeLine(fillTemplate(pick(DEFEAT_CRISIS_TEMPLATES.phase1), vars), "normal", "normal", 500),
-    makeLine(fillTemplate(pick(DEFEAT_CRISIS_TEMPLATES.phase2), vars), "critical", "normal", 600),
-    makeLine(fillTemplate(pick(DEFEAT_CRISIS_TEMPLATES.phase3), vars), "critical", "slow", 400),
+    makeLine(fillTemplate(pick(T.DEFEAT_CRISIS_TEMPLATES.phase1), vars), "normal", "normal", 500),
+    makeLine(fillTemplate(pick(T.DEFEAT_CRISIS_TEMPLATES.phase2), vars), "critical", "normal", 600),
+    makeLine(fillTemplate(pick(T.DEFEAT_CRISIS_TEMPLATES.phase3), vars), "critical", "slow", 400),
   ];
 }
 
@@ -274,10 +290,11 @@ export function generateCounterSealNarrative(
   playerServant: Servant,
   enemyServant: Servant,
 ): NarrativeLine[] {
+  const T = getTemplates();
   const vars = { A: playerServant.name, B: enemyServant.name };
   return [
-    makeLine(fillTemplate(pick(COUNTER_SEAL_COMBAT_TEMPLATES.phase1), vars), "normal", "normal", 500),
-    makeLine(fillTemplate(pick(COUNTER_SEAL_COMBAT_TEMPLATES.phase2), vars), "critical", "normal", 400),
+    makeLine(fillTemplate(pick(T.COUNTER_SEAL_COMBAT_TEMPLATES.phase1), vars), "normal", "normal", 500),
+    makeLine(fillTemplate(pick(T.COUNTER_SEAL_COMBAT_TEMPLATES.phase2), vars), "critical", "normal", 400),
   ];
 }
 
@@ -289,23 +306,24 @@ export function generateEscapeNarrative(
   outcome: "try" | "success" | "fail" | "refused" | "forcedDefeat" | "success_seal",
   escapeChance?: number,
 ): NarrativeLine[] {
+  const T = getTemplates();
   const vars = { A: playerServant.name, B: enemyServant.name };
 
   if (outcome === "success" && escapeChance != null) {
     // 확률에 따른 다른 성공 메시지
     const pool = escapeChance >= 60
-      ? ESCAPE_ATTEMPT_TEMPLATES.success_easy
+      ? T.ESCAPE_ATTEMPT_TEMPLATES.success_easy
       : escapeChance >= 40
-      ? ESCAPE_ATTEMPT_TEMPLATES.success_normal
-      : ESCAPE_ATTEMPT_TEMPLATES.success_hard;
+      ? T.ESCAPE_ATTEMPT_TEMPLATES.success_normal
+      : T.ESCAPE_ATTEMPT_TEMPLATES.success_hard;
     return [makeLine(fillTemplate(pick(pool), vars), "stealth_fade", "normal", 400)];
   }
 
   if (outcome === "success_seal") {
-    return [makeLine(fillTemplate(pick(ESCAPE_ATTEMPT_TEMPLATES.success_seal), vars), "np_glow", "normal", 400)];
+    return [makeLine(fillTemplate(pick(T.ESCAPE_ATTEMPT_TEMPLATES.success_seal), vars), "np_glow", "normal", 400)];
   }
 
-  const pool = ESCAPE_ATTEMPT_TEMPLATES[outcome] ?? ESCAPE_ATTEMPT_TEMPLATES.success;
+  const pool = T.ESCAPE_ATTEMPT_TEMPLATES[outcome] ?? T.ESCAPE_ATTEMPT_TEMPLATES.success;
   const template = pick(pool);
   const effect: NarrativeEffect =
     outcome === "success" ? "stealth_fade" :
@@ -333,6 +351,7 @@ export function generateEncounterNarrative(
     territoryServant?: Servant | null;
   },
 ): NarrativeLine[] {
+  const T = getTemplates();
   const lines: NarrativeLine[] = [];
   const vars = {
     A: playerServant.name,
@@ -346,14 +365,14 @@ export function generateEncounterNarrative(
   if (tileId) {
     let areaPool: string[];
     if (playerIntent === "hide") {
-      areaPool = AREA_EXPLORATION_HIDE[tileId] ?? [`숨어서 기척을 지우고 있다.`];
+      areaPool = T.AREA_EXPLORATION_HIDE[tileId] ?? [T.FALLBACK_HIDE];
     } else if (playerIntent === "guard") {
-      areaPool = AREA_EXPLORATION_GUARD[tileId] ?? [`주위를 경계하고 있다.`];
+      areaPool = T.AREA_EXPLORATION_GUARD[tileId] ?? [T.FALLBACK_GUARD];
     } else {
-      areaPool = AREA_EXPLORATION_TEMPLATES[tileId] ?? [`주위를 탐색하고 있다.`];
+      areaPool = T.AREA_EXPLORATION_TEMPLATES[tileId] ?? [T.FALLBACK_EXPLORE];
     }
     lines.push(makeLine(
-      fixParticles(pick(areaPool)),
+      i18n.language === "ko" ? fixParticles(pick(areaPool)) : pick(areaPool),
       "normal",
       "normal",
       400,
@@ -367,12 +386,12 @@ export function generateEncounterNarrative(
     const tc = findClassSkillRank(ts, prefixes.territoryCreation);
     if (tc) {
       // 오버라이드 체크
-      const overrideText = TERRITORY_CREATION_OVERRIDES[ts.id];
+      const overrideText = T.TERRITORY_CREATION_OVERRIDES[ts.id];
       if (overrideText) {
-        lines.push(makeLine(fixParticles(overrideText), "normal", "normal", 400));
+        lines.push(makeLine(i18n.language === "ko" ? fixParticles(overrideText) : overrideText, "normal", "normal", 400));
       } else {
         const rankCategory = tc.score >= 9 ? "ex" : tc.score >= 7 ? "high" : tc.score >= 5 ? "mid" : "low";
-        const pool = TERRITORY_CREATION_NARRATION[rankCategory] ?? TERRITORY_CREATION_NARRATION.mid;
+        const pool = T.TERRITORY_CREATION_NARRATION[rankCategory] ?? T.TERRITORY_CREATION_NARRATION.mid;
         const text = fillTemplate(pick(pool), { A: ts.name, rank: tc.rank });
         lines.push(makeLine(text, "normal", "normal", 400));
       }
@@ -386,7 +405,7 @@ export function generateEncounterNarrative(
     encounterKey = "guard_hunt";
   }
 
-  const detailPool = ENCOUNTER_DETAIL_TEMPLATES[encounterKey];
+  const detailPool = T.ENCOUNTER_DETAIL_TEMPLATES[encounterKey];
   if (detailPool) {
     const tileSpecific = tileId ? detailPool[tileId] : undefined;
     const pool = tileSpecific ?? detailPool.default ?? [];
@@ -404,8 +423,8 @@ export function generateEncounterNarrative(
   if (lines.length === 0) {
     const vocabA = getVocab(playerServant.class);
     const fallbackVars = { ...vars, "무기": vocabA.weapon, "동사": vocabA.verb };
-    const pool = ENCOUNTER_TEMPLATES.default[intentMatchup] ?? ENCOUNTER_TEMPLATES.default.hunt_hunt;
-    const text = fillTemplate(pickTemplate(pool, ENCOUNTER_TEMPLATES.overrides, playerServant.id), fallbackVars);
+    const pool = T.ENCOUNTER_TEMPLATES.default[intentMatchup] ?? T.ENCOUNTER_TEMPLATES.default.hunt_hunt;
+    const text = fillTemplate(pickTemplate(pool, T.ENCOUNTER_TEMPLATES.overrides, playerServant.id), fallbackVars);
     lines.push(makeLine(
       text,
       intentMatchup === "ambush" ? "stealth_fade" : "normal",
@@ -415,7 +434,7 @@ export function generateEncounterNarrative(
   }
 
   // 인연 대사 삽입 (조우)
-  const affinity = getAffinityDialogue(playerServant.id, enemyServant.id);
+  const affinity = getAffinityDialogue(playerServant.id, enemyServant.id, i18n.language);
   if (affinity) {
     // 플레이어 서번트 대사
     const playerLines = affinity.encounter[playerServant.id];
@@ -454,6 +473,7 @@ function formatSkillNarrative(
   _servantB: Servant,
   vocabA: ReturnType<typeof getVocab>,
 ): NarrativeLine[] {
+  const T = getTemplates();
   const { key, params } = effect;
 
   // NP 관련 — 진명 해방 연출 (다중 라인: 예고 → NP명 → ruby)
@@ -467,14 +487,14 @@ function formatSkillNarrative(
 
     // 예고 라인 — 영주로 보구 사용
     lines.push(makeLine(
-      fixParticles(`${casterName}이(가) 영주로써 보구 '${npName}'를 사용한다!`),
+      fillTemplate(i18n.t("trpg:narrative.npSealUse", { name: casterName, np: npName }), {}),
       "np_glow",
       "slow",
       600,
     ));
 
     // 보구 영창 대사 (Atlas Academy 크롤링 데이터)
-    const npChant = pickDialogue(caster.id, "npChant");
+    const npChant = pickDialogue(caster.id, "npChant", i18n.language);
     if (npChant) {
       lines.push(makeLine(
         `${casterName}: "${npChant}"`,
@@ -509,10 +529,10 @@ function formatSkillNarrative(
   if (key.includes("specialAttack") || key.includes("trpg:specialAttack")) {
     const traitKey = params.traits?.split(",")[0]?.trim();
     let template: string;
-    if (traitKey && SPECIAL_ATTACK_TEMPLATES.specific[traitKey]) {
-      template = pick(SPECIAL_ATTACK_TEMPLATES.specific[traitKey]);
+    if (traitKey && T.SPECIAL_ATTACK_TEMPLATES.specific[traitKey]) {
+      template = pick(T.SPECIAL_ATTACK_TEMPLATES.specific[traitKey]);
     } else {
-      template = pick(SPECIAL_ATTACK_TEMPLATES.default);
+      template = pick(T.SPECIAL_ATTACK_TEMPLATES.default);
     }
     const mappedVars: Record<string, string> = {
       A: params.attacker ?? "",
@@ -528,7 +548,7 @@ function formatSkillNarrative(
   // 영주 부스트
   if (key.includes("sealBoost")) {
     return [makeLine(
-      fixParticles(`${params.name}의 마스터가 영주를 사용한다! 전투력이 상승!`),
+      fillTemplate(i18n.t("trpg:narrative.sealBoost", { name: params.name }), {}),
       "np_glow",
       "normal",
       400,
@@ -538,7 +558,7 @@ function formatSkillNarrative(
   // 기습
   if (key === "ambushSuccess") {
     return [makeLine(
-      fixParticles(`${params.name}의 기습이 성공했다! (은신 ${params.rank})`),
+      fillTemplate(i18n.t("trpg:narrative.ambushSuccess", { name: params.name, rank: params.rank }), {}),
       "stealth_fade",
       "normal",
       300,
@@ -547,7 +567,7 @@ function formatSkillNarrative(
 
   if (key === "ambushFail") {
     return [makeLine(
-      fixParticles(`${params.name}의 기습이 간파되었다.`),
+      fillTemplate(i18n.t("trpg:narrative.ambushFail", { name: params.name }), {}),
       "normal",
       "normal",
       300,
@@ -556,14 +576,14 @@ function formatSkillNarrative(
 
   // 대마력
   if (key.includes("antiMagic")) {
-    const pool = SKILL_TEMPLATES.default.anti_magic;
+    const pool = T.SKILL_TEMPLATES.default.anti_magic;
     return [makeLine(fillTemplate(pick(pool), { ...params, A: params.name ?? "" }), "normal", "normal", 300)];
   }
 
   // 은신 발각 페널티
   if (key.includes("detectedPenalty")) {
     return [makeLine(
-      fixParticles(`${params.name}이(가) 은신 발각 페널티를 받았다.`),
+      fillTemplate(i18n.t("trpg:narrative.detectedPenalty", { name: params.name }), {}),
       "normal",
       "normal",
       200,
@@ -572,9 +592,10 @@ function formatSkillNarrative(
 
   // 진지작성
   if (key.includes("territory")) {
-    const pool = SKILL_TEMPLATES.default.territory;
+    const pool = T.SKILL_TEMPLATES.default.territory;
+    const prefixes = getSkillPrefixes(i18n.language);
     return [makeLine(
-      fillTemplate(pick(pool), { A: params.name ?? "", "스킬명": "진지작성" }),
+      fillTemplate(pick(pool), { A: params.name ?? "", "스킬명": prefixes.territoryCreation }),
       "normal",
       "normal",
       300,
@@ -583,7 +604,7 @@ function formatSkillNarrative(
 
   // 액티브 스킬 — 공격
   if (key.includes("skill.atkBoost")) {
-    const pool = SKILL_TEMPLATES.default.atk_boost;
+    const pool = T.SKILL_TEMPLATES.default.atk_boost;
     return [makeLine(
       fillTemplate(pick(pool), { A: params.name, "스킬명": params.skill, "무기": vocabA.weapon }),
       "normal",
@@ -594,7 +615,7 @@ function formatSkillNarrative(
 
   // 액티브 스킬 — 방어
   if (key.includes("skill.defBoost")) {
-    const pool = SKILL_TEMPLATES.default.def_boost;
+    const pool = T.SKILL_TEMPLATES.default.def_boost;
     return [makeLine(
       fillTemplate(pick(pool), { A: params.name, "스킬명": params.skill }),
       "normal",
@@ -605,7 +626,7 @@ function formatSkillNarrative(
 
   // 액티브 스킬 — 매혹
   if (key.includes("skill.charm")) {
-    const pool = SKILL_TEMPLATES.default.charm;
+    const pool = T.SKILL_TEMPLATES.default.charm;
     return [makeLine(
       fillTemplate(pick(pool), { A: params.name, "스킬명": params.skill }),
       "normal",
@@ -616,7 +637,7 @@ function formatSkillNarrative(
 
   // 액티브 스킬 — 생존
   if (key.includes("skill.survival")) {
-    const pool = SKILL_TEMPLATES.default.survival;
+    const pool = T.SKILL_TEMPLATES.default.survival;
     return [makeLine(
       fillTemplate(pick(pool), { A: params.name, "스킬명": params.skill }),
       "critical",
@@ -628,7 +649,7 @@ function formatSkillNarrative(
   // fallback
   if (params.name) {
     return [makeLine(
-      fixParticles(`${params.name}의 스킬이 발동했다.`),
+      fillTemplate(i18n.t("trpg:narrative.skillFallback", { name: params.name }), {}),
       "normal",
       "normal",
       200,

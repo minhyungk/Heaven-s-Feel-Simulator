@@ -66,8 +66,8 @@ export default function CombatResult({ result, playerServantId, state, onContinu
         intentMatchup = "hunt_guard";
       }
       const lines = generateBattleNarrative({
-        servantA: playerServant,
-        servantB: enemyServant,
+        servantA: resolvedPlayer,
+        servantB: resolvedEnemy!,
         combatResult: result,
         day: state.day,
         intentMatchup,

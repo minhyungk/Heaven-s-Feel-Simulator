@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import type { Servant } from "../data/types";
 import defaultServants, { filterServants } from "../data/servants";
+import { loadDialogues } from "../data/servantDialogues";
 
 interface ServantDataContextType {
   servants: Servant[];
@@ -54,6 +55,8 @@ export function ServantDataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const lang = i18n.language;
+    // Preload dialogue data for current language
+    if (lang !== "ko") loadDialogues(lang);
     if (lang === "ko") {
       setServants(defaultServants);
     } else {

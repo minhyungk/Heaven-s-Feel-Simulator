@@ -138,6 +138,10 @@
     "title": "夜が過ぎた",
     "continue": "次の夜へ →"
   },
+  "memoir": {
+    "title": "聖杯戦争回顧録",
+    "continue": "記憶を閉じる"
+  },
   "gameOver": {
     "victory": "聖杯戦争勝利！",
     "defeat": "敗北...",
@@ -200,5 +204,77 @@
     "status": "戦況",
     "log": "ログ",
     "servant": "マイサーヴァント"
+  },
+  "loop": {
+    "intent": {
+      "hunt": "狩猟",
+      "guard": "警戒",
+      "hide": "隠密"
+    },
+    "battleWinTrust": "戦闘に勝利した！ {{name}}はマスターをより深く信頼するようになった。",
+    "battleLossAnxiety": "{{name}}は敗北に不安な表情を浮かべている。",
+    "commandRefusal": "{{name}}は命令を拒否した！ ({{from}} → {{to}})",
+    "actionPositive": "{{name}}はマスターの方針を気に入っているようだ。",
+    "actionNegative": "{{name}}は今回のマスターの選択が気に入らないようだ。",
+    "actionNeutral": "{{name}}は何も言わずマスターの命令に従った。",
+    "escapeRelief": "{{name}}はマスターの判断に安堵しているようだ。",
+    "crisisEscapeRelief": "危機を脱した。{{name}}はマスターの判断に安堵しているようだ。",
+    "escapeRefused": "{{name}}は撤退を拒否し、戦闘を続行する！（マスターの信頼：低い）",
+    "master": "マスター",
+    "penaltyStatus1": "{{name}}は敗北の余波で苦しんでいる。",
+    "penaltyStatus2": "{{name}}はまだ霊基に損傷を受けた状態だ。",
+    "penaltyStatus3": "{{name}}の魔力の流れが不安定だ。霊核にひびが入っているかもしれない。",
+    "affStatus": {
+      "hostile1": "{{name}}はマスターに敵意を抱いている。注意が必要だ。",
+      "hostile2": "{{name}}の目から警戒心が消えることはない。",
+      "wary1": "まだ{{name}}はマスターを信頼していない。",
+      "wary2": "{{name}}はマスターと距離を保っている。",
+      "neutral1": "{{name}}はマスターと普通の関係を維持している。",
+      "trusting1": "{{name}}はマスターを信頼している。",
+      "trusting2": "{{name}}はマスターの傍で安定して行動している。",
+      "intimate1": "{{name}}はマスターと深い絆を築いている。",
+      "devoted1": "{{name}}はマスターのためなら何でもすると誓っている。"
+    },
+    "manaPositive": "{{name}}は魔力供給に満足しているようだ。",
+    "manaNegative": "{{name}}は今回の魔力供給が気に入らないようだ。",
+    "sealForceControl": "令呪の力で{{name}}を強制的に制御した。しかし{{name}}の目はより冷たくなった。"
+  },
+  "narrative": {
+    "nightHeader": "第{{day}}日目 夜",
+    "quietNight": "冬木市に静かな夜が訪れた。",
+    "eliminated": "{{name}}が消滅した。",
+    "npSealUse": "{{name}}が令呪で宝具「{{np}}」を使用する！",
+    "sealBoost": "{{name}}のマスターが令呪を使用した！ 戦闘力が上昇！",
+    "ambushSuccess": "{{name}}の奇襲が成功した！（気配遮断 {{rank}}）",
+    "ambushFail": "{{name}}の奇襲は看破された。",
+    "detectedPenalty": "{{name}}が隠密発覚のペナルティを受けた。",
+    "skillFallback": "{{name}}のスキルが発動した。",
+    "enemySealEscape": "{{name}}のマスターが令呪を使用した！ 強制転移 — {{name}}が戦場から離脱する！",
+    "enemyEscaped": "{{name}}が戦場から離脱した。",
+    "betrayalDefeat1": "{{name}}に裏切られた。血に染まった貴方を残し、{{name}}はどこかへ消えた。",
+    "betrayalDefeat2": "{{name}}の刃がマスターを貫く。契約は破棄された。{{name}}は一言も発さず背を向けた。",
+    "betrayalDefeat3": "{{name}}はマスターの令呪すら奪い取り、戦場を去った。冷たい夜風だけが倒れた貴方の上を通り過ぎる。",
+    "spiritCoreDestroyed": "{{name}}の霊核が破壊された。退去が進行する...",
+    "defeat": "敗北...",
+    "betrayalKillingIntent": "{{name}}の殺気がマスターに向けられている。",
+    "betrayalRefusal": "{{name}}はもはやマスターの命令に従うつもりがないようだ。"
+  },
+  "affectionNoChange": "（好感度変化なし）",
+  "tileNames": {
+    "ryuudou": "柳洞寺",
+    "miyama": "深山町住宅街",
+    "school": "学校",
+    "forest": "森",
+    "bridge": "冬木大橋",
+    "downtown": "市街地",
+    "port": "港",
+    "church": "教会",
+    "park": "河川公園"
+  },
+  "betrayal": {
+    "title": "サーヴァントが裏切りを試みている！",
+    "useSeal": "令呪でサーヴァントを制御する（令呪1画）",
+    "accept": "そのまま受け入れる...",
+    "noSeals": "令呪がない..."
   }
 }

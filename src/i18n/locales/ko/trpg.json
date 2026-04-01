@@ -138,6 +138,10 @@
     "title": "밤이 지나갔다",
     "continue": "다음 밤으로 →"
   },
+  "memoir": {
+    "title": "📖 성배전쟁 회고록",
+    "continue": "회상 종료"
+  },
   "gameOver": {
     "victory": "성배전쟁 승리!",
     "defeat": "패배...",
@@ -200,5 +204,77 @@
     "status": "전황",
     "log": "로그",
     "servant": "내 서번트"
+  },
+  "loop": {
+    "intent": {
+      "hunt": "사냥",
+      "guard": "경계",
+      "hide": "은신"
+    },
+    "battleWinTrust": "전투를 승리했다! {{name}}은(는) 마스터를 더욱 깊이 신뢰하게 된다.",
+    "battleLossAnxiety": "{{name}}은(는) 패배에 불안한 표정을 짓고 있다.",
+    "commandRefusal": "{{name}}은(는) 명령을 거부했다! ({{from}} → {{to}})",
+    "actionPositive": "{{name}}은(는) 마스터의 방침을 마음에 들어하는 듯 하다.",
+    "actionNegative": "{{name}}은(는) 이번 마스터의 선택이 마음에 들지 않는 눈치다.",
+    "actionNeutral": "{{name}}은(는) 별말 없이 마스터의 명령을 따랐다.",
+    "escapeRelief": "{{name}}은(는) 마스터의 판단에 안도한 듯 하다.",
+    "crisisEscapeRelief": "위기를 넘겼다. {{name}}은(는) 마스터의 판단에 안도한 듯 하다.",
+    "escapeRefused": "{{name}}은(는) 후퇴를 거부하고 싸움을 속행한다! (마스터 신뢰: 낮음)",
+    "master": "마스터",
+    "penaltyStatus1": "{{name}}은(는) 패배의 여파로 고통스러워 하고 있다.",
+    "penaltyStatus2": "{{name}}은(는) 아직 영기 손상을 입은 상태다.",
+    "penaltyStatus3": "{{name}}의 마력 흐름이 불안정하다. 영핵에 금이 간 것 같다.",
+    "affStatus": {
+      "hostile1": "{{name}}은(는) 마스터를 적대하고 있다. 조심해야 할 것 같다.",
+      "hostile2": "{{name}}의 눈빛에서 경계심이 사라지지 않는다.",
+      "wary1": "아직 {{name}}은(는) 마스터를 신뢰하지 못한다.",
+      "wary2": "{{name}}은(는) 마스터와 거리를 유지하고 있다.",
+      "neutral1": "{{name}}은(는) 마스터와 보통의 관계를 유지하고 있다.",
+      "trusting1": "{{name}}은(는) 마스터를 신뢰하고 있다.",
+      "trusting2": "{{name}}은(는) 마스터의 옆에서 안정적으로 행동하고 있다.",
+      "intimate1": "{{name}}은(는) 마스터와 깊은 유대를 쌓고 있다.",
+      "devoted1": "{{name}}은(는) 마스터를 위해서라면 무엇이든 하겠다고 다짐하고 있다."
+    },
+    "manaPositive": "{{name}}은(는) 마력공급에 만족한 듯 하다.",
+    "manaNegative": "{{name}}은(는) 이번 마력공급이 마음에 들지 않은 눈치다.",
+    "sealForceControl": "영주의 힘으로 {{name}}을(를) 강제로 제어했다. 그러나 {{name}}의 눈빛이 더욱 차가워졌다."
+  },
+  "narrative": {
+    "nightHeader": "{{day}}일차 밤",
+    "quietNight": "후유키 시에 고요한 밤이 찾아왔다.",
+    "eliminated": "{{name}}(이)가 소멸했다.",
+    "npSealUse": "{{name}}(이)가 영주로써 보구 '{{np}}'를 사용한다!",
+    "sealBoost": "{{name}}의 마스터가 영주를 사용한다! 전투력이 상승!",
+    "ambushSuccess": "{{name}}의 기습이 성공했다! (은신 {{rank}})",
+    "ambushFail": "{{name}}의 기습이 간파되었다.",
+    "detectedPenalty": "{{name}}(이)가 은신 발각 페널티를 받았다.",
+    "skillFallback": "{{name}}의 스킬이 발동했다.",
+    "enemySealEscape": "{{name}}의 마스터가 영주를 사용했다! 강제 전이 — {{name}}(이)가 전장에서 이탈한다!",
+    "enemyEscaped": "{{name}}(이)가 전장에서 이탈했다.",
+    "betrayalDefeat1": "{{name}}에게 배신당하고 말았다. 피로 물들여진 당신을 두고 {{name}}은(는) 어딘가로 사라졌다.",
+    "betrayalDefeat2": "{{name}}의 칼날이 마스터를 관통한다. 계약은 파기되었다. {{name}}은(는) 한 마디의 말도 없이 등을 돌렸다.",
+    "betrayalDefeat3": "{{name}}은(는) 마스터의 영주마저 뜯어낸 채 전장을 떠났다. 차가운 밤바람만이 쓰러진 당신 위를 지나간다.",
+    "spiritCoreDestroyed": "{{name}}의 영핵이 파괴되었다. 퇴거가 진행된다...",
+    "defeat": "패배...",
+    "betrayalKillingIntent": "{{name}}의 살기가 마스터를 향하고 있다.",
+    "betrayalRefusal": "{{name}}은(는) 더 이상 마스터의 명령에 따를 생각이 없는 것 같다."
+  },
+  "affectionNoChange": "(호감도 변화 없음)",
+  "tileNames": {
+    "ryuudou": "류도사",
+    "miyama": "미야마 주택가",
+    "school": "학교",
+    "forest": "숲",
+    "bridge": "후유키 대교",
+    "downtown": "시가지",
+    "port": "항구",
+    "church": "교회",
+    "park": "강변공원"
+  },
+  "betrayal": {
+    "title": "서번트가 배신을 시도하고 있다!",
+    "useSeal": "영주로 서번트를 제어한다 (영주 1획)",
+    "accept": "그대로 당한다...",
+    "noSeals": "영주가 없다..."
   }
 }

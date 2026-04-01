@@ -54,9 +54,9 @@ export function getDialogue(servantId: number, lang = "ko"): ServantDialogueData
   return data[String(servantId)] ?? null;
 }
 
-/** [image ...] 태그 제거 (버서커 언어 등 Atlas Academy 메타데이터) */
+/** Atlas Academy 메타데이터 태그 제거 ([id ...], [image ...], [margin ...], [delay ...] 등) */
 function cleanDialogueText(text: string): string {
-  return text.replace(/\[image [^\]]+\]/g, "").trim();
+  return text.replace(/\[\w+ [^\]]*\]/g, "").trim();
 }
 
 /** 특정 타입의 대사 중 랜덤 하나 선택 */

@@ -138,6 +138,10 @@
     "title": "The night has passed",
     "continue": "Next Night →"
   },
+  "memoir": {
+    "title": "Grail War Memoir",
+    "continue": "Close the memoir"
+  },
   "gameOver": {
     "victory": "Holy Grail War Victory!",
     "defeat": "Defeat...",
@@ -200,5 +204,77 @@
     "status": "Status",
     "log": "Log",
     "servant": "My Servant"
+  },
+  "loop": {
+    "intent": {
+      "hunt": "Hunt",
+      "guard": "Guard",
+      "hide": "Hide"
+    },
+    "battleWinTrust": "Victory! {{name}} trusts the Master even more deeply now.",
+    "battleLossAnxiety": "{{name}} looks uneasy after the defeat.",
+    "commandRefusal": "{{name}} refuses the order! ({{from}} → {{to}})",
+    "actionPositive": "{{name}} seems pleased with the Master's decision.",
+    "actionNegative": "{{name}} doesn't seem to approve of the Master's choice.",
+    "actionNeutral": "{{name}} follows the Master's order without a word.",
+    "escapeRelief": "{{name}} seems relieved by the Master's judgment.",
+    "crisisEscapeRelief": "Crisis averted. {{name}} seems relieved by the Master's judgment.",
+    "escapeRefused": "{{name}} refuses to retreat and continues fighting! (Master trust: Low)",
+    "master": "Master",
+    "penaltyStatus1": "{{name}} is suffering from the aftermath of defeat.",
+    "penaltyStatus2": "{{name}} is still recovering from Spirit Origin damage.",
+    "penaltyStatus3": "{{name}}'s mana flow is unstable. The Spirit Core may be cracked.",
+    "affStatus": {
+      "hostile1": "{{name}} is hostile toward the Master. Caution is advised.",
+      "hostile2": "The wariness in {{name}}'s eyes refuses to fade.",
+      "wary1": "{{name}} still doesn't trust the Master.",
+      "wary2": "{{name}} is keeping a distance from the Master.",
+      "neutral1": "{{name}} maintains a normal relationship with the Master.",
+      "trusting1": "{{name}} trusts the Master.",
+      "trusting2": "{{name}} acts steadily at the Master's side.",
+      "intimate1": "{{name}} has formed a deep bond with the Master.",
+      "devoted1": "{{name}} has resolved to do anything for the Master."
+    },
+    "manaPositive": "{{name}} seems satisfied with the mana transfer.",
+    "manaNegative": "{{name}} doesn't seem pleased with this mana transfer.",
+    "sealForceControl": "The Command Seal forcibly restrains {{name}}. But {{name}}'s gaze has grown colder."
+  },
+  "narrative": {
+    "nightHeader": "Night {{day}}",
+    "quietNight": "A quiet night settles over Fuyuki City.",
+    "eliminated": "{{name}} has been eliminated.",
+    "npSealUse": "{{name}} unleashes Noble Phantasm '{{np}}' with a Command Seal!",
+    "sealBoost": "{{name}}'s Master uses a Command Seal! Combat power increases!",
+    "ambushSuccess": "{{name}}'s ambush succeeds! (Presence Concealment {{rank}})",
+    "ambushFail": "{{name}}'s ambush was seen through.",
+    "detectedPenalty": "{{name}} suffers a detection penalty.",
+    "skillFallback": "{{name}}'s skill activates.",
+    "enemySealEscape": "{{name}}'s Master uses a Command Seal! Forced transfer — {{name}} withdraws from the battlefield!",
+    "enemyEscaped": "{{name}} has withdrawn from the battlefield.",
+    "betrayalDefeat1": "Betrayed by {{name}}. Leaving you bleeding on the ground, {{name}} vanishes into the night.",
+    "betrayalDefeat2": "{{name}}'s blade pierces the Master. The contract is broken. {{name}} turns away without a word.",
+    "betrayalDefeat3": "{{name}} tears away even the Master's Command Seals and leaves the battlefield. Only the cold night wind passes over your fallen body.",
+    "spiritCoreDestroyed": "{{name}}'s Spirit Core has been destroyed. Withdrawal is commencing...",
+    "defeat": "Defeat...",
+    "betrayalKillingIntent": "{{name}}'s killing intent is directed at the Master.",
+    "betrayalRefusal": "{{name}} no longer intends to obey the Master's commands."
+  },
+  "affectionNoChange": "(No affection change)",
+  "tileNames": {
+    "ryuudou": "Ryuudou Temple",
+    "miyama": "Miyama District",
+    "school": "School",
+    "forest": "Forest",
+    "bridge": "Fuyuki Bridge",
+    "downtown": "Downtown",
+    "port": "Harbor",
+    "church": "Church",
+    "park": "Riverside Park"
+  },
+  "betrayal": {
+    "title": "Your Servant is attempting betrayal!",
+    "useSeal": "Restrain Servant with Command Seal (1 seal)",
+    "accept": "Accept your fate...",
+    "noSeals": "No Command Seals left..."
   }
 }

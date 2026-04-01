@@ -1,5 +1,6 @@
 import type { AffectionTier } from "./affection";
 import type { PersonalityTag } from "../data/servantPersonality";
+import i18n from "../i18n";
 
 // ─── 결과 타입 ───
 
@@ -76,6 +77,8 @@ export function rollManaSupply(
 // ─── 묘사 (default 성격 기반, override는 narrativeTemplates.json에서 확장 가능) ───
 
 type NarrationPool = Record<ManaSupplyResult, string[]>;
+
+// ─── Korean narrations (default) ───
 
 const DEFAULT_NARRATIONS: Record<PersonalityTag, NarrationPool> = {
   assassin: {
@@ -220,6 +223,298 @@ const DEFAULT_NARRATIONS: Record<PersonalityTag, NarrationPool> = {
   },
 };
 
+// ─── English narrations ───
+
+const DEFAULT_NARRATIONS_EN: Record<PersonalityTag, NarrationPool> = {
+  assassin: {
+    perfect: [
+      "{name}'s presence vanished for an instant, then returned. Mana reserves are fully replenished.",
+      "{name} nodded silently from the shadows. A flawless transfer of magical energy.",
+    ],
+    good: [
+      "{name} accepted the mana without a word. A satisfactory result.",
+      "{name} slipped away soundlessly. They seem content.",
+    ],
+    normal: [
+      "{name} disappeared without a trace. It seems to have been sufficient.",
+    ],
+    poor: [
+      "{name}'s cold gaze swept over the Master. 'Do better next time.'",
+    ],
+    critical_fail: [
+      "{name} drew a blade halfway, then sheathed it again. Consider that a warning.",
+    ],
+  },
+  cool: {
+    perfect: [
+      "Something has changed in {name}'s gaze. A light that was not there before.",
+      "{name} allowed a faint smile. 'That will suffice.' High praise indeed.",
+    ],
+    good: [
+      "{name} left with a single word: 'Adequate.' From them, that is approval.",
+      "{name} examined the flow of mana with quiet satisfaction.",
+    ],
+    normal: [
+      "An unremarkable mana transfer. {name} departed without comment.",
+    ],
+    poor: [
+      "{name} seems faintly disappointed in the Master.",
+    ],
+    critical_fail: [
+      "An unspoken agreement was reached: this never happened.",
+    ],
+  },
+  tsundere: {
+    perfect: [
+      "{name} turned away, but the reddening of their ears betrayed everything.",
+    ],
+    good: [
+      "'W-well, it was passable, I suppose,' {name} muttered, though their expression said otherwise.",
+    ],
+    normal: [
+      "{name} sighed. Still, the mana was accepted all the same.",
+    ],
+    poor: [
+      "{name} shot the Master a withering glare. '...Try harder next time.'",
+    ],
+    critical_fail: [
+      "{name} hurled a pillow. It struck the Master square in the face.",
+    ],
+  },
+  cheerful: {
+    perfect: [
+      "{name} gave an enthusiastic thumbs up! A perfect mana supply!",
+    ],
+    good: [
+      "{name} flashed a thumbs up. Simple, but heartwarming.",
+    ],
+    normal: [
+      "{name} nodded reassuringly. 'It's fine! We'll do even better next time!'",
+    ],
+    poor: [
+      "{name} wasn't satisfied, but decided to encourage the Master anyway.",
+    ],
+    critical_fail: [
+      "{name} smiled and said, '...Let's do better next time.' Is that comfort or a threat...?",
+    ],
+  },
+  royal: {
+    perfect: [
+      "For the first time, {name} addressed the Master not as 'subject,' but as 'companion.'",
+    ],
+    good: [
+      "{name} declared, 'You pass.' To receive a king's approval is no small feat.",
+    ],
+    normal: [
+      "{name} yawned. Not an encouraging sign.",
+    ],
+    poor: [
+      "{name} has resumed using the word 'mongrel' again.",
+    ],
+    critical_fail: [
+      "{name} leveled their Noble Phantasm at the Master, then stayed their hand. Call it mercy.",
+    ],
+  },
+  berserker: {
+    perfect: [
+      "{name}'s roaring ceased. They seem pleased. ...Probably.",
+    ],
+    good: [
+      "{name} fell quiet. A sign of satisfaction... presumably.",
+    ],
+    normal: [
+      "{name} growled. No different from usual.",
+    ],
+    poor: [
+      "{name} looks displeased. Best to keep your distance.",
+    ],
+    critical_fail: [
+      "{name} smashed through a wall. Mana supply is no longer the issue. Survival is.",
+    ],
+  },
+  saint: {
+    perfect: [
+      "{name} gently took the Master's hand. Sacred mana enveloped them both in warmth.",
+    ],
+    good: [
+      "{name} offered a prayer of gratitude. The mana flowed in, warm and gentle.",
+    ],
+    normal: [
+      "{name} smiled softly. 'Thank you, Master.'",
+    ],
+    poor: [
+      "{name} let out a quiet sigh, but did not blame the Master.",
+    ],
+    critical_fail: [
+      "{name} is praying for the Master. ...It seems the one who needs salvation is the Master.",
+    ],
+  },
+  avenger: {
+    perfect: [
+      "{name}'s hatred seemed to pause, if only for a moment. This is the most favor they can show.",
+    ],
+    good: [
+      "{name} gave a slight nod. Through the flames of hatred, a flicker of trust could be seen.",
+    ],
+    normal: [
+      "{name} accepted the mana with an expressionless face.",
+    ],
+    poor: [
+      "{name}'s eyes turned cold. '...Useless.'",
+    ],
+    critical_fail: [
+      "{name} turned their back on the Master. Trust has been severely damaged.",
+    ],
+  },
+};
+
+// ─── Japanese narrations ───
+
+const DEFAULT_NARRATIONS_JA: Record<PersonalityTag, NarrationPool> = {
+  assassin: {
+    perfect: [
+      "{name}の気配が一瞬消え、再び戻った。魔力は完全に充填された。",
+      "{name}は影の中から静かに頷いた。最上の状態だ。",
+    ],
+    good: [
+      "{name}は何も言わず魔力を受け入れた。悪くない結果だ。",
+      "{name}は音もなく姿を消した。満足したようだ。",
+    ],
+    normal: [
+      "{name}は気配もなく消えた。十分だったようだ。",
+    ],
+    poor: [
+      "{name}の視線が冷たくマスターを掠めた。「次はもっとうまくやれ。」",
+    ],
+    critical_fail: [
+      "{name}が刃を抜きかけ、再び納めた。警告だ。",
+    ],
+  },
+  cool: {
+    perfect: [
+      "{name}の眼差しが以前とは明らかに変わっていた。",
+      "{name}は「十分だ」と一言残し、微かに笑みを見せた。",
+    ],
+    good: [
+      "{name}は「十分だ」と一言残し、部屋を出た。",
+      "{name}は満足げに魔力の流れを確認した。",
+    ],
+    normal: [
+      "無難な魔力供給だった。{name}は何も言わず去っていった。",
+    ],
+    poor: [
+      "{name}はマスターに少し失望したようだ。",
+    ],
+    critical_fail: [
+      "この件はなかったことにしよう——無言の合意が成立した。",
+    ],
+  },
+  tsundere: {
+    perfect: [
+      "{name}は顔を背けたが、耳が赤くなっているのは隠しきれなかった。",
+    ],
+    good: [
+      "{name}は「まあ、悪くないんじゃない」と言ったが、表情は悪くなかった。",
+    ],
+    normal: [
+      "{name}はため息をついた。それでも魔力は受け入れたようだ。",
+    ],
+    poor: [
+      "{name}がマスターを睨んだ。「……次はもうちょっと頑張りなさいよ。」",
+    ],
+    critical_fail: [
+      "{name}が枕を投げつけた。見事にマスターの顔面に命中した。",
+    ],
+  },
+  cheerful: {
+    perfect: [
+      "{name}が親指を立てた！最高の魔力供給だ！",
+    ],
+    good: [
+      "{name}が親指を立てた。単純だが気分のいい反応だ。",
+    ],
+    normal: [
+      "{name}が頷いた。「大丈夫、次はもっとうまくいくよ！」",
+    ],
+    poor: [
+      "{name}は満足できなかったようだが、マスターを励ますことに決めたようだ。",
+    ],
+    critical_fail: [
+      "{name}は笑いながら「……次はもっと頑張ろう」と言った。慰めなのか脅しなのか……。",
+    ],
+  },
+  royal: {
+    perfect: [
+      "{name}が初めてマスターを「臣下」ではなく「友」と呼んだ。",
+    ],
+    good: [
+      "{name}が「合格だ」と宣言した。王の許しを得たということだ。",
+    ],
+    normal: [
+      "{name}が欠伸をした。良い兆候ではなさそうだ。",
+    ],
+    poor: [
+      "{name}が「雑種」という呼称を再び使い始めた。",
+    ],
+    critical_fail: [
+      "{name}が宝具をマスターに向けかけ、止めた。慈悲のつもりらしい。",
+    ],
+  },
+  berserker: {
+    perfect: [
+      "{name}の咆哮が止んだ。機嫌が良いようだ。……たぶん。",
+    ],
+    good: [
+      "{name}が静かになった。満足の表れ……だと思いたい。",
+    ],
+    normal: [
+      "{name}が唸り声を上げた。いつもと変わりない。",
+    ],
+    poor: [
+      "{name}は不快そうだ。近づかない方がいい。",
+    ],
+    critical_fail: [
+      "{name}が壁を破壊した。魔力供給の問題ではない。生存の問題だ。",
+    ],
+  },
+  saint: {
+    perfect: [
+      "{name}がマスターの手を優しく取った。神聖な魔力が二人を包み込んだ。",
+    ],
+    good: [
+      "{name}が感謝の祈りを捧げた。魔力が温かく流れ込んできた。",
+    ],
+    normal: [
+      "{name}が微笑んだ。「ありがとうございます、マスター。」",
+    ],
+    poor: [
+      "{name}は静かにため息をついたが、マスターを責めはしなかった。",
+    ],
+    critical_fail: [
+      "{name}がマスターのために祈っている。……救いが必要なのはマスターの方らしい。",
+    ],
+  },
+  avenger: {
+    perfect: [
+      "{name}の憎悪が一瞬止まったようだ。マスターに見せる最大限の好意だ。",
+    ],
+    good: [
+      "{name}が頷いた。憎悪の炎の間に、小さな信頼が垣間見えた。",
+    ],
+    normal: [
+      "{name}は無表情のまま魔力を受け入れた。",
+    ],
+    poor: [
+      "{name}の目が冷たくなった。「……役立たずが。」",
+    ],
+    critical_fail: [
+      "{name}がマスターに背を向けた。信頼が大きく損なわれたようだ。",
+    ],
+  },
+};
+
+// ─── Korean overrides ───
+
 /** 서번트 ID별 오버라이드 (추후 narrativeTemplates.json으로 이전 가능) */
 const NARRATION_OVERRIDES: Record<number, Partial<NarrationPool>> = {
   // 길가메쉬
@@ -245,16 +540,87 @@ const NARRATION_OVERRIDES: Record<number, Partial<NarrationPool>> = {
   },
 };
 
+// ─── English overrides ───
+
+const NARRATION_OVERRIDES_EN: Record<number, Partial<NarrationPool>> = {
+  // Gilgamesh
+  12: {
+    perfect: ["For the first time, the King of Heroes addressed the Master as 'friend.'"],
+    poor: ["Gilgamesh has resumed calling the Master 'mongrel.'"],
+    critical_fail: ["Gilgamesh raised Ea toward the Master, then stayed his hand."],
+  },
+  // Cu Chulainn
+  20: {
+    perfect: ["Cu Chulainn broke into a wide grin. 'That was the best, Master!'"],
+    good: ["Cu Chulainn gave a thumbs up. 'Not bad at all.'"],
+  },
+  // Jeanne d'Arc
+  66: {
+    perfect: ["Jeanne d'Arc took the Master's hand. The saint's blessing enveloped them in warmth."],
+    critical_fail: ["Jeanne d'Arc is praying for the Master. ...It seems salvation is needed on the Master's end."],
+  },
+  // Mash Kyrielight
+  1: {
+    perfect: ["Mash's face turned bright red. 'S-Senpai...!'"],
+    good: ["Mash smiled gently. 'Master's mana is always so warm.'"],
+  },
+};
+
+// ─── Japanese overrides ───
+
+const NARRATION_OVERRIDES_JA: Record<number, Partial<NarrationPool>> = {
+  // ギルガメッシュ
+  12: {
+    perfect: ["英雄王が初めてマスターを「友」と呼んだ。"],
+    poor: ["ギルガメッシュが再び「雑種」という呼称を使い始めた。"],
+    critical_fail: ["ギルガメッシュがエアをマスターに向けかけ、止めた。"],
+  },
+  // クー・フーリン
+  20: {
+    perfect: ["クー・フーリンが満面の笑みを浮かべた。「最高だぜ、マスター！」"],
+    good: ["クー・フーリンが親指を立てた。「悪くないな。」"],
+  },
+  // ジャンヌ・ダルク
+  66: {
+    perfect: ["ジャンヌ・ダルクがマスターの手を取った。聖女の祝福が温かく包み込む。"],
+    critical_fail: ["ジャンヌ・ダルクがマスターのために祈っている。……救いが必要なのはマスターの方らしい。"],
+  },
+  // マシュ
+  1: {
+    perfect: ["マシュの顔が真っ赤になった。「せ、先輩……！」"],
+    good: ["マシュが微笑んだ。「マスターの魔力はいつも温かいです。」"],
+  },
+};
+
+// ─── Language-aware narration selector ───
+
+function getNarrationData(): {
+  defaults: Record<PersonalityTag, NarrationPool>;
+  overrides: Record<number, Partial<NarrationPool>>;
+} {
+  const lang = i18n.language;
+  if (lang === "en") {
+    return { defaults: DEFAULT_NARRATIONS_EN, overrides: NARRATION_OVERRIDES_EN };
+  }
+  if (lang === "ja") {
+    return { defaults: DEFAULT_NARRATIONS_JA, overrides: NARRATION_OVERRIDES_JA };
+  }
+  // default: Korean
+  return { defaults: DEFAULT_NARRATIONS, overrides: NARRATION_OVERRIDES };
+}
+
 function getNarration(personality: PersonalityTag, result: ManaSupplyResult, servantName: string, servantId: number): string {
+  const { defaults, overrides } = getNarrationData();
+
   // 1. 오버라이드 확인
-  const overrides = NARRATION_OVERRIDES[servantId];
-  if (overrides?.[result]?.length) {
-    const pool = overrides[result]!;
+  const override = overrides[servantId];
+  if (override?.[result]?.length) {
+    const pool = override[result]!;
     return pool[Math.floor(Math.random() * pool.length)].replace(/\{name\}/g, servantName);
   }
 
   // 2. 기본 성격 풀
-  const pool = DEFAULT_NARRATIONS[personality][result];
+  const pool = defaults[personality][result];
   const text = pool[Math.floor(Math.random() * pool.length)];
   return text.replace(/\{name\}/g, servantName);
 }

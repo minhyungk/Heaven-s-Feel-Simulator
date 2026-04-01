@@ -31,6 +31,7 @@ export type TRPGPhase =
   | "nightEnd"
   | "betrayalPrompt"
   | "grailWish"
+  | "memoir"
   | "gameOver";
 
 export type FogLevel = "unknown" | "classRevealed" | "statsRevealed" | "fullyRevealed";
@@ -219,7 +220,8 @@ export type TRPGAction =
   | { type: "resolveAI" }
   | { type: "manaSupply" }
   | { type: "skipManaSupply" }
-  | { type: "betrayalDecision"; useSeal: boolean };
+  | { type: "betrayalDecision"; useSeal: boolean }
+  | { type: "syncServantLanguage"; resolvedMap: Record<number, Servant> };
 
 // ─── 기존 warEngine 호환 타입 ───
 
